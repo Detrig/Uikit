@@ -1,4 +1,4 @@
-package github.detrig.uikit.components.text
+package github.detrig.uikit.components.productcart
 
 import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.Component
@@ -7,15 +7,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@SerialName("text")
-data class TextComponent(
+@SerialName("product_cart_item")
+data class ProductCardComponent(
     override val id: String? = null,
     override val style: Style? = null,
     override val actions: Map<String, Action>? = null,
-    val value: String? = null,
-    val dataKey: String? = null,
-    val fontSize: Int? = null,
-    val color: String? = null,
-    val bold: Boolean = false,
-    val italic: Boolean = false
+    val title: String,
+    val imageUrl: String,
+    val quantity: Int = 0,
+    val price: Int
 ) : Component()

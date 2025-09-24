@@ -2,6 +2,7 @@ package github.detrig.uikit.core
 
 import android.util.Log
 import github.detrig.uikit.components.screen.ScreenState
+import kotlin.math.max
 
 class ActionDispatcher(
     private val state: ScreenState,
@@ -34,5 +35,14 @@ class ActionDispatcher(
         register("increment") { action ->
             state.incrementCounter(action.targetId ?: return@register)
         }
+
+        register("decrement") { action ->
+            val current = (state.getValue(action.targetId ?: "") as? Int ?: 0)
+            state.updateComponent(action.targetId, max(0, current - 1))
+        }
+
+//        register("delete") { action ->
+//            state.removeComponent(action.targetId ?: return@register)
+//        }
     }
 }

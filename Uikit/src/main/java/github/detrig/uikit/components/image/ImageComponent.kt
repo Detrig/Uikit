@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @SerialName("image")
 data class ImageComponent(
-    override val id: String?, override val style: Style?, override val actions: List<Action>?,
+    override val id: String?, override val style: Style?, override val actions: Map<String, Action>?,
     val imageUrl: String? = null,
     val imageError: String? = null,
     val contentDescription: String? = null,

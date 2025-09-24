@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 data class ButtonComponent(
     override val id: String? = null,
     override val style: Style? = null,
-    override val actions: List<Action>? = null,
+    override val actions: Map<String, Action>? = null,
     val text: String? = null,
     val textBold: Boolean = false,
     val fontSize: Int? = null,
