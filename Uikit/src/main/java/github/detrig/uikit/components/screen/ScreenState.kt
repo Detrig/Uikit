@@ -4,11 +4,11 @@ import androidx.compose.runtime.mutableStateMapOf
 import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.text.TextComponent
 
-class ScreenState(val screen: Screen) {
+class ScreenState(val screenModel: ScreenModel) {
     private val componentStates = mutableStateMapOf<String, Any?>()
 
     init {
-        screen.components.forEach { component ->
+        screenModel.components.forEach { component ->
             when (component) {
                 is TextComponent -> componentStates[component.id ?: ""] = component.value
                 is ButtonComponent -> {}

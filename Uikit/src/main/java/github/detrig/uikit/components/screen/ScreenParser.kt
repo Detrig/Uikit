@@ -3,7 +3,6 @@ package github.detrig.uikit.components.screen
 import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.text.TextComponent
-import github.detrig.uikit.core.Component
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
@@ -16,7 +15,7 @@ object ScreenParser {
         ignoreUnknownKeys = true // игнорируем лишние поля
     }
 
-    fun parse(jsonStr: String): Screen {
+    fun parse(jsonStr: String): ScreenModel {
         val jsonObj = json.parseToJsonElement(jsonStr).jsonObject
         val componentsJson = jsonObj["components"]?.jsonArray ?: JsonArray(emptyList())
         val id = jsonObj["id"]!!.jsonPrimitive.content
@@ -29,6 +28,6 @@ object ScreenParser {
                 else -> throw IllegalArgumentException("Unknown component type: $type")
             }
         }
-        return Screen(id, components)
+        return ScreenModel(id, components)
     }
 }
