@@ -1,50 +1,90 @@
 package github.detrig.uikit.components.button
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.components.utils.toComposeModifier
 import androidx.core.graphics.toColorInt
-import github.detrig.uikit.core.ActionDispatcher
-import github.detrig.uikit.utils.applyStyle
+import github.detrig.uikit.R
+
 
 object ButtonRenderer {
 
     @Composable
-    fun Render(component: ButtonComponent, actionDispatcher: ActionDispatcher) {
-        val text = component.text
-        val textColor = component.textColor?.let { Color(it.toColorInt()) } ?: Color.Black
-        val fontSize = (component.fontSize ?: 16).sp
-        val fontWeight = if (component.bold) FontWeight.Bold else FontWeight.Normal
+    fun Render(component: ButtonComponent, state: ScreenState, actions: Map<String, () -> Unit>? = null) {
 
-        val backgroundColor = component.backgroundHex?.let { Color(it.toColorInt()) }
-            ?: MaterialTheme.colorScheme.primary
-
-        var modifier = Modifier
-
+       // val onClickAction = component.onClick?.let { actions?.get(it) } ?: {}
 
         Button(
-            colors = ButtonDefaults.buttonColors(contentColor = backgroundColor),
-            modifier = Modifier.applyStyle(component.style),
-            onClick = {
-                component.action?.let { actionDispatcher.dispatch(it) }
-            }) {
-            text?.let {
-                if (text.isNotEmpty()) {
-                    Text(
-                        text = text,
-                        color = textColor,
-                        fontSize = fontSize,
-                        fontWeight = fontWeight
+            onClick = { }, //onClickAction,
+            enabled = component.enabled,
+            modifier = component.modifier?.toComposeModifier() ?: Modifier,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = component.style?.background?.let { Color(it.toColorInt()) }
+                    ?: MaterialTheme.colorScheme.primary,
+                contentColor = component.style?.background?.let { Color(it.toColorInt()) }
+                    ?: Color.White
+            ),
+            shape = component.style?.shape?.cornerRadius?.let { RoundedCornerShape(it.dp) } ?: RoundedCornerShape(0.dp),
+            elevation = component.style?.elevation?.dp?.let { ButtonDefaults.elevatedButtonElevation(defaultElevation = it) }
+                ?: ButtonDefaults.elevatedButtonElevation()
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                // Если кнопка с иконкой
+                component.icon?.let { iconName ->
+                    Icon(
+                        painter = painterResource(id = getIconRes(iconName)),
+                        contentDescription = iconName,
+                        modifier = Modifier.size(20.dp)
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
                 }
+
+                Text(
+                    text = component.text ?: "",
+                    fontSize = component.style?.fontSize?.sp ?: 16.sp,
+                    fontWeight = when (component.style?.fontWeight?.lowercase()) {
+                        "bold" -> FontWeight.Bold
+                        "medium" -> FontWeight.Medium
+                        else -> FontWeight.Normal
+                    },
+                    fontStyle = when (component.style?.fontStyle?.lowercase()) {
+                        "italic" -> FontStyle.Italic
+                        else -> FontStyle.Normal
+                    }
+                )
             }
         }
+    }
 
+    // Пример функции для получения ресурса иконки по имени
+    @Composable
+    private fun getIconRes(name: String): Int {
+        return when (name.lowercase()) {
+            "checkout" -> R.drawable.img
+            "favorite" -> R.drawable.img_1
+            else -> R.drawable.img_1
+        }
     }
 }

@@ -1,8 +1,7 @@
 package github.detrig.uikit.components.button
 
-import github.detrig.uikit.core.Action
-import github.detrig.uikit.core.Component
-import github.detrig.uikit.core.Style
+import github.detrig.uikit.components.utils.Component
+import github.detrig.uikit.components.utils.ModifierModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -10,15 +9,10 @@ import kotlinx.serialization.Serializable
 @SerialName("button")
 data class ButtonComponent(
     override val id: String? = null,
-    override val style: Style? = null,
-    override val actions: Map<String, Action>? = null,
-    val text: String? = null,
-    val textBold: Boolean = false,
-    val fontSize: Int? = null,
-    val contentPadding: Int? = null,
-    val textColor: String? = null,
-    val bold: Boolean = false,
-    val backgroundHex: String? = null,
-    val dataKey: String? = null,
-    val action: Action? = null
+    override val modifier: ModifierModel? = null,
+    val style: ButtonStyle? = null,
+    val text: String? = null,            // Текст кнопки
+    val onClick: String? = null,         // ID действия
+    val enabled: Boolean = true,         // Включена ли
+    val icon: String? = null             // Если кнопка с иконкой
 ) : Component()

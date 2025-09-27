@@ -1,30 +1,34 @@
 package github.detrig.uikit.components.image
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage
-import github.detrig.uikit.utils.applyStyle
+import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.components.utils.toComposeModifier
 
 object ImageRenderer {
 
     @Composable
-    fun Render(component: ImageComponent) {
-        val scale = when (component.contentScale) {
-            "fill" -> ContentScale.FillBounds
-            "crop" -> ContentScale.Crop
-            "fit" -> ContentScale.Fit
-            "inside" -> ContentScale.Inside
-            else -> ContentScale.Fit
-        }
+    fun Render(component: ImageComponent, state: ScreenState) {
+        val modifier = component.modifier?.toComposeModifier() ?: Modifier
 
         AsyncImage(
-            model = component.imageUrl,
+            model = component.url ?: component.placeholder,
             contentDescription = component.contentDescription,
-            contentScale = scale,
-            modifier = Modifier
-                .applyStyle(component.style)
+            modifier = modifier,
+            contentScale = when (component.contentScale) {
+                ContentScaleType.Fill -> ContentScale.FillBounds
+                ContentScaleType.FillHeight -> ContentScale.FillHeight
+                ContentScaleType.FillWidth -> ContentScale.FillWidth
+                ContentScaleType.Inside -> ContentScale.Inside
+                ContentScaleType.None -> ContentScale.None
+                ContentScaleType.FillBounds -> ContentScale.FillBounds
+                ContentScaleType.Crop, null -> ContentScale.Crop
+            },
+            //placeholder = component.placeholder?.let { painterResource(id = getImageRes(it)) }, //TODO add local and url image
+            //error = component.error?.let { painterResource(id = getImageRes(it)) }
         )
     }
+
 }
