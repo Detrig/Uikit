@@ -25,24 +25,26 @@ import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.utils.Component
+import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.RenderComponent
 
 
 object BoxRenderer {
 
     @Composable
-    fun Render(component: BoxComponent, state: ScreenState) {
+    fun Render(component: BoxComponent, state: ScreenState, dispatcher: ActionDispatcher) {
         Box(modifier = component.modifier?.toComposeModifier() ?: Modifier) {
             component.children.forEach { child ->
                 when (child) {
                     is TextComponent -> TextRenderer.Render(child, state)
-                    is ButtonComponent -> ButtonRenderer.Render(child, state)
+                    is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
                     is ImageComponent -> ImageRenderer.Render(child, state)
-                    is RowComponent -> RowRenderer.Render(child, state)
-                    is ColumnComponent -> ColumnRenderer.Render(child, state)
+                    is RowComponent -> RowRenderer.Render(child, state, dispatcher)
+                    is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, state)
-                    is CardComponent -> CardRenderer.Render(child, state)
-                    is IconComponent -> IconRenderer.Render(child)
-                    is BoxComponent -> Render(child, state)
+                    is CardComponent -> CardRenderer.Render(child, state, dispatcher)
+                    is IconComponent -> IconRenderer.Render(child, state, dispatcher)
+                    is BoxComponent -> Render(child, state, dispatcher)
                     else -> {}
                 }
             }

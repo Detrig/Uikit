@@ -1,4 +1,4 @@
-package github.detrig.composetutorial.core
+package github.detrig.composetutorial.presentation.core
 
 import github.detrig.uikit.core.NavigationHandler
 

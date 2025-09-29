@@ -34,51 +34,63 @@ import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.utils.Component
+import github.detrig.uikit.core.ActionDispatcher
+import androidx.core.graphics.toColorInt
+import github.detrig.uikit.components.snackbar.SnackbarComponent
+import github.detrig.uikit.components.snackbar.SnackbarRenderer
+import github.detrig.uikit.core.RenderComponent
 
 object ScreenRenderer {
     @Composable
-    fun Render(component: ScreenComponent, state: ScreenState) {
+    fun Render(component: ScreenComponent, state: ScreenState, dispatcher: ActionDispatcher) {
         val backgroundColor = component.background?.let {
-            Color(android.graphics.Color.parseColor(it))
+            Color(it.toColorInt())
         } ?: Color.White
 
         Scaffold(
             topBar = {
                 if (component.topBar.isNotEmpty()) {
                     Column(Modifier.fillMaxWidth().background(backgroundColor)) {
-                        component.topBar.forEach { RenderComponent(it, state) }
+                        component.topBar.forEach { RenderComponent(it, state, dispatcher) }
                     }
                 }
             },
             bottomBar = {
                 if (component.bottomBar.isNotEmpty()) {
                     Column(Modifier.fillMaxWidth().background(backgroundColor)) {
-                        component.bottomBar.forEach { RenderComponent(it, state) }
+                        component.bottomBar.forEach { RenderComponent(it, state, dispatcher) }
+                    }
+                }
+            },
+            snackbarHost = {
+                Column {
+                    component.snackbars.forEach { snackbar ->
+                        RenderComponent(snackbar, state, dispatcher)
                     }
                 }
             },
             containerColor = backgroundColor
         ) { paddingValues ->
             Column(Modifier.padding(paddingValues)) {
-                component.content.forEach { RenderComponent(it, state) }
+                component.content.forEach { RenderComponent(it, state, dispatcher) }
             }
         }
     }
 }
 
 @Composable
-fun RenderComponent(component: Component, state: ScreenState) {
-    Log.d("alz-04", "component: $component")
+fun RenderComponent(component: Component, state: ScreenState, dispatcher: ActionDispatcher) {
     when (component) {
         is TextComponent -> TextRenderer.Render(component, state)
-        is ButtonComponent -> ButtonRenderer.Render(component, state)
+        is ButtonComponent -> ButtonRenderer.Render(component, state, dispatcher)
         is ImageComponent -> ImageRenderer.Render(component, state)
-        is IconComponent -> IconRenderer.Render(component)
+        is IconComponent -> IconRenderer.Render(component, state, dispatcher)
         is CheckboxComponent -> CheckboxRenderer.Render(component, state)
-        is RowComponent -> RowRenderer.Render(component, state)
-        is BoxComponent -> Render(component, state)
-        is ColumnComponent -> ColumnRenderer.Render(component, state)
-        is CardComponent -> CardRenderer.Render(component, state)
+        is RowComponent -> RowRenderer.Render(component, state, dispatcher)
+        is BoxComponent -> Render(component, state, dispatcher)
+        is ColumnComponent -> ColumnRenderer.Render(component, state, dispatcher)
+        is CardComponent -> CardRenderer.Render(component, state, dispatcher)
+        is SnackbarComponent -> SnackbarRenderer.Render(component, state, dispatcher)
         else -> {
             println("Unknown component type: ${component::class.simpleName}")
         }

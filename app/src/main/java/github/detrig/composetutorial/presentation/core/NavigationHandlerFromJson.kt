@@ -1,7 +1,7 @@
-package github.detrig.composetutorial.core
+package github.detrig.composetutorial.presentation.core
 
-import github.detrig.composetutorial.cart.CartScreen
-import github.detrig.composetutorial.makeorder.MakeOrderScreen
+import github.detrig.composetutorial.presentation.cart.CartScreen
+import github.detrig.composetutorial.presentation.makeorder.MakeOrderScreen
 import github.detrig.uikit.core.NavigationHandler
 import android.util.Log
 

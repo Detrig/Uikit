@@ -28,13 +28,15 @@ import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
+import github.detrig.uikit.core.ActionDispatcher
 
 object CardRenderer {
 
     @Composable
-    fun Render(component: CardComponent, state: ScreenState) {
+    fun Render(component: CardComponent, state: ScreenState, dispatcher: ActionDispatcher) {
         val elevation = (component.elevation ?: 0).dp
-        val shape = component.shape?.cornerRadius?.let { RoundedCornerShape(it.dp) } ?: RoundedCornerShape(0.dp)
+        val shape = component.shape?.cornerRadius?.let { RoundedCornerShape(it.dp) }
+            ?: RoundedCornerShape(0.dp)
         val backgroundColor = component.background?.let { Color(it.toColorInt()) } ?: Color.White
 
         Card(
@@ -44,26 +46,25 @@ object CardRenderer {
             colors = CardDefaults.cardColors(containerColor = backgroundColor)
         ) {
             component.children.forEach { child ->
-                component.children.forEach { child ->
-                    when (child) {
-                        is TextComponent -> TextRenderer.Render(child, state)
-                        is ButtonComponent -> ButtonRenderer.Render(child, state)
-                        is ImageComponent -> ImageRenderer.Render(child, state)
-                        is RowComponent -> RowRenderer.Render(child, state)
-                        is ColumnComponent -> ColumnRenderer.Render(child, state)
-                        is CheckboxComponent -> CheckboxRenderer.Render(child, state)
-                        is BoxComponent -> BoxRenderer.Render(child, state)
-                        is SpacerComponent -> {
-                            val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
-                            val finalModifier = child.modifier?.weight?.let { w ->
-                                baseModifier.then(Modifier.weight(w))
-                            } ?: baseModifier
-                            Spacer(modifier = finalModifier)
-                        }
-                        is CardComponent -> Render(child, state)
-                        is IconComponent -> IconRenderer.Render(child)
-                        else -> {}
+                when (child) {
+                    is TextComponent -> TextRenderer.Render(child, state)
+                    is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
+                    is ImageComponent -> ImageRenderer.Render(child, state)
+                    is RowComponent -> RowRenderer.Render(child, state, dispatcher)
+                    is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
+                    is CheckboxComponent -> CheckboxRenderer.Render(child, state)
+                    is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
+                    is SpacerComponent -> {
+                        val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
+                        val finalModifier = child.modifier?.weight?.let { w ->
+                            baseModifier.then(Modifier.weight(w))
+                        } ?: baseModifier
+                        Spacer(modifier = finalModifier)
                     }
+
+                    is CardComponent -> Render(child, state, dispatcher)
+                    is IconComponent -> IconRenderer.Render(child, state, dispatcher)
+                    else -> {}
                 }
             }
         }

@@ -24,17 +24,20 @@ import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
 import androidx.core.graphics.toColorInt
 import github.detrig.uikit.R
+import github.detrig.uikit.core.ActionDispatcher
 
 
 object ButtonRenderer {
 
     @Composable
-    fun Render(component: ButtonComponent, state: ScreenState, actions: Map<String, () -> Unit>? = null) {
-
-       // val onClickAction = component.onClick?.let { actions?.get(it) } ?: {}
+    fun Render(component: ButtonComponent, state: ScreenState, dispatcher: ActionDispatcher) {
 
         Button(
-            onClick = { }, //onClickAction,
+            onClick = {
+                component.actions?.forEach { action ->
+                    dispatcher.dispatch(action)
+                }
+            },
             enabled = component.enabled,
             modifier = component.modifier?.toComposeModifier() ?: Modifier,
             colors = ButtonDefaults.buttonColors(
@@ -51,7 +54,7 @@ object ButtonRenderer {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                // Если кнопка с иконкой
+                // с иконкой
                 component.icon?.let { iconName ->
                     Icon(
                         painter = painterResource(id = getIconRes(iconName)),
@@ -72,13 +75,15 @@ object ButtonRenderer {
                     fontStyle = when (component.style?.fontStyle?.lowercase()) {
                         "italic" -> FontStyle.Italic
                         else -> FontStyle.Normal
-                    }
+                    },
+                    color = component.style?.textColor?.let { Color(it.toColorInt()) }
+                        ?: Color.White
                 )
             }
         }
     }
 
-    // Пример функции для получения ресурса иконки по имени
+
     @Composable
     private fun getIconRes(name: String): Int {
         return when (name.lowercase()) {

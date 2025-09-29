@@ -1,5 +1,7 @@
 package github.detrig.uikit.components.icon
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -11,25 +13,37 @@ import androidx.compose.ui.res.painterResource
 import github.detrig.uikit.R
 import github.detrig.uikit.components.utils.toComposeModifier
 import java.util.Locale
+import androidx.core.graphics.toColorInt
+import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.core.ActionDispatcher
 
 
 object IconRenderer {
 
     @Composable
-    fun Render(component: IconComponent) {
-        val modifier: Modifier = component.modifier?.toComposeModifier() ?: Modifier
+    fun Render(component: IconComponent, state: ScreenState? = null, dispatcher: ActionDispatcher? = null) {
+        val modifier: Modifier = (component.modifier?.toComposeModifier() ?: Modifier)
+            .let { base ->
+                if (component.actions != null && component.actions.isNotEmpty()) {
+                    base.clickable {
+                        Log.d("alz-04", "icon clicked: $component")
+                        component.actions.forEach { dispatcher?.dispatch(it) }
+                    }
+                } else base
+            }
+
 
         val iconName = component.icon?.lowercase(Locale.getDefault())
         val vector: ImageVector? = when (iconName) {
             "home" -> Icons.Default.Home
             "settings" -> Icons.Default.Settings
             "info" -> Icons.Default.Info
-            "favorite" -> Icons.Default.Favorite
+            "favorite_border" -> Icons.Default.Favorite
+            "delete" -> Icons.Default.Delete
             else -> null
         }
 
-        // Определяем цвет (если указан)
-        val tintColor = component.tint?.let { Color(android.graphics.Color.parseColor(it)) } ?: Color.Unspecified
+        val tintColor = component.tint?.let { Color(it.toColorInt()) } ?: Color.Unspecified
 
         if (vector != null) {
             Icon(

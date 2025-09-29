@@ -10,15 +10,31 @@ import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.column.ColumnComponent
 import github.detrig.uikit.components.lazycolumn.LazyColumnComponent
 import github.detrig.uikit.components.row.RowComponent
+import github.detrig.uikit.components.snackbar.SnackbarComponent
+import github.detrig.uikit.components.snackbar.SnackbarData
 import github.detrig.uikit.components.utils.Component
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ScreenState(screen: ScreenComponent) {
 
     private val componentStates = mutableStateMapOf<String, Any?>()
 
+    private val visibleSnackbars = mutableStateMapOf<String, Boolean>()
+
     init {
+        screen.snackbars.forEach { snackbar ->
+            Log.d("alz-04", "snackbar: $snackbar")
+            val id = snackbar.id ?: return@forEach
+
+            visibleSnackbars[id] = false
+        }
+
         fun traverse(component: Component) {
             val id = component.id ?: return
+            Log.d("alz-04", "component: $component")
             when (component) {
                 is TextComponent -> componentStates[id] = component.text
                 is CheckboxComponent -> componentStates[id] = component.isChecked
@@ -26,7 +42,6 @@ class ScreenState(screen: ScreenComponent) {
                 is LazyColumnComponent -> componentStates[id] = emptyList<Any>()
             }
 
-            // Рекурсивно обходим детей
             when (component) {
                 is RowComponent -> component.children.forEach { traverse(it) }
                 is ColumnComponent -> component.children.forEach { traverse(it) }
@@ -47,4 +62,21 @@ class ScreenState(screen: ScreenComponent) {
     fun getValue(id: String?): Any? = id?.let { componentStates[it] }
 
     fun getList(id: String?): List<Any>? = id?.let { componentStates[it] as? List<Any> }
+
+
+
+    fun showSnackbar(id: String) {
+        Log.d("alz-04", "showSnackbar: $id, $visibleSnackbars")
+        visibleSnackbars[id] = true
+        // auto hide через корутину
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(3000)
+            visibleSnackbars[id] = false
+        }
+    }
+    fun isSnackbarVisible(id: String): Boolean = visibleSnackbars[id] == true
+    fun hideSnackbar(id: String) {
+        visibleSnackbars[id] = false
+    }
+
 }

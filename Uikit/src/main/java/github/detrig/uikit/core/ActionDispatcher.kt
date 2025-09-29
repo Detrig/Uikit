@@ -2,36 +2,45 @@ package github.detrig.uikit.core
 
 import android.util.Log
 import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.components.snackbar.SnackbarData
 import kotlin.math.max
 
-//class ActionDispatcher(
-//    private val state: ScreenState,
-//    private val navigate: ((String) -> Unit)? = null
-//) {
-//    private val listeners = mutableMapOf<String, (Action) -> Unit>()
-//
-//    fun register(actionType: String, handler: (Action) -> Unit) {
-//        listeners[actionType] = handler
-//    }
-//
-//    fun dispatch(action: Action) {
-//        Log.d("alz-04", "action: $action")
-//        listeners[action.action]?.invoke(action)
-//    }
-//
-//    fun registerDefaultActions(/*navController: NavController,*/) {
-////        register("navigate") { action ->
-////            navController.navigate(action.targetId ?: return@register)
-////        }
-//
-//        register("set_value") { action ->
-//            state.updateComponent(action.targetId, action.value)
-//        }
-//
-//        register("navigate") { action ->
-//            action.targetId?.let { navigate?.invoke(it) }
-//        }
-//
+class ActionDispatcher(
+    private val state: ScreenState,
+    private val navigate: ((String) -> Unit)? = null
+) {
+    private val listeners = mutableMapOf<String, (Action) -> Unit>()
+
+    fun register(actionType: String, handler: (Action) -> Unit) {
+        listeners[actionType] = handler
+    }
+
+    fun dispatch(action: Action) {
+        Log.d("alz-04", "action: $action")
+        listeners[action.action]?.invoke(action)
+    }
+
+    fun registerDefaultActions(/*navController: NavController,*/) {
+        register("set_value") { action ->
+            state.updateComponent(action.targetId, action.value)
+        }
+
+        register("navigate") { action ->
+            action.targetId?.let { navigate?.invoke(it) }
+        }
+
+        register("showSnackbar") { action ->
+            val id = action.targetId ?: return@register
+            state.showSnackbar(id)
+        }
+
+        register("restoreItem") { action ->
+            val id = action.targetId ?: return@register
+            println("Восстановить элемент $id")
+        }
+    }
+}
+
 //        register("increment") { action ->
 //            state.incrementCounter(action.targetId ?: return@register)
 //        }
@@ -40,11 +49,11 @@ import kotlin.math.max
 //            val current = (state.getValue(action.targetId ?: "") as? Int ?: 0)
 //            state.updateComponent(action.targetId, max(0, current - 1))
 //        }
-//
-////        register("delete") { action ->
-////            state.removeComponent(action.targetId ?: return@register)
-////        }
-//    }
+
+//        register("delete") { action ->
+//            state.removeComponent(action.targetId ?: return@register)
+//        }
+
 //
 //    fun registerCartActions() {
 //        register("increment") { action ->
@@ -80,4 +89,4 @@ import kotlin.math.max
 //            state.updateComponent("cart_list", items.filterNot { it.id == id })
 //        }
 //    }
-//}
+

@@ -12,12 +12,12 @@ data class ImageComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
 
-    val url: String? = null,                  // URL или локальный ресурс
-    val contentDescription: String? = null,   // Accessibility описание
-    val contentScale: ContentScaleType? = null, // Масштабирование
+    val url: String? = null,
+    val contentDescription: String? = null,
+    val contentScale: ContentScaleType? = null,
     val placeholder: String? = null,          // Placeholder (ресурс или url)
     val error: String? = null,                // Ошибка (ресурс или url)
-    val scaleType: String? = null             // Альтернативное scale (если нужно)
+    val scaleType: String? = null
 ) : Component()
 
 

@@ -1,9 +1,9 @@
-package github.detrig.composetutorial.core
+package github.detrig.composetutorial.presentation.core
 
 import androidx.lifecycle.ViewModel
-import github.detrig.composetutorial.cart.CartViewModel
-import github.detrig.composetutorial.main.MainViewModel
-import github.detrig.composetutorial.makeorder.MakeOrderViewModel
+import github.detrig.composetutorial.presentation.cart.CartViewModel
+import github.detrig.composetutorial.presentation.main.MainViewModel
+import github.detrig.composetutorial.presentation.makeorder.MakeOrderViewModel
 
 interface ProvideViewModel {
 

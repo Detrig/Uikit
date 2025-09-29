@@ -2,6 +2,7 @@ package github.detrig.uikit.components.column
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,11 +26,12 @@ import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.utils.toComposeModifier
+import github.detrig.uikit.core.ActionDispatcher
 
 object ColumnRenderer {
 
     @Composable
-    fun Render(component: ColumnComponent, state: ScreenState) {
+    fun Render(component: ColumnComponent, state: ScreenState, dispatcher: ActionDispatcher) {
         Column(
             modifier = component.modifier?.toComposeModifier() ?: Modifier,
             verticalArrangement = when (component.verticalArrangement) {
@@ -51,10 +53,10 @@ object ColumnRenderer {
             component.children.forEach { child ->
                 when (child) {
                     is TextComponent -> TextRenderer.Render(child, state)
-                    is ButtonComponent -> ButtonRenderer.Render(child, state)
+                    is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
                     is ImageComponent -> ImageRenderer.Render(child, state)
-                    is RowComponent -> RowRenderer.Render(child, state)
-                    is ColumnComponent -> Render(child, state) // рекурсивно
+                    is RowComponent -> RowRenderer.Render(child, state, dispatcher)
+                    is ColumnComponent -> Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, state)
                     is SpacerComponent -> {
                         val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
@@ -63,9 +65,9 @@ object ColumnRenderer {
                         } ?: baseModifier
                         Spacer(modifier = finalModifier)
                     }
-                    is CardComponent -> CardRenderer.Render(child, state)
-                    is BoxComponent -> BoxRenderer.Render(child, state)
-                    is IconComponent -> IconRenderer.Render(child)
+                    is CardComponent -> CardRenderer.Render(child, state, dispatcher)
+                    is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
+                    is IconComponent -> IconRenderer.Render(child, state, dispatcher)
                     else -> {}
                 }
             }
