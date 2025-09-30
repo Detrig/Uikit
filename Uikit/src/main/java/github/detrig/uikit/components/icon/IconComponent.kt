@@ -1,4 +1,4 @@
-package github.detrig.uikit.components.button
+package github.detrig.uikit.components.icon
 
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.utils.ModifierModel
@@ -7,13 +7,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@SerialName("button")
-data class ButtonComponent(
+@SerialName("icon")
+data class IconComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
-    val style: ButtonStyle? = null,
-    val text: String? = null,
-    val enabled: Boolean = true,
-    val icon: String? = null,
+
+    val icon: String? = null,                  // Название иконки или путь к ресурсу
+    val contentDescription: String? = null,
+    val tint: String? = null,
     val actions: List<Action>? = null
 ) : Component()
