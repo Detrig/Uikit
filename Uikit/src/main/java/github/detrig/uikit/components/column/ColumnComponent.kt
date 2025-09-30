@@ -16,5 +16,5 @@ data class ColumnComponent(
     val verticalArrangement: String? = null,     // top, center, bottom, spaceBetween, spaceAround, spaceEvenly
     val horizontalAlignment: String? = null,     // start, center, end
     @Serializable(with = PolymorphicListSerializer::class)
-    val children: List<Component> = emptyList()  // Дочерние компоненты
+    val children: List<Component> = emptyList()
 ) : Component()

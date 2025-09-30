@@ -19,11 +19,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ModifierModel(
     val width: String? = null,           // fixed, wrap_content, match_parent
-    val height: String? = null,             // px/dp
+    val height: String? = null,
     val weight: Float? = null,
     val fillMaxWidth: Boolean? = null,
     val fillMaxHeight: Boolean? = null,
-    val size: Size? = null,              // width/height в одном объекте
+    val size: Size? = null,              // width/height
     val padding: Padding? = null,
     val align: String? = null,           // start, center, end
     val clip: Shape? = null,

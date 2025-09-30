@@ -27,7 +27,6 @@ import kotlinx.serialization.modules.polymorphic
 
 object ScreenParser {
 
-    // Полиморфный модуль для всех Component
     val module = SerializersModule {
         polymorphic(Component::class) {
             subclass(TextComponent::class, TextComponent.serializer())

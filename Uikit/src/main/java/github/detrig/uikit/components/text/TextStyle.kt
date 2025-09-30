@@ -4,14 +4,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TextStyle(
-    val fontSize: Int? = null,             // sp
-    val fontWeight: String? = null,        // normal, bold, medium
-    val fontStyle: String? = null,         // normal, italic
-    val color: String? = null,             // #HEX
-    val lineHeight: Int? = null,           // dp
-    val letterSpacing: Float? = null,      // em/dp
+    val fontSize: Int? = null,
+    val fontWeight: String? = null,
+    val fontStyle: String? = null,
+    val color: String? = null,
+    val lineHeight: Int? = null,
+    val letterSpacing: Float? = null,
     val textDecoration: String? = null,    // none, underline, lineThrough
     val textAlign: String? = null,         // start, center, end, justify
-    val maxLines: Int? = null,             // максимальное количество строк
+    val maxLines: Int? = null,
     val overflow: String? = null           // clip, ellipsis, visible
 )

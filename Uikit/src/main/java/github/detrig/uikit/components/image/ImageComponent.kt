@@ -15,8 +15,8 @@ data class ImageComponent(
     val url: String? = null,
     val contentDescription: String? = null,
     val contentScale: ContentScaleType? = null,
-    val placeholder: String? = null,          // Placeholder (ресурс или url)
-    val error: String? = null,                // Ошибка (ресурс или url)
+    val placeholder: String? = null,
+    val error: String? = null,
     val scaleType: String? = null
 ) : Component()
 

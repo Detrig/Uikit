@@ -11,15 +11,15 @@ data class CheckboxComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
 
-    val isChecked: Boolean = false,          // Текущее состояние чекбокса
-    val onCheckedChange: String? = null,     // Экшен при изменении состояния
-    val enabled: Boolean = true,             // Можно ли взаимодействовать
-    val colors: CheckboxColors? = null       // Цвета
+    val isChecked: Boolean = false,
+    val onCheckedChange: String? = null,
+    val enabled: Boolean = true,
+    val colors: CheckboxColors? = null
 ) : Component()
 
 @Serializable
 data class CheckboxColors(
-    val checkedColor: String? = null,        // Цвет при checked
-    val uncheckedColor: String? = null,      // Цвет при unchecked
-    val disabledColor: String? = null        // Цвет при disabled
+    val checkedColor: String? = null,
+    val uncheckedColor: String? = null,
+    val disabledColor: String? = null
 )

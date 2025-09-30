@@ -26,7 +26,6 @@ class ScreenState(screen: ScreenComponent) {
 
     init {
         screen.snackbars.forEach { snackbar ->
-            Log.d("alz-04", "snackbar: $snackbar")
             val id = snackbar.id ?: return@forEach
 
             visibleSnackbars[id] = false
@@ -34,7 +33,6 @@ class ScreenState(screen: ScreenComponent) {
 
         fun traverse(component: Component) {
             val id = component.id ?: return
-            Log.d("alz-04", "component: $component")
             when (component) {
                 is TextComponent -> componentStates[id] = component.text
                 is CheckboxComponent -> componentStates[id] = component.isChecked
@@ -66,7 +64,6 @@ class ScreenState(screen: ScreenComponent) {
 
 
     fun showSnackbar(id: String) {
-        Log.d("alz-04", "showSnackbar: $id, $visibleSnackbars")
         visibleSnackbars[id] = true
         // auto hide через корутину
         CoroutineScope(Dispatchers.Main).launch {

@@ -12,6 +12,5 @@ data class TextComponent(
     override val modifier: ModifierModel? = null,
     val style: TextStyle? = null,
     val text: String? = null,
-    val format: String? = null,                // Форматирование "(%s)"
- //   val binding: String? = null                // Привязка к данным (например reviews)
+    val format: String? = null,                //  "(%s)"
 ) : Component()

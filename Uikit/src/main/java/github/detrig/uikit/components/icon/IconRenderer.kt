@@ -26,7 +26,6 @@ object IconRenderer {
             .let { base ->
                 if (component.actions != null && component.actions.isNotEmpty()) {
                     base.clickable {
-                        Log.d("alz-04", "icon clicked: $component")
                         component.actions.forEach { dispatcher?.dispatch(it) }
                     }
                 } else base
