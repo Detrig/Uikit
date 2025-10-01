@@ -17,9 +17,9 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.modules.subclass
-import android.util.Log
+import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.snackbar.SnackbarComponent
+import github.detrig.uikit.components.textfield.TextFieldComponent
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.modules.SerializersModule
@@ -32,6 +32,7 @@ object ScreenParser {
             subclass(TextComponent::class, TextComponent.serializer())
             subclass(ButtonComponent::class, ButtonComponent.serializer())
             subclass(ImageComponent::class, ImageComponent.serializer())
+            subclass(TextFieldComponent::class, TextFieldComponent.serializer())
             subclass(BoxComponent::class, BoxComponent.serializer())
             subclass(RowComponent::class, RowComponent.serializer())
             subclass(ColumnComponent::class, ColumnComponent.serializer())
@@ -40,6 +41,7 @@ object ScreenParser {
             subclass(SpacerComponent::class, SpacerComponent.serializer())
             subclass(IconComponent::class, IconComponent.serializer())
             subclass(SnackbarComponent::class, SnackbarComponent.serializer())
+            subclass(BottomSheetComponent::class, BottomSheetComponent.serializer())
         }
     }
 

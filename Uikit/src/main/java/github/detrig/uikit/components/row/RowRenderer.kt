@@ -24,6 +24,8 @@ import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
+import github.detrig.uikit.components.textfield.TextFieldComponent
+import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
 import github.detrig.uikit.core.RenderComponent
@@ -55,6 +57,7 @@ object RowRenderer {
                     is TextComponent -> TextRenderer.Render(child, state)
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
                     is ImageComponent -> ImageRenderer.Render(child, state)
+                    is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher)
                     is RowComponent -> Render(child, state, dispatcher)
                     is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, state)

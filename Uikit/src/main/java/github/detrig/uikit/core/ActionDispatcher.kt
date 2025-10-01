@@ -38,6 +38,16 @@ class ActionDispatcher(
             val id = action.targetId ?: return@register
             println("Восстановить элемент $id")
         }
+
+        register("showBottomSheet") { action ->
+            val id = action.targetId ?: return@register
+            state.showSheet(id)
+        }
+
+        register("hideBottomSheet") { action ->
+            val id = action.targetId ?: return@register
+            state.hideSheet(id)
+        }
     }
 }
 

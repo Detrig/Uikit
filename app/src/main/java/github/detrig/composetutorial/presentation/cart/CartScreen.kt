@@ -843,6 +843,56 @@ object CartScreen : Screen {
                   ]
                 }
               ]
+        },
+        {
+          "type": "button",
+          "id": "openPromo",
+          "text": "Открыть купон",
+          "actions": [
+            { "action": "showBottomSheet", "targetId": "promoSheet" }
+          ]
+        },
+        {
+          "type": "bottomSheet",
+          "id": "promoSheet",
+          "dismissible": true,
+          "children": [
+            {
+              "type": "column",
+              "modifier": { "padding": { "start": 16, "end": 16, "top": 24, "bottom": 24 } },
+              "children": [
+                {
+                  "type": "text",
+                  "text": "Хотите скидку 10%?",
+                  "style": { "fontSize": 20, "fontWeight": "bold" },
+                  "modifier": { "padding": { "bottom": 12 } }
+                },
+                {
+                  "type": "textField",
+                  "id": "emailInput",
+                  "placeholder": "Введите email",
+                  "singleLine": true,
+                  "style": { "fontSize": 16, "color": "#000000" },
+                  "actions": [
+                    { "action": "set_value", "targetId": "emailInput" }
+                  ]
+                },
+                {
+                  "type": "button",
+                  "text": "Получить купон",
+                  "style": {
+                    "background": "#965EEB",
+                    "textColor": "#FFFFFF",
+                    "shape": { "cornerRadius": 12 }
+                  },
+                  "modifier": { "height": "48", "fillMaxWidth": true },
+                  "actions": [
+                    { "action": "showSnackbar", "targetId": "deleteCartItemSnackbar" }
+                  ]
+                }
+              ]
+            }
+          ]
         }
               ],
               "snackbars": [

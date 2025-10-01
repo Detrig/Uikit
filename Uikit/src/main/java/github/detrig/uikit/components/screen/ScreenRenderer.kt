@@ -36,8 +36,12 @@ import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.core.ActionDispatcher
 import androidx.core.graphics.toColorInt
+import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
+import github.detrig.uikit.components.bottomsheet.BottomSheetRenderer
 import github.detrig.uikit.components.snackbar.SnackbarComponent
 import github.detrig.uikit.components.snackbar.SnackbarRenderer
+import github.detrig.uikit.components.textfield.TextFieldComponent
+import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.core.RenderComponent
 
 object ScreenRenderer {
@@ -84,6 +88,7 @@ fun RenderComponent(component: Component, state: ScreenState, dispatcher: Action
         is TextComponent -> TextRenderer.Render(component, state)
         is ButtonComponent -> ButtonRenderer.Render(component, state, dispatcher)
         is ImageComponent -> ImageRenderer.Render(component, state)
+        is TextFieldComponent -> TextFieldRenderer.Render(component, state, dispatcher)
         is IconComponent -> IconRenderer.Render(component, state, dispatcher)
         is CheckboxComponent -> CheckboxRenderer.Render(component, state)
         is RowComponent -> RowRenderer.Render(component, state, dispatcher)
@@ -91,6 +96,7 @@ fun RenderComponent(component: Component, state: ScreenState, dispatcher: Action
         is ColumnComponent -> ColumnRenderer.Render(component, state, dispatcher)
         is CardComponent -> CardRenderer.Render(component, state, dispatcher)
         is SnackbarComponent -> SnackbarRenderer.Render(component, state, dispatcher)
+        is BottomSheetComponent -> BottomSheetRenderer.Render(component, state, dispatcher)
         else -> {
             println("Unknown component type: ${component::class.simpleName}")
         }

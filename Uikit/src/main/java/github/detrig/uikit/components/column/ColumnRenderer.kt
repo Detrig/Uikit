@@ -2,7 +2,6 @@ package github.detrig.uikit.components.column
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +24,8 @@ import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
+import github.detrig.uikit.components.textfield.TextFieldComponent
+import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
 
@@ -55,6 +56,7 @@ object ColumnRenderer {
                     is TextComponent -> TextRenderer.Render(child, state)
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
                     is ImageComponent -> ImageRenderer.Render(child, state)
+                    is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher)
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, state)

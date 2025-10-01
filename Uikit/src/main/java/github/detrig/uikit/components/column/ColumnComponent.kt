@@ -3,7 +3,6 @@ package github.detrig.uikit.components.column
 import github.detrig.uikit.components.row.PolymorphicListSerializer
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.utils.ModifierModel
-import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
