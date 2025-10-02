@@ -2,9 +2,9 @@ package github.detrig.composetutorial.presentation.cart
 
 import androidx.lifecycle.ViewModel
 
-import github.detrig.composetutorial.presentation.core.Navigation
-import github.detrig.composetutorial.presentation.core.NavigationHandlerFromJson
-import github.detrig.composetutorial.presentation.core.ScreenViewModel
+import github.detrig.composetutorial.core.Navigation
+import github.detrig.composetutorial.core.NavigationHandlerFromJson
+import github.detrig.composetutorial.core.ScreenViewModel
 import github.detrig.composetutorial.presentation.makeorder.MakeOrderScreen
 import github.detrig.uikit.components.screen.ScreenParser
 import github.detrig.uikit.components.screen.ScreenState

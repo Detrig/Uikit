@@ -3,9 +3,8 @@ package github.detrig.composetutorial.presentation.makeorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import github.detrig.composetutorial.presentation.core.ProvideViewModel
-import github.detrig.composetutorial.presentation.core.Screen
-import github.detrig.uikit.components.screen.ScreenParser
+import github.detrig.composetutorial.core.Screen
+import github.detrig.composetutorial.di.ProvideViewModel
 import github.detrig.uikit.components.screen.ScreenRenderer
 import github.detrig.uikit.core.ActionDispatcher
 

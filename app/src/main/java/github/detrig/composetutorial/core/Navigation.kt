@@ -1,4 +1,4 @@
-package github.detrig.composetutorial.presentation.core
+package github.detrig.composetutorial.core
 
 import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,7 +1,8 @@
-package github.detrig.composetutorial.presentation.core
+package github.detrig.composetutorial.core
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
+import github.detrig.composetutorial.di.ProvideViewModel
 
 class App : Application(), ProvideViewModel {
 
