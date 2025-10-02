@@ -28,9 +28,7 @@ class MainActivity : ComponentActivity() {
                     .systemBarsPadding(),
                 color = MaterialTheme.colorScheme.background
             ) {
-
                 Container(viewModel)
-
             }
         }
     }
@@ -48,79 +46,3 @@ fun Container(viewModel: MainViewModel) {
     }
     state.Show()
 }
-
-
-//@Composable
-//fun ServersList(servers: List<ServerInfo>) {
-//    LazyColumn(
-//        verticalArrangement = Arrangement.spacedBy(8.dp),
-//    ) {
-//        item {
-//            ArtistCardRow()
-//        }
-//        items(servers) { server ->
-//            ServerItem(server)
-//        }
-//    }
-//}
-//
-//
-//@Composable
-//fun ServerItem(server: ServerInfo) {
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp),
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Image(
-//            painter = painterResource(getFlagResource(server.country)),
-//            contentDescription = "Flag of ${server.country}",
-//            modifier = Modifier.size(40.dp)
-//        )
-//
-//        Text(
-//            text = server.country,
-//            fontSize = 20.sp,
-//            color = Color.Black,
-//            modifier = Modifier
-//                .weight(1f)
-//                .padding(horizontal = 8.dp)
-//        )
-//
-//        Image(
-//            painter = painterResource(R.drawable.internet_l_3),
-//            contentDescription = "Connection fine",
-//            modifier = Modifier.size(40.dp)
-//        )
-//    }
-//}
-//
-//@Composable
-//fun ArtistCardRow() {
-//    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier) {
-//        Image(
-//            painter = painterResource(R.drawable.ic_launcher_background),
-//            contentDescription = "Artist image"
-//        )
-//        Column {
-//            Text("artist.name")
-//            Text("artist.lastSeenOnline")
-//        }
-//    }
-//}
-//
-//fun getFlagResource(country: String): Int {
-//    return when (country) {
-//        "FINLAND" -> R.drawable.finland
-//        "RUSSIA" -> R.drawable.russia
-//        else -> R.drawable.ic_launcher_foreground
-//    }
-//}
-//
-//data class ServerInfo(
-//    val id: String = "FUCK",
-//    val country: String = "FINLAND",
-//    val city: String = "XELSINKI",
-//    val key: String = "1isjfjksdf89opweufjui3e4g="
-//)

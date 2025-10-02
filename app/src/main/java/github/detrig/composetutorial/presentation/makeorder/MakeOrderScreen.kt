@@ -1,153 +1,40 @@
 package github.detrig.composetutorial.presentation.makeorder
 
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import github.detrig.composetutorial.core.Screen
 import github.detrig.composetutorial.di.ProvideViewModel
+import github.detrig.composetutorial.ui.theme.common.UiStateHandler
 import github.detrig.uikit.components.screen.ScreenRenderer
+import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.core.ActionDispatcher
 
 
 object MakeOrderScreen : Screen {
-    const val SCREEN_ID = "make_order"
+    private const val SCREEN_ID = "c01d04b9-cd45-4eda-85ad-d6d5b979c870"
 
     @Composable
     override fun Show() {
         val viewModel = (LocalContext.current.applicationContext as ProvideViewModel).viewModel(
             MakeOrderViewModel::class.java
         )
-        val json = """
-            {
-          "type": "screen",
-          "id": "cart_screen",
-          "name": "CartScreen",
-          "background": "#FFFFFF",
-          "topBar": [
-          {
-                "type": "row",
-                 "children": [
-                    {
-                                  "type": "row",
-                                  "modifier": {
-                                    "fillMaxWidth": true,
-                                    "padding": { "start": 16, "end": 16, "top": 8, "bottom": 12 }
-                                  },
-                                  "verticalAlignment": "center",
-                                  "children": [
-                                    {
-                                      "type": "checkbox",
-                                      "isChecked": "true",
-                                      "modifier": { "size": { "width": "21", "height": "21" } }
-                                    },
-                                    {
-                                      "type": "text",
-                                      "text": "PearStore",
-                                      "style": { "fontSize": 24, "fontWeight": "bold" },
-                                      "modifier": { "padding": { "start": 8 } }
-                                    },
-                                    {
-                                      "type": "icon",
-                                      "icon": "star",
-                                      "modifier": { "size": { "width": "14", "height": "14" } , "padding": { "start": 4 }, "align": "CenterVertically" },
-                                      "tint": "#00FF00"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "text": "4.8",
-                                      "style": { "fontSize": 16, "fontWeight": "normal" },
-                                      "modifier": { "padding": { "start": 2 } }
-                                    },
-                                    {
-                                      "type": "text",
-                                      "text": "463",
-                                      "style": { "fontSize": 16, "fontWeight": "normal", "color": "#A3A3A3" },
-                                      "modifier": { "padding": { "start": 2 } },
-                                      "format": "(%s)"
-                                    }
-                                  ]
-                                }
-                 ]
-            }
-          ],
-          "bottomBar": [
-             {
-              "type": "box",
-              "shape": { "topStart": 16, "topEnd": 16 },
-              "shadow": { "elevation": 8 },
-              "background": "#FFFFFF",
-              "children": [
-                {
-                  "type": "row",
-                  "modifier": { "padding": { "start": 12, "end": 12, "top": 16, "bottom": 16 } },
-                  "children": [
-                    {
-                      "type": "column",
-                      "children": [
-                        { "type": "text", "text": "3 товара", "style": { "fontSize": 12 } },
-                        {
-                          "type": "text",
-                          "text": "12450 ₽",
-                          "style": { "fontSize": 20, "fontWeight": "bold" }
-                        }
-                      ]
-                    },
-                    { 
-                        "type": "spacer",
-                        "modifier": { "weight": 1  }
-                    },
-                    {
-                      "type": "button",
-                      "text": "Оформить доставку",
-                      "actions": [
-                        {
-                            "action": "navigate",
-                            "targetId": "cart"
-                            }
-                      ],
-                      "style": {
-                        "background": "#965EEB",
-                        "textColor": "#FFFFFF",
-                        "shape": { "cornerRadius": 12 }
-                      },
-                      "modifier": { "height": "48" },
-                      "onClick": "checkout"
-                    }
-                  ]
-                }
-              ]
-              }
-          ],
-          "content": [
-            
-              ]
-        
-        }
-        """
 
-        val screenModel by viewModel.screenComponent.collectAsState()
-        val screenState by viewModel.screenState.collectAsState()
+        val screenUiState by viewModel.screenUiState.collectAsState()
 
-        if (screenModel != null && screenState != null) {
-            val dispatcher = remember {
-                ActionDispatcher(state = screenState!!) { screenId ->
-                    viewModel.navigateToScreenById(screenId)
+        UiStateHandler.ScreenStateHandler(
+            uiState = screenUiState,
+            fetchScreenJson = { screenId -> viewModel.loadScreenJson(screenId) },
+            onRetry = { viewModel.loadScreenById(SCREEN_ID) }
+        ) { screenComponent ->
+            val dispatcher = remember(screenComponent) {
+                ActionDispatcher(state = ScreenState(screenComponent)) { id ->
+                    viewModel.navigateToScreenById(id)
                 }.apply { registerDefaultActions() }
             }
-
-            ScreenRenderer.Render(
-                screenModel!!,
-                screenState!!,
-                dispatcher
-            )
-        } else {
-            CircularProgressIndicator(modifier = Modifier.size(24.dp))
+            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), dispatcher)
         }
     }
 }

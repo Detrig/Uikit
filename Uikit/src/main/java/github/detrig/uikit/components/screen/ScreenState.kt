@@ -71,7 +71,6 @@ class ScreenState(screen: ScreenComponent) {
     //Snackbar
     fun showSnackbar(id: String) {
         visibleSnackbars[id] = true
-        // auto hide через корутину
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000)
             visibleSnackbars[id] = false

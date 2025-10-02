@@ -12,7 +12,7 @@ data class IconComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
 
-    val icon: String? = null,                  // Название иконки или путь к ресурсу
+    val icon: String? = null,
     val contentDescription: String? = null,
     val tint: String? = null,
     val actions: List<Action>? = null
