@@ -5,6 +5,7 @@ import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.card.CardComponent
 import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.column.ColumnComponent
+import android.util.Log
 import github.detrig.uikit.components.icon.IconComponent
 import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.row.RowComponent
@@ -17,9 +18,10 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.modules.subclass
-import android.util.Log
+import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.snackbar.SnackbarComponent
+import github.detrig.uikit.components.textfield.TextFieldComponent
+import github.detrig.uikit.custom_components.ListComponent
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.modules.SerializersModule
@@ -32,6 +34,7 @@ object ScreenParser {
             subclass(TextComponent::class, TextComponent.serializer())
             subclass(ButtonComponent::class, ButtonComponent.serializer())
             subclass(ImageComponent::class, ImageComponent.serializer())
+            subclass(TextFieldComponent::class, TextFieldComponent.serializer())
             subclass(BoxComponent::class, BoxComponent.serializer())
             subclass(RowComponent::class, RowComponent.serializer())
             subclass(ColumnComponent::class, ColumnComponent.serializer())
@@ -40,6 +43,8 @@ object ScreenParser {
             subclass(SpacerComponent::class, SpacerComponent.serializer())
             subclass(IconComponent::class, IconComponent.serializer())
             subclass(SnackbarComponent::class, SnackbarComponent.serializer())
+            subclass(BottomSheetComponent::class, BottomSheetComponent.serializer())
+            subclass(ListComponent::class, ListComponent.serializer())
         }
     }
 
@@ -67,7 +72,7 @@ object ScreenParser {
         )
 
         return ScreenComponent(
-            id = jsonObj["id"]?.jsonPrimitive?.content,
+            id = jsonObj["_id"]?.jsonPrimitive?.content,
             name = jsonObj["name"]?.jsonPrimitive?.content ?: "UnknownScreen",
             background = jsonObj["background"]?.jsonPrimitive?.content,
             topBar = topBar,

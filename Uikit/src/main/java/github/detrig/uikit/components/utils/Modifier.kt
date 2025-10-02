@@ -1,8 +1,9 @@
 package github.detrig.uikit.components.utils
-
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -60,21 +61,28 @@ data class Shadow(
 )
 
 fun ModifierModel.toComposeModifier(): Modifier {
-
     var modifier: Modifier = Modifier
 
-    this.size?.let { size ->
-        val widthDp = when (size.width) {
-            "wrap_content" -> null
-            "match_parent" -> null
-            else -> size.width?.toIntOrNull()?.dp
-        }
-        val heightDp = when (size.height) {
-            "wrap_content" -> null
-            "match_parent" -> null
-            else -> size.height?.toIntOrNull()?.dp
-        }
 
+    val widthDp = when (size?.width) {
+        "wrap_content" -> null
+        "match_parent" -> {
+            modifier = modifier.fillMaxWidth()
+            null
+        }
+        else -> size?.width?.toIntOrNull()?.dp
+    }
+
+    val heightDp = when (size?.height) {
+        "wrap_content" -> null
+        "match_parent" -> {
+            modifier = modifier.fillMaxHeight()
+            null
+        }
+        else -> size?.height?.toIntOrNull()?.dp
+    }
+
+    if (widthDp != null || heightDp != null) {
         modifier = modifier.then(
             when {
                 widthDp != null && heightDp != null -> Modifier.size(widthDp, heightDp)
@@ -85,8 +93,13 @@ fun ModifierModel.toComposeModifier(): Modifier {
         )
     }
 
-    if (this.fillMaxWidth == true) modifier = modifier.fillMaxWidth()
-    if (this.fillMaxHeight == true) modifier = modifier.fillMaxHeight()
+
+    if (this.fillMaxWidth == true) {
+        modifier = modifier.fillMaxWidth()
+    }
+    if (this.fillMaxHeight == true) {
+        modifier = modifier.fillMaxHeight()
+    }
 
     this.padding?.let { padding ->
         val p = padding.all?.dp ?: 0.dp

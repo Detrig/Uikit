@@ -3,16 +3,15 @@ package github.detrig.uikit.components.screen
 import androidx.compose.runtime.mutableStateMapOf
 import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.text.TextComponent
-import android.util.Log
+import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.box.BoxComponent
 import github.detrig.uikit.components.card.CardComponent
 import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.column.ColumnComponent
-import github.detrig.uikit.components.lazycolumn.LazyColumnComponent
 import github.detrig.uikit.components.row.RowComponent
-import github.detrig.uikit.components.snackbar.SnackbarComponent
-import github.detrig.uikit.components.snackbar.SnackbarData
+import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.utils.Component
+import github.detrig.uikit.custom_components.ListComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -23,6 +22,7 @@ class ScreenState(screen: ScreenComponent) {
     private val componentStates = mutableStateMapOf<String, Any?>()
 
     private val visibleSnackbars = mutableStateMapOf<String, Boolean>()
+    private val visibleSheets = mutableStateMapOf<String, Boolean>()
 
     init {
         screen.snackbars.forEach { snackbar ->
@@ -37,7 +37,7 @@ class ScreenState(screen: ScreenComponent) {
                 is TextComponent -> componentStates[id] = component.text
                 is CheckboxComponent -> componentStates[id] = component.isChecked
                 is ButtonComponent -> componentStates[id] = component.enabled
-                is LazyColumnComponent -> componentStates[id] = emptyList<Any>()
+                is TextFieldComponent -> componentStates[id] = component.value ?: ""
             }
 
             when (component) {
@@ -45,6 +45,8 @@ class ScreenState(screen: ScreenComponent) {
                 is ColumnComponent -> component.children.forEach { traverse(it) }
                 is BoxComponent -> component.children.forEach { traverse(it) }
                 is CardComponent -> component.children.forEach { traverse(it) }
+                is BottomSheetComponent -> component.children.forEach { traverse(it) }
+                is ListComponent -> component.items.forEach { traverse(it) }
             }
         }
 
@@ -63,9 +65,9 @@ class ScreenState(screen: ScreenComponent) {
 
 
 
+    //Snackbar
     fun showSnackbar(id: String) {
         visibleSnackbars[id] = true
-        // auto hide через корутину
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000)
             visibleSnackbars[id] = false
@@ -75,5 +77,17 @@ class ScreenState(screen: ScreenComponent) {
     fun hideSnackbar(id: String) {
         visibleSnackbars[id] = false
     }
+
+
+    //Sheet
+    fun showSheet(id: String) {
+        visibleSheets[id] = true
+    }
+
+    fun hideSheet(id: String) {
+        visibleSheets[id] = false
+    }
+
+    fun isSheetVisible(id: String): Boolean = visibleSheets[id] == true
 
 }

@@ -21,8 +21,8 @@ import github.detrig.uikit.core.ActionDispatcher
 object IconRenderer {
 
     @Composable
-    fun Render(component: IconComponent, state: ScreenState? = null, dispatcher: ActionDispatcher? = null) {
-        val modifier: Modifier = (component.modifier?.toComposeModifier() ?: Modifier)
+    fun Render(component: IconComponent, state: ScreenState? = null, dispatcher: ActionDispatcher? = null, modifier: Modifier = Modifier) {
+        val modifier = (component.modifier?.toComposeModifier() ?: Modifier)
             .let { base ->
                 if (component.actions != null && component.actions.isNotEmpty()) {
                     base.clickable {
@@ -39,6 +39,7 @@ object IconRenderer {
             "info" -> Icons.Default.Info
             "favorite_border" -> Icons.Default.Favorite
             "delete" -> Icons.Default.Delete
+            "back" -> Icons.Default.ArrowBack
             else -> null
         }
 

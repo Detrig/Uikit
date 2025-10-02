@@ -17,13 +17,11 @@ import github.detrig.uikit.components.utils.toComposeModifier
 object TextRenderer {
 
     @Composable
-    fun Render(component: TextComponent, state: ScreenState) {
-//        val rawValue = component.binding?.let { state.getValue(it)?.toString() }
-//            ?: component.text
-//            ?: ""
-
-//        val textValue = component.format?.let { String.format(it, rawValue) } ?: rawValue
-
+    fun Render(
+        component: TextComponent,
+        state: ScreenState,
+        modifier: Modifier = Modifier // новый параметр
+    ) {
         val color = component.style?.color?.let { Color(it.toColorInt()) } ?: Color.Black
         val fontSize = (component.style?.fontSize ?: 16).sp
         val fontWeight = when(component.style?.fontWeight?.lowercase()) {
@@ -55,7 +53,7 @@ object TextRenderer {
             },
             lineHeight = component.style?.lineHeight?.sp ?: TextUnit.Unspecified,
             letterSpacing = component.style?.letterSpacing?.sp ?: TextUnit.Unspecified,
-            modifier = component.modifier?.toComposeModifier() ?: Modifier,
+            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
             textAlign = textAlign
         )
     }

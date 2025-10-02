@@ -14,9 +14,9 @@ data class CardComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
 
-    val elevation: Int? = null,                 // Высота тени (dp)
-    val shape: Shape? = null,                   // Скругление углов
-    val background: String? = null,             // Цвет фона карты
+    val elevation: Int? = null,
+    val shape: Shape? = null,
+    val background: String? = null,
     @Serializable(with = PolymorphicListSerializer::class)
-    val children: List<Component> = emptyList() // Вложенные компоненты
+    val children: List<Component> = emptyList()
 ) : Component()

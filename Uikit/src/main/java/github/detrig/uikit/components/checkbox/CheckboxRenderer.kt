@@ -14,8 +14,7 @@ import github.detrig.uikit.components.utils.toComposeModifier
 object CheckboxRenderer {
 
     @Composable
-    fun Render(component: CheckboxComponent, state: ScreenState) {
-        // Получаем текущее состояние из ScreenState, если есть binding
+    fun Render(component: CheckboxComponent, state: ScreenState, modifier: Modifier = Modifier) {
        // var checked by remember { mutableStateOf(component.isChecked) }
 
         val checkedColor = component.colors?.checkedColor?.let { Color(it.toColorInt()) } ?: Color(0xFF965EEB)
@@ -37,7 +36,7 @@ object CheckboxRenderer {
                 disabledCheckedColor = disabledColor,
                 disabledUncheckedColor = disabledColor
             ),
-            modifier = component.modifier?.toComposeModifier() ?: Modifier
+            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
         )
     }
 }
