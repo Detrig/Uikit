@@ -1,0 +1,23 @@
+[
+  {
+    "action": "set_value",
+    "targetId": "text_field_1",
+    "value": "Новое значение"
+  },
+  {
+    "action": "navigate",
+    "targetId": "make_order"
+  },
+  {
+    "action": "showSnackbar",
+    "targetId": "deleteCartItemSnackbar"
+  },
+  {
+    "action": "showBottomSheet",
+    "targetId": "payment_sheet"
+  },
+  {
+    "action": "hideBottomSheet",
+    "targetId": "payment_sheet"
+  }
+]

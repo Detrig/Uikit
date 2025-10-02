@@ -10,7 +10,8 @@ class MakeOrderModule(private val core: Core) : Module<MakeOrderViewModel> {
     override fun viewModel(): MakeOrderViewModel {
         return MakeOrderViewModel(
             core.navigation(),
-            core.navigationHandler()
+            core.navigationHandler(),
+            core.screenRepository()
         )
     }
 }

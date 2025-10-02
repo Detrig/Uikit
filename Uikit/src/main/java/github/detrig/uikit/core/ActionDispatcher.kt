@@ -2,8 +2,6 @@ package github.detrig.uikit.core
 
 import android.util.Log
 import github.detrig.uikit.components.screen.ScreenState
-import github.detrig.uikit.components.snackbar.SnackbarData
-import kotlin.math.max
 
 class ActionDispatcher(
     private val state: ScreenState,
@@ -20,7 +18,7 @@ class ActionDispatcher(
         listeners[action.action]?.invoke(action)
     }
 
-    fun registerDefaultActions(/*navController: NavController,*/) {
+    fun registerDefaultActions() {
         register("set_value") { action ->
             state.updateComponent(action.targetId, action.value)
         }

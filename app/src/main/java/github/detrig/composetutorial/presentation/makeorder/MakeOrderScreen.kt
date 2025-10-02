@@ -1,8 +1,14 @@
 package github.detrig.composetutorial.presentation.makeorder
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import github.detrig.composetutorial.core.Screen
 import github.detrig.composetutorial.di.ProvideViewModel
 import github.detrig.uikit.components.screen.ScreenRenderer
@@ -10,6 +16,8 @@ import github.detrig.uikit.core.ActionDispatcher
 
 
 object MakeOrderScreen : Screen {
+    const val SCREEN_ID = "make_order"
+
     @Composable
     override fun Show() {
         val viewModel = (LocalContext.current.applicationContext as ProvideViewModel).viewModel(
@@ -123,17 +131,23 @@ object MakeOrderScreen : Screen {
         }
         """
 
-        viewModel.loadScreen(json)
+        val screenModel by viewModel.screenComponent.collectAsState()
+        val screenState by viewModel.screenState.collectAsState()
 
-        val dispatcher = remember {
-            ActionDispatcher(state = viewModel.screenState,
-                navigate = { screenId ->
+        if (screenModel != null && screenState != null) {
+            val dispatcher = remember {
+                ActionDispatcher(state = screenState!!) { screenId ->
                     viewModel.navigateToScreenById(screenId)
-                }).apply {
-                registerDefaultActions()
+                }.apply { registerDefaultActions() }
             }
-        }
 
-        ScreenRenderer.Render(viewModel.screenModel, viewModel.screenState, dispatcher = dispatcher)
+            ScreenRenderer.Render(
+                screenModel!!,
+                screenState!!,
+                dispatcher
+            )
+        } else {
+            CircularProgressIndicator(modifier = Modifier.size(24.dp))
+        }
     }
 }
