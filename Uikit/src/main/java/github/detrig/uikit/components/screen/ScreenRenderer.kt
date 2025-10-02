@@ -38,6 +38,7 @@ import github.detrig.uikit.core.ActionDispatcher
 import androidx.core.graphics.toColorInt
 import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.bottomsheet.BottomSheetRenderer
+import github.detrig.uikit.components.box.BoxRenderer
 import github.detrig.uikit.components.snackbar.SnackbarComponent
 import github.detrig.uikit.components.snackbar.SnackbarRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
@@ -67,7 +68,6 @@ object ScreenRenderer {
             },
             bottomBar = {
                 if (component.bottomBar.isNotEmpty()) {
-                    Log.d("alz-04", "bottomBar: ${component.bottomBar}")
                     Column(Modifier.fillMaxWidth().background(backgroundColor)) {
                         component.bottomBar.forEach { RenderComponent(it, state, dispatcher) }
                     }
@@ -84,12 +84,15 @@ object ScreenRenderer {
         ) { paddingValues ->
             val scrollState = rememberScrollState()
 
+
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
                     .verticalScroll(scrollState)
             ) {
-                component.content.forEach { RenderComponent(it, state, dispatcher) }
+
+                component.content.forEach { RenderComponent(it, state, dispatcher)
+                    Log.d("alz-04", "comp: ${it}")}
             }
         }
     }
@@ -105,7 +108,7 @@ fun RenderComponent(component: Component, state: ScreenState, dispatcher: Action
         is IconComponent -> IconRenderer.Render(component, state, dispatcher)
         is CheckboxComponent -> CheckboxRenderer.Render(component, state)
         is RowComponent -> RowRenderer.Render(component, state, dispatcher)
-        is BoxComponent -> Render(component, state, dispatcher)
+        is BoxComponent -> BoxRenderer.Render(component, state, dispatcher)
         is ColumnComponent -> ColumnRenderer.Render(component, state, dispatcher)
         is ListComponent -> ListRenderer.Render(component, state, dispatcher)
         is CardComponent -> CardRenderer.Render(component, state, dispatcher)

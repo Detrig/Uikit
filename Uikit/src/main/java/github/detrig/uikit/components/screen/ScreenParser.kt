@@ -72,7 +72,7 @@ object ScreenParser {
         )
 
         return ScreenComponent(
-            id = jsonObj["id"]?.jsonPrimitive?.content,
+            id = jsonObj["_id"]?.jsonPrimitive?.content,
             name = jsonObj["name"]?.jsonPrimitive?.content ?: "UnknownScreen",
             background = jsonObj["background"]?.jsonPrimitive?.content,
             topBar = topBar,

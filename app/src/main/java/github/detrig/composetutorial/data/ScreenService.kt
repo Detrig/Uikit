@@ -15,6 +15,7 @@ interface ScreenService {
                 parameter("id", id)
             }
             val body = response.body<String>()
+            Log.d("alz-04", "body: ${body}")
             return body
         }
     }
