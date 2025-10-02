@@ -28,6 +28,8 @@ import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.custom_components.ListComponent
+import github.detrig.uikit.custom_components.ListRenderer
 
 object ColumnRenderer {
 
@@ -52,14 +54,22 @@ object ColumnRenderer {
             }
         ) {
             component.children.forEach { child ->
+                val modifier = child.modifier?.toComposeModifier() ?: Modifier
+                val modifierWithAlign = when (child.modifier?.align) {
+                    "start" -> modifier.then(Modifier.align(Alignment.Start))
+                    "center" -> modifier.then(Modifier.align(Alignment.CenterHorizontally))
+                    "end" -> modifier.then(Modifier.align(Alignment.End))
+                    else -> modifier
+                }
+
                 when (child) {
-                    is TextComponent -> TextRenderer.Render(child, state)
-                    is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
-                    is ImageComponent -> ImageRenderer.Render(child, state)
-                    is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher)
+                    is TextComponent -> TextRenderer.Render(child, state, modifierWithAlign)
+                    is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    is ImageComponent -> ImageRenderer.Render(child, state, modifierWithAlign)
+                    is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> Render(child, state, dispatcher)
-                    is CheckboxComponent -> CheckboxRenderer.Render(child, state)
+                    is CheckboxComponent -> CheckboxRenderer.Render(child, state, modifierWithAlign)
                     is SpacerComponent -> {
                         val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
                         val finalModifier = child.modifier?.weight?.let { w ->
@@ -67,9 +77,10 @@ object ColumnRenderer {
                         } ?: baseModifier
                         Spacer(modifier = finalModifier)
                     }
-                    is CardComponent -> CardRenderer.Render(child, state, dispatcher)
-                    is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
-                    is IconComponent -> IconRenderer.Render(child, state, dispatcher)
+                    is CardComponent -> CardRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    is BoxComponent -> BoxRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    is IconComponent -> IconRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    is ListComponent -> ListRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     else -> {}
                 }
             }

@@ -1,19 +1,20 @@
 package github.detrig.uikit.components.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import android.util.Log
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import github.detrig.uikit.components.box.BoxComponent
 import github.detrig.uikit.components.box.BoxRenderer.Render
-import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.button.ButtonRenderer
@@ -26,11 +27,8 @@ import github.detrig.uikit.components.icon.IconComponent
 import github.detrig.uikit.components.icon.IconRenderer
 import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.image.ImageRenderer
-import github.detrig.uikit.components.lazycolumn.LazyColumnComponent
 import github.detrig.uikit.components.row.RowComponent
 import github.detrig.uikit.components.row.RowRenderer
-import github.detrig.uikit.components.screen.ScreenState
-import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.utils.Component
@@ -42,7 +40,8 @@ import github.detrig.uikit.components.snackbar.SnackbarComponent
 import github.detrig.uikit.components.snackbar.SnackbarRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
-import github.detrig.uikit.core.RenderComponent
+import github.detrig.uikit.custom_components.ListComponent
+import github.detrig.uikit.custom_components.ListRenderer
 
 object ScreenRenderer {
     @Composable
@@ -54,13 +53,19 @@ object ScreenRenderer {
         Scaffold(
             topBar = {
                 if (component.topBar.isNotEmpty()) {
-                    Column(Modifier.fillMaxWidth().background(backgroundColor)) {
-                        component.topBar.forEach { RenderComponent(it, state, dispatcher) }
-                    }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp)
+                        ) {
+                            component.topBar.forEach { RenderComponent(it, state, dispatcher) }
+                        }
+
                 }
             },
             bottomBar = {
                 if (component.bottomBar.isNotEmpty()) {
+                    Log.d("alz-04", "bottomBar: ${component.bottomBar}")
                     Column(Modifier.fillMaxWidth().background(backgroundColor)) {
                         component.bottomBar.forEach { RenderComponent(it, state, dispatcher) }
                     }
@@ -94,6 +99,7 @@ fun RenderComponent(component: Component, state: ScreenState, dispatcher: Action
         is RowComponent -> RowRenderer.Render(component, state, dispatcher)
         is BoxComponent -> Render(component, state, dispatcher)
         is ColumnComponent -> ColumnRenderer.Render(component, state, dispatcher)
+        is ListComponent -> ListRenderer.Render(component, state, dispatcher)
         is CardComponent -> CardRenderer.Render(component, state, dispatcher)
         is SnackbarComponent -> SnackbarRenderer.Render(component, state, dispatcher)
         is BottomSheetComponent -> BottomSheetRenderer.Render(component, state, dispatcher)

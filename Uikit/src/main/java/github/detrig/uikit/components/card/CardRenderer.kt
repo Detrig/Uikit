@@ -31,18 +31,20 @@ import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.custom_components.ListComponent
+import github.detrig.uikit.custom_components.ListRenderer
 
 object CardRenderer {
 
     @Composable
-    fun Render(component: CardComponent, state: ScreenState, dispatcher: ActionDispatcher) {
+    fun Render(component: CardComponent, state: ScreenState, dispatcher: ActionDispatcher, modifier: Modifier = Modifier) {
         val elevation = (component.elevation ?: 0).dp
         val shape = component.shape?.cornerRadius?.let { RoundedCornerShape(it.dp) }
             ?: RoundedCornerShape(0.dp)
         val backgroundColor = component.background?.let { Color(it.toColorInt()) } ?: Color.White
 
         Card(
-            modifier = component.modifier?.toComposeModifier() ?: Modifier,
+            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
             elevation = CardDefaults.cardElevation(defaultElevation = elevation),
             shape = shape,
             colors = CardDefaults.cardColors(containerColor = backgroundColor)
@@ -57,6 +59,7 @@ object CardRenderer {
                     is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, state)
                     is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
+                    is ListComponent -> ListRenderer.Render(child, state, dispatcher)
                     is SpacerComponent -> {
                         val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
                         val finalModifier = child.modifier?.weight?.let { w ->

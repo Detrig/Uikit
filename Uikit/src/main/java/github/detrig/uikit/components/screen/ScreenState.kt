@@ -3,18 +3,15 @@ package github.detrig.uikit.components.screen
 import androidx.compose.runtime.mutableStateMapOf
 import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.text.TextComponent
-import android.util.Log
 import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.box.BoxComponent
 import github.detrig.uikit.components.card.CardComponent
 import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.column.ColumnComponent
-import github.detrig.uikit.components.lazycolumn.LazyColumnComponent
 import github.detrig.uikit.components.row.RowComponent
-import github.detrig.uikit.components.snackbar.SnackbarComponent
-import github.detrig.uikit.components.snackbar.SnackbarData
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.utils.Component
+import github.detrig.uikit.custom_components.ListComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -41,7 +38,6 @@ class ScreenState(screen: ScreenComponent) {
                 is CheckboxComponent -> componentStates[id] = component.isChecked
                 is ButtonComponent -> componentStates[id] = component.enabled
                 is TextFieldComponent -> componentStates[id] = component.value ?: ""
-                is LazyColumnComponent -> componentStates[id] = emptyList<Any>()
             }
 
             when (component) {
@@ -50,6 +46,7 @@ class ScreenState(screen: ScreenComponent) {
                 is BoxComponent -> component.children.forEach { traverse(it) }
                 is CardComponent -> component.children.forEach { traverse(it) }
                 is BottomSheetComponent -> component.children.forEach { traverse(it) }
+                is ListComponent -> component.items.forEach { traverse(it) }
             }
         }
 

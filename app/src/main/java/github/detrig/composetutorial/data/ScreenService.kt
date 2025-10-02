@@ -14,9 +14,7 @@ interface ScreenService {
             val response = client.get("http://31.56.205.210:8080/api/screen/get") {
                 parameter("id", id)
             }
-            //Log.d("alz-04", "HTTP status: ${response.status.value}")
             val body = response.body<String>()
-            Log.d("alz-04","Body: $body")
             return body
         }
     }

@@ -19,7 +19,7 @@ import github.detrig.uikit.core.ActionDispatcher
 object TextFieldRenderer {
 
     @Composable
-    fun Render(component: TextFieldComponent, state: ScreenState, dispatcher: ActionDispatcher) {
+    fun Render(component: TextFieldComponent, state: ScreenState, dispatcher: ActionDispatcher, modifier: Modifier = Modifier) {
         val value = state.getValue(component.id) as? String ?: ""
 
         val color = component.style?.color?.let { Color(it.toColorInt()) } ?: Color.Black

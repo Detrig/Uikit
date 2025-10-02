@@ -14,7 +14,7 @@ import github.detrig.composetutorial.ui.theme.common.UiStateHandler
 import github.detrig.uikit.components.screen.ScreenState
 
 object CartScreen : Screen {
-    private const val SCREEN_ID = "b7485cf9-d9c6-4ede-ae30-bb7e3f44b004"
+    private const val SCREEN_ID = "21d7850d-1775-4610-9ccd-5896515aa381"
 
     @Composable
     override fun Show() {
@@ -31,7 +31,7 @@ object CartScreen : Screen {
         UiStateHandler.ScreenStateHandler(
             uiState = screenUiState,
             fetchScreenJson = { screenId -> viewModel.loadScreenJson(screenId) },
-            onRetry = { viewModel.loadScreenFromJsonString(json) }
+            onRetry = { } //viewModel.loadScreenFromJsonString(json) }
         ) { screenComponent ->
             val dispatcher = remember(screenComponent) {
                 ActionDispatcher(state = ScreenState(screenComponent)) { id ->
@@ -41,6 +41,7 @@ object CartScreen : Screen {
             ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), dispatcher)
         }
     }
+
 
     val json = """
         {

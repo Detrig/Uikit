@@ -13,8 +13,7 @@ import github.detrig.uikit.components.utils.toComposeModifier
 object ImageRenderer {
 
     @Composable
-    fun Render(component: ImageComponent, state: ScreenState) {
-        val modifier = component.modifier?.toComposeModifier() ?: Modifier
+    fun Render(component: ImageComponent, state: ScreenState, modifier: Modifier = Modifier) {
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -30,7 +29,7 @@ object ImageRenderer {
                 )
                 .build(),
             contentDescription = component.contentDescription,
-            modifier = modifier,
+            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
             contentScale = when (component.contentScale) {
                 ContentScaleType.Fill -> ContentScale.FillBounds
                 ContentScaleType.FillHeight -> ContentScale.FillHeight

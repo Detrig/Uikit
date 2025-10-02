@@ -30,7 +30,7 @@ import github.detrig.uikit.core.ActionDispatcher
 object ButtonRenderer {
 
     @Composable
-    fun Render(component: ButtonComponent, state: ScreenState, dispatcher: ActionDispatcher) {
+    fun Render(component: ButtonComponent, state: ScreenState, dispatcher: ActionDispatcher, modifier: Modifier = Modifier) {
 
         Button(
             onClick = {
@@ -39,7 +39,7 @@ object ButtonRenderer {
                 }
             },
             enabled = component.enabled,
-            modifier = component.modifier?.toComposeModifier() ?: Modifier,
+            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
             colors = ButtonDefaults.buttonColors(
                 containerColor = component.style?.background?.let { Color(it.toColorInt()) }
                     ?: MaterialTheme.colorScheme.primary,
@@ -87,7 +87,7 @@ object ButtonRenderer {
     @Composable
     private fun getIconRes(name: String): Int {
         return when (name.lowercase()) {
-            "checkout" -> R.drawable.img
+            "back" -> R.drawable.img
             "favorite" -> R.drawable.img_1
             else -> R.drawable.img_1
         }
