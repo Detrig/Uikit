@@ -10,19 +10,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
 import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
+import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 
 object CheckboxRenderer {
 
     @Composable
-    fun Render(component: CheckboxComponent, state: ScreenState, modifier: Modifier = Modifier) {
+    fun Render(component: CheckboxComponent, dispatcher: ActionDispatcher, state: ScreenState, modifier: Modifier = Modifier) {
        // var checked by remember { mutableStateOf(component.isChecked) }
+
 
         val checkedColor = component.colors?.checkedColor?.let { Color(it.toColorInt()) } ?: Color(0xFF965EEB)
         val uncheckedColor = component.colors?.uncheckedColor?.let { Color(it.toColorInt()) } ?: Color.Gray
         val disabledColor = component.colors?.disabledColor?.let { Color(it.toColorInt()) } ?: Color.LightGray
 
+        val onClick = if (component.actions?.any { it.event == ActionEvent.OnClick } == true) {
+            { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) }
+        } else null
+
+
         Checkbox(
             checked = component.isChecked,
+
             onCheckedChange = { newValue ->
 //                checked = newValue
 //                component.onCheckedChange?.let { actionId ->

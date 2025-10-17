@@ -14,12 +14,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
+import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 
 object TextRenderer {
 
     @Composable
     fun Render(
         component: TextComponent,
+        dispatcher: ActionDispatcher,
         state: ScreenState,
         modifier: Modifier = Modifier
     ) {
@@ -40,6 +44,10 @@ object TextRenderer {
             else -> TextAlign.Start
         }
 
+        val onClick = if (component.actions?.any { it.event == ActionEvent.OnClick } == true) {
+            { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) }
+        } else null
+
         Text(
             text = component.text ?: "",
             color = color,
@@ -54,7 +62,7 @@ object TextRenderer {
             },
             lineHeight = component.style?.lineHeight?.sp ?: TextUnit.Unspecified,
             letterSpacing = component.style?.letterSpacing?.sp ?: TextUnit.Unspecified,
-            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
+            modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier),
             textAlign = textAlign
         )
     }

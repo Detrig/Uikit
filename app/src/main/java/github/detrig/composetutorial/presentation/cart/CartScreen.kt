@@ -12,8 +12,9 @@ import github.detrig.composetutorial.ui.theme.common.UiStateHandler
 import github.detrig.uikit.components.screen.ScreenState
 
 object CartScreen : Screen {
-    private const val SCREEN_ID = "1c24b76b-f646-40d4-84e1-65a613152aa9"
-    //private const val SCREEN_ID = "76b729c3-9213-49df-91af-25259cc56162"
+    //private const val SCREEN_ID = "1c24b76b-f646-40d4-84e1-65a613152aa9"
+    //private const val SCREEN_ID = "3a7c12a5-6cb2-4bc3-bc0e-1549c405b413"
+    private const val SCREEN_ID = "76b729c3-9213-49df-91af-25259cc56162"
     //private const val SCREEN_ID = "4761c8a0-74bf-4733-8444-93faebb6f6da"
     //private const val SCREEN_ID = "4761c8a0-74bf-4733-8444-93faebb6f6da"
     //private const val SCREEN_ID = "21d7850d-1775-4610-9ccd-5896515aa381"
@@ -39,6 +40,4 @@ object CartScreen : Screen {
             ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), viewModel.getDispatcher())
         }
     }
-
-
 }

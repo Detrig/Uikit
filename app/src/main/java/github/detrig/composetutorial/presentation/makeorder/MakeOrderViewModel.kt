@@ -7,10 +7,10 @@ import github.detrig.composetutorial.domain.repository.ScreenRepository
 import github.detrig.uikit.core.ActionDispatcher
 
 class MakeOrderViewModel(
-    private val navigation: Navigation.Update,
+    private val navigation: Navigation.Mutable,
     private val dispatcher: ActionDispatcher,
     screenRepository: ScreenRepository
-) : ScreenViewModel(screenRepository, dispatcher) {
+) : ScreenViewModel(navigation, screenRepository, dispatcher) {
 
     fun cartScreen() {
         navigation.update(CartScreen)

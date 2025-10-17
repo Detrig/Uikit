@@ -44,13 +44,13 @@ object BoxRenderer {
                 }
 
                 when (child) {
-                    is TextComponent -> TextRenderer.Render(child, state, modifierWithAlign)
+                    is TextComponent -> TextRenderer.Render(child, dispatcher, state, modifierWithAlign)
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is ImageComponent -> ImageRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
-                    is CheckboxComponent -> CheckboxRenderer.Render(child, state, modifierWithAlign)
+                    is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state, modifierWithAlign)
                     is CardComponent -> CardRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is IconComponent -> IconRenderer.Render(child, state, dispatcher)
                     is ListComponent -> ListRenderer.Render(child, state, dispatcher, modifierWithAlign)

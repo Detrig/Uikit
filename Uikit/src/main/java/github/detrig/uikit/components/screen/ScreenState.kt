@@ -1,5 +1,6 @@
 package github.detrig.uikit.components.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateMapOf
 import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.text.TextComponent
@@ -17,28 +18,27 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import android.util.Log
+import androidx.compose.runtime.*
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class ScreenState(screen: ScreenComponent) {
 
-    private val componentStates = mutableStateMapOf<String, Any?>()
+    private val componentStates = mutableStateMapOf<String, MutableState<Any?>>()
 
-    private val visibleSnackbars = mutableStateMapOf<String, Boolean>()
     private val visibleSheets = mutableStateMapOf<String, Boolean>()
 
     init {
-        screen.snackbars.forEach { snackbar ->
-            val id = snackbar.id ?: return@forEach
-
-            visibleSnackbars[id] = false
-        }
 
         fun traverse(component: Component) {
             val id = component.id ?: return
             when (component) {
-                is TextComponent -> componentStates[id] = component.text
-                is CheckboxComponent -> componentStates[id] = component.isChecked
-                is ButtonComponent -> componentStates[id] = component.enabled
-                is TextFieldComponent -> componentStates[id] = component.value ?: ""
+                is TextComponent -> componentStates[id] = mutableStateOf(component.text)
+                is CheckboxComponent -> componentStates[id] = mutableStateOf(component.isChecked)
+                is ButtonComponent -> componentStates[id] = mutableStateOf(component.enabled)
+                is TextFieldComponent -> componentStates[id] = mutableStateOf(component.value ?: "")
             }
 
             when (component) {
@@ -58,38 +58,43 @@ class ScreenState(screen: ScreenComponent) {
         screen.topBar.forEach { traverse(it) }
         screen.content.forEach { traverse(it) }
         screen.bottomBar.forEach { traverse(it) }
-    }
-
-    fun updateComponent(id: String?, value: Any?) {
-        if (id != null) componentStates[id] = value
-    }
-
-    fun getValue(id: String?): Any? = id?.let { componentStates[it] }
-
-    fun getList(id: String?): List<Any>? = id?.let { componentStates[it] as? List<Any> }
-
-
-    //Snackbar
-    fun showSnackbar(id: String) {
-        visibleSnackbars[id] = true
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(3000)
-            Log.d("alz-04", "visibleSnackbars: ${visibleSnackbars}")
-            visibleSnackbars[id] = false
+        screen.bottomSheets.forEach { sheet ->
+            val id = sheet.id ?: return@forEach
+            visibleSheets[id] = false
+            traverse(sheet)
         }
     }
 
-    fun isSnackbarVisible(id: String): Boolean = visibleSnackbars[id] == true
-    fun hideSnackbar(id: String) {
-        visibleSnackbars[id] = false
+    fun getValueState(id: String): MutableState<Any?>? = componentStates[id]
+
+    fun updateComponent(id: String, value: Any?) {
+        componentStates[id]?.value = value
     }
+
+    fun getList(id: String?): List<Any>? = id?.let { componentStates[it] as? List<Any> }
+
+    private val snackbars: Map<String, MutableStateFlow<Boolean>> =
+        screen.snackbars.associate { it.id!! to MutableStateFlow(false) }
+
+    fun showSnackbar(id: String) {
+        snackbars[id]?.value = true
+        Log.d("alz-04", "snackbars: $id")
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(3000)
+            snackbars[id]?.value = false
+        }
+    }
+
+    fun hideSnackbar(id: String) {
+        Log.d("alz-04", "hideSnackbar: $id")
+        snackbars[id]?.value = false
+    }
+
+    fun snackbarState(id: String): StateFlow<Boolean>? = snackbars[id]
 
 
     //Sheet
     fun showSheet(id: String) {
-//        Log.d("alz-04", "showSheet: $id")
-//        Log.d("alz-04", "visibleSheet: ${visibleSheets[id]}")
-//        Log.d("alz-04", "visibleSheets: ${visibleSheets}")
         visibleSheets[id] = true
     }
 
@@ -97,6 +102,11 @@ class ScreenState(screen: ScreenComponent) {
         visibleSheets[id] = false
     }
 
-    fun isSheetVisible(id: String): Boolean = visibleSheets[id] == true
+    @Composable
+    fun sheetVisibleState(id: String): State<Boolean> {
+        val state = remember { derivedStateOf { visibleSheets[id] == true } }
+        Log.d("alz-04", "sheetVisibleState($id) = ${state.value}")
+        return state
+    }
 
 }

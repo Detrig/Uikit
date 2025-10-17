@@ -32,12 +32,11 @@ object ImageRenderer {
                         Log.e("alz-img", "Load error: ${throwable.throwable.message}")
                     },
                     onSuccess = { _, _ ->
-                        Log.d("alz-img", "Image loaded successfully")
                     }
                 )
                 .build(),
             contentDescription = component.contentDescription,
-            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
+            modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier),
             contentScale = when (component.contentScale) {
                 ContentScaleType.Fill -> ContentScale.FillBounds
                 ContentScaleType.FillHeight -> ContentScale.FillHeight

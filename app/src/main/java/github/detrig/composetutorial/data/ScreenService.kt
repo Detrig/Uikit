@@ -30,7 +30,6 @@ interface ScreenService {
         }
 
         override fun observeScreen(id: String): Flow<String> = callbackFlow {
-            Log.d("alz-04", "Подключаемся к ws://31.56.205.210:8080/ws?id=$id")
 
             try {
                 client.webSocket(
@@ -42,13 +41,11 @@ interface ScreenService {
                         parameter("id", id)
                     }
                 ) {
-                    Log.d("alz-04", "WebSocket открыт для id=$id")
 
                     for (frame in incoming) {
                         when (frame) {
                             is Frame.Text -> {
                                 val update = frame.readText()
-                                Log.d("alz-04", "Обновление: $update")
                                 trySend(update)
                             }
                             is Frame.Close -> {

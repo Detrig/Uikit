@@ -11,14 +11,21 @@ sealed class Action {
     @SerialName("navigate")
     data class Navigate(
         override val event: ActionEvent,
-        val screenId: String
+        val targetId: String
     ) : Action()
 
     @Serializable
     @SerialName("showSnackbar")
     data class ShowSnackbar(
         override val event: ActionEvent,
-        val message: String
+        val id: String
+    ) : Action()
+
+    @Serializable
+    @SerialName("showBottomSheet")
+    data class ShowBottomSheet(
+        override val event: ActionEvent,
+        val id: String
     ) : Action()
 
     @Serializable
@@ -48,4 +55,3 @@ enum class ActionEvent {
 //    val targetId: String? = null,
 //    val value: String? = null
 //)
-

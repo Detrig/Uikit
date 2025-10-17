@@ -54,13 +54,13 @@ object CardRenderer {
         ) {
             component.children.forEach { child ->
                 when (child) {
-                    is TextComponent -> TextRenderer.Render(child, state)
+                    is TextComponent -> TextRenderer.Render(child, dispatcher, state)
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
                     is ImageComponent -> ImageRenderer.Render(child, state, dispatcher)
                     is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher)
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
-                    is CheckboxComponent -> CheckboxRenderer.Render(child, state)
+                    is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state)
                     is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
                     is ListComponent -> ListRenderer.Render(child, state, dispatcher)
                     is SpacerComponent -> {

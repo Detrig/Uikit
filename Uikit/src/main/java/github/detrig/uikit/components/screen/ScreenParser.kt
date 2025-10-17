@@ -67,6 +67,7 @@ object ScreenParser {
         val topBar = parseComponents(jsonObj["topBar"]?.jsonArray)
         val bottomBar = parseComponents(jsonObj["bottomBar"]?.jsonArray)
         val snackbars = parseComponents(jsonObj["snackbars"]?.jsonArray)
+        val bottomSheets = parseComponents(jsonObj["bottomSheets"]?.jsonArray)
         val content: List<Component> = json.decodeFromJsonElement(
             ListSerializer(PolymorphicSerializer(Component::class)),
             jsonObj["content"]!!
@@ -79,6 +80,7 @@ object ScreenParser {
             topBar = topBar,
             bottomBar = bottomBar,
             snackbars = snackbars,
+            bottomSheets = bottomSheets,
             content = content,
             modifier = jsonObj["modifier"]?.let {
                 json.decodeFromJsonElement(ModifierModel.serializer(), it)

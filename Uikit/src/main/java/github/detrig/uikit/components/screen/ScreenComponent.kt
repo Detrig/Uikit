@@ -19,5 +19,6 @@ data class ScreenComponent(
     @Polymorphic val topBar: List<Component> = emptyList(),
     @Polymorphic val content: List<Component> = emptyList(),
     @Polymorphic val bottomBar: List<Component> = emptyList(),
-    @Polymorphic val snackbars: List<Component> = emptyList()
+    @Polymorphic val snackbars: List<Component> = emptyList(),
+    @Polymorphic val bottomSheets: List<Component> = emptyList()
 ) : Component()

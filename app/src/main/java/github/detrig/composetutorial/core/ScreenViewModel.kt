@@ -3,18 +3,24 @@ package github.detrig.composetutorial.core
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import github.detrig.composetutorial.core.navigation.Navigation
+import github.detrig.composetutorial.domain.handlers.NavigateHandler
+import github.detrig.composetutorial.domain.handlers.ShowBottomSheetHandler
+import github.detrig.composetutorial.domain.handlers.ShowSnackbarHandler
 import github.detrig.composetutorial.domain.model.ReloadScreenMessage
 import github.detrig.composetutorial.domain.repository.ScreenRepository
 import github.detrig.composetutorial.ui.theme.common.UiState
 import github.detrig.uikit.components.screen.ScreenComponent
 import github.detrig.uikit.components.screen.ScreenParser
 import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.ActionDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 open class ScreenViewModel(
+    private val navigation: Navigation.Mutable,
     private val repository: ScreenRepository,
     private val dispatcher: ActionDispatcher
 ) : ViewModel() {
@@ -28,6 +34,14 @@ open class ScreenViewModel(
     private val _screenUiState = MutableStateFlow<UiState<ScreenComponent>>(UiState.Initial)
     val screenUiState: StateFlow<UiState<ScreenComponent>> = _screenUiState
 
+    /**
+     * Register Handlers for current screen
+     */
+    private fun registerHandlers(state: ScreenState) {
+        dispatcher.register(Action.ShowSnackbar::class, ShowSnackbarHandler(state))
+        dispatcher.register(Action.ShowBottomSheet::class, ShowBottomSheetHandler(state))
+    }
+
     fun getDispatcher(): ActionDispatcher = dispatcher
 
     fun loadScreenById(screenId: String) {
@@ -38,11 +52,14 @@ open class ScreenViewModel(
                 val json = repository.getScreenJson(screenId)
                 val screen = ScreenParser.parse(json)
 
-                Log.d("alz-04", "screenId: ${screenId}")
                 _screenComponent.value = screen
-                _screenState.value = ScreenState(screen)
+                val state = ScreenState(screen)
+                _screenState.value = state
                 _screenUiState.value = UiState.Success(screen)
 
+                Log.d("alz-04", "screen bottomSheet: ${screen.bottomSheets}")
+
+                registerHandlers(state)
                 observeScreenUpdates(screenId)
 
             } catch (e: Exception) {

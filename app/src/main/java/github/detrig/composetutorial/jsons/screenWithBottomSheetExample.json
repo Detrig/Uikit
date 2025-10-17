@@ -15,7 +15,7 @@
       "id": "openPromo",
       "text": "Открыть bottomSheet",
       "actions": [
-        { "action": "showBottomSheet", "targetId": "sheetExample" }
+        { "action": "showBottomSheet", "id": "sheetExample" }
       ]
     },
     {
@@ -53,7 +53,7 @@
               },
               "modifier": { "height": "48", "fillMaxWidth": true },
               "actions": [
-                { "action": "hideBottomSheet", "targetId": "sheetExample" }
+                { "action": "hideBottomSheet", "targetId": "sheetExample" } ???
               ]
             }
           ]
@@ -68,7 +68,6 @@
       "text": "Товар удалён из корзины",
       "actionText": "Вернуть",
       "actions": [
-        { "action": "restoreItem", "targetId": "cart_item" }
       ]
     }
   ]

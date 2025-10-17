@@ -4,12 +4,12 @@ import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.ActionHandler
 
-class ShowSnackbarHandler(
+class ShowBottomSheetHandler(
     private val state: ScreenState
-) : ActionHandler<Action.ShowSnackbar> {
+) : ActionHandler<Action.ShowBottomSheet> {
     override fun canHandle(action: Action): Boolean = action is Action.ShowSnackbar
 
-    override suspend fun handle(action: Action.ShowSnackbar) {
-        state.showSnackbar(action.id)
+    override suspend fun handle(action: Action.ShowBottomSheet) {
+        state.showSheet(action.id)
     }
 }

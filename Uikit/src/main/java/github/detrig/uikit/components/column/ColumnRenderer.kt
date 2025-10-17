@@ -4,7 +4,9 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +49,7 @@ object ColumnRenderer {
         var modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier)
         val scrollState = rememberScrollState()
         if (component.modifier?.scrollable == true)
-            modifier = modifier.horizontalScroll((scrollState))
+            modifier = modifier.verticalScroll((scrollState))
 
         Column(
             modifier = modifier,
@@ -77,7 +79,7 @@ object ColumnRenderer {
                 }
 
                 when (child) {
-                    is TextComponent -> TextRenderer.Render(child, state, modifierWithAlign)
+                    is TextComponent -> TextRenderer.Render(child, dispatcher, state, modifierWithAlign)
                     is ButtonComponent -> ButtonRenderer.Render(
                         child,
                         state,
@@ -95,7 +97,7 @@ object ColumnRenderer {
 
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> Render(child, state, dispatcher)
-                    is CheckboxComponent -> CheckboxRenderer.Render(child, state, modifierWithAlign)
+                    is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state, modifierWithAlign)
                     is SpacerComponent -> {
                         val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
                         val finalModifier = child.modifier?.weight?.let { w ->

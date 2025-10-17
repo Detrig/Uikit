@@ -22,7 +22,6 @@ data class ImageComponent(
 ) : Component()
 
 
-
 @Serializable
 enum class ContentScaleType {
     Fill,

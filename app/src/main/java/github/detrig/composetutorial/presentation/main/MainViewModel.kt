@@ -17,7 +17,7 @@ class MainViewModel(
 
     init {
         dispatcher.register(Action.Navigate::class, NavigateHandler(navigation))
-        //dispatcher.register(Action.ShowSnackbar::class, ShowSnackbarHandler())
+        //dispatcher.register(Action.ShowSnackbar::class, ShowSnackbarHandler(screenState))
     }
 
     fun init(firstRun: Boolean) {

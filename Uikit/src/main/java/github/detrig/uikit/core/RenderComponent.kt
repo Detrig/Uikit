@@ -35,12 +35,12 @@ object RenderComponent {
         dispatcher: ActionDispatcher
     ) {
         when (component) {
-            is TextComponent -> TextRenderer.Render(component, state)
+            is TextComponent -> TextRenderer.Render(component, dispatcher, state)
             is ButtonComponent -> ButtonRenderer.Render(component, state, dispatcher)
             is ImageComponent -> ImageRenderer.Render(component, state, dispatcher)
             is RowComponent -> RowRenderer.Render(component, state, dispatcher)
             is ColumnComponent -> ColumnRenderer.Render(component, state, dispatcher)
-            is CheckboxComponent -> CheckboxRenderer.Render(component, state)
+            is CheckboxComponent -> CheckboxRenderer.Render(component, dispatcher, state)
             is CardComponent -> CardRenderer.Render(component, state, dispatcher)
             is BoxComponent -> BoxRenderer.Render(component, state, dispatcher)
             is IconComponent -> IconRenderer.Render(component, state, dispatcher)

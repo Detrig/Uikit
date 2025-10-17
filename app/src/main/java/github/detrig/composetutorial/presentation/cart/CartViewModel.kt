@@ -13,7 +13,7 @@ class CartViewModel(
     private val navigation: Navigation.Mutable,
     private val screenRepository: ScreenRepository,
     private val dispatcher: ActionDispatcher
-) : ScreenViewModel(screenRepository, dispatcher) {
+) : ScreenViewModel(navigation, screenRepository, dispatcher) {
 
     private val _cartUiState = MutableStateFlow<CartUiState>(CartUiState.Initial)
     val cartUiState: StateFlow<CartUiState> = _cartUiState
