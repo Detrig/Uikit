@@ -17,5 +17,5 @@ data class CartItemComponent(
     val isChecked: Boolean = false,
     val isFavorite: Boolean = false,
     val quantity: Int = 1,
-    val actions: List<Action>? = null
+    override val actions: List<Action>? = null
 ) : Component()

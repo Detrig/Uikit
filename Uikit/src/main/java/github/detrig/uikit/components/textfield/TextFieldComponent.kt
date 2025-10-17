@@ -3,6 +3,7 @@ package github.detrig.uikit.components.textfield
 import github.detrig.uikit.components.text.TextStyle
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.utils.ModifierModel
+import github.detrig.uikit.core.Action
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,6 +12,7 @@ import kotlinx.serialization.Serializable
 data class TextFieldComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
+    override val actions: List<Action>? = null,
     val value: String? = null,               // начальное значение
     val placeholder: String? = null,
     val enabled: Boolean = true,

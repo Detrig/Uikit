@@ -25,6 +25,8 @@ import github.detrig.uikit.components.utils.toComposeModifier
 import androidx.core.graphics.toColorInt
 import github.detrig.uikit.R
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 
 
 object ButtonRenderer {
@@ -34,9 +36,7 @@ object ButtonRenderer {
 
         Button(
             onClick = {
-                component.actions?.forEach { action ->
-                    dispatcher.dispatch(action)
-                }
+                component.performActionsForEvent(ActionEvent.OnClick, dispatcher)
             },
             enabled = component.enabled,
             modifier = (component.modifier?.toComposeModifier() ?: Modifier),

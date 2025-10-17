@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
@@ -20,7 +21,7 @@ object TextRenderer {
     fun Render(
         component: TextComponent,
         state: ScreenState,
-        modifier: Modifier = Modifier // новый параметр
+        modifier: Modifier = Modifier
     ) {
         val color = component.style?.color?.let { Color(it.toColorInt()) } ?: Color.Black
         val fontSize = (component.style?.fontSize ?: 16).sp

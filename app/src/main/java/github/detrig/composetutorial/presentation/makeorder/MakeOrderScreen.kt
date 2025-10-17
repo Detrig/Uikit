@@ -1,12 +1,14 @@
 package github.detrig.composetutorial.presentation.makeorder
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import github.detrig.composetutorial.core.Screen
 import github.detrig.composetutorial.di.ProvideViewModel
+import github.detrig.composetutorial.presentation.cart.CartScreen
 import github.detrig.composetutorial.ui.theme.common.UiStateHandler
 import github.detrig.uikit.components.screen.ScreenRenderer
 import github.detrig.uikit.components.screen.ScreenState
@@ -14,7 +16,7 @@ import github.detrig.uikit.core.ActionDispatcher
 
 
 object MakeOrderScreen : Screen {
-    private const val SCREEN_ID = "1c24b76b-f646-40d4-84e1-65a613152aa9"
+    private const val SCREEN_ID = "76b729c3-9213-49df-91af-25259cc56162"
 
     @Composable
     override fun Show() {
@@ -22,19 +24,18 @@ object MakeOrderScreen : Screen {
             MakeOrderViewModel::class.java
         )
 
+        LaunchedEffect(Unit) {
+            viewModel.loadScreenById(MakeOrderScreen.SCREEN_ID)
+        }
+
         val screenUiState by viewModel.screenUiState.collectAsState()
 
         UiStateHandler.ScreenStateHandler(
             uiState = screenUiState,
             fetchScreenJson = { screenId -> viewModel.loadScreenJson(screenId) },
-            onRetry = { viewModel.loadScreenById(SCREEN_ID) }
+            onRetry = { } // { viewModel.loadScreenById(SCREEN_ID) }
         ) { screenComponent ->
-            val dispatcher = remember(screenComponent) {
-                ActionDispatcher(state = ScreenState(screenComponent)) { id ->
-                    viewModel.navigateToScreenById(id)
-                }.apply { registerDefaultActions() }
-            }
-            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), dispatcher)
+            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), viewModel.getDispatcher())
         }
     }
 }

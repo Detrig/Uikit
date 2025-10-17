@@ -62,7 +62,7 @@ object BottomSheetRenderer {
                         when (child) {
                             is TextComponent -> TextRenderer.Render(child, state)
                             is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
-                            is ImageComponent -> ImageRenderer.Render(child, state)
+                            is ImageComponent -> ImageRenderer.Render(child, state, dispatcher)
                             is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                             is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
                             is CheckboxComponent -> CheckboxRenderer.Render(child, state)

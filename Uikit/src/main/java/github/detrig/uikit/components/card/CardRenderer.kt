@@ -31,6 +31,8 @@ import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 import github.detrig.uikit.custom_components.ListComponent
 import github.detrig.uikit.custom_components.ListRenderer
 
@@ -45,6 +47,7 @@ object CardRenderer {
 
         Card(
             modifier = (component.modifier?.toComposeModifier() ?: Modifier),
+            onClick = { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) },
             elevation = CardDefaults.cardElevation(defaultElevation = elevation),
             shape = shape,
             colors = CardDefaults.cardColors(containerColor = backgroundColor)
@@ -53,7 +56,7 @@ object CardRenderer {
                 when (child) {
                     is TextComponent -> TextRenderer.Render(child, state)
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
-                    is ImageComponent -> ImageRenderer.Render(child, state)
+                    is ImageComponent -> ImageRenderer.Render(child, state, dispatcher)
                     is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher)
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)

@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 
 object SnackbarRenderer {
     @Composable
@@ -53,7 +55,7 @@ object SnackbarRenderer {
                     TextButton(
                         modifier = Modifier.background(Color.White, RoundedCornerShape(16.dp)),
                         onClick = {
-                            component.actions?.forEach { dispatcher.dispatch(it) }
+                            component.performActionsForEvent(ActionEvent.OnClick, dispatcher)
                             state.hideSnackbar(component.id ?: "")
                         }
                     ) {

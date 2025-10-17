@@ -44,13 +44,13 @@ object TextFieldRenderer {
             value = value,
             onValueChange = { newValue ->
                 state.updateComponent(component.id, newValue)
-                dispatcher.dispatch(
-                    Action(
-                        action = "set_value",
-                        targetId = component.id,
-                        value = newValue
-                    )
-                )
+//                dispatcher.dispatch(
+//                    Action(
+//                        action = "set_value",
+//                        targetId = component.id,
+//                        value = newValue
+//                    )
+//                )
             },
             enabled = component.enabled,
             singleLine = component.singleLine,

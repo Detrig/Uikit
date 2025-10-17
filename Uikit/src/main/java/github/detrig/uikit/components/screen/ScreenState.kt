@@ -16,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import android.util.Log
 
 class ScreenState(screen: ScreenComponent) {
 
@@ -45,7 +46,11 @@ class ScreenState(screen: ScreenComponent) {
                 is ColumnComponent -> component.children.forEach { traverse(it) }
                 is BoxComponent -> component.children.forEach { traverse(it) }
                 is CardComponent -> component.children.forEach { traverse(it) }
-                is BottomSheetComponent -> component.children.forEach { traverse(it) }
+                is BottomSheetComponent -> component.children.forEach {
+                    traverse(it)
+                    Log.d("alz-04", "BottomSheetComponent: $it")
+                }
+
                 is ListComponent -> component.items.forEach { traverse(it) }
             }
         }
@@ -64,15 +69,16 @@ class ScreenState(screen: ScreenComponent) {
     fun getList(id: String?): List<Any>? = id?.let { componentStates[it] as? List<Any> }
 
 
-
     //Snackbar
     fun showSnackbar(id: String) {
         visibleSnackbars[id] = true
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000)
+            Log.d("alz-04", "visibleSnackbars: ${visibleSnackbars}")
             visibleSnackbars[id] = false
         }
     }
+
     fun isSnackbarVisible(id: String): Boolean = visibleSnackbars[id] == true
     fun hideSnackbar(id: String) {
         visibleSnackbars[id] = false
@@ -81,6 +87,9 @@ class ScreenState(screen: ScreenComponent) {
 
     //Sheet
     fun showSheet(id: String) {
+//        Log.d("alz-04", "showSheet: $id")
+//        Log.d("alz-04", "visibleSheet: ${visibleSheets[id]}")
+//        Log.d("alz-04", "visibleSheets: ${visibleSheets}")
         visibleSheets[id] = true
     }
 

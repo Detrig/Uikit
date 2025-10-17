@@ -1,8 +1,8 @@
 package github.detrig.uikit.components.image
 
-import github.detrig.uikit.core.Action
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.utils.ModifierModel
+import github.detrig.uikit.core.Action
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,6 +11,7 @@ import kotlinx.serialization.Serializable
 data class ImageComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
+    override val actions: List<Action>? = null,
 
     val url: String? = null,
     val contentDescription: String? = null,

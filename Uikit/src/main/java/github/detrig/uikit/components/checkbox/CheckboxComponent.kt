@@ -2,6 +2,7 @@ package github.detrig.uikit.components.checkbox
 
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.utils.ModifierModel
+import github.detrig.uikit.core.Action
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -10,6 +11,7 @@ import kotlinx.serialization.Serializable
 data class CheckboxComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
+    override val actions: List<Action>? = null,
 
     val isChecked: Boolean = false,
     val onCheckedChange: String? = null,

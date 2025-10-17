@@ -34,6 +34,8 @@ import github.detrig.uikit.R
 import github.detrig.uikit.components.screen.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 
 object CartItemRenderer {
 
@@ -57,7 +59,8 @@ object CartItemRenderer {
                 Checkbox(
                     checked = component.isChecked,
                     onCheckedChange = {
-                        component.actions?.forEach { action -> dispatcher.dispatch(action) }
+                        //todo replace OnClick -> OnCheckedChange
+                        component.performActionsForEvent(ActionEvent.OnClick, dispatcher)
                     },
                     modifier = Modifier.size(21.dp)
                 )
@@ -101,7 +104,8 @@ object CartItemRenderer {
                             Box(
                                 modifier = Modifier
                                     .clickable {
-                                        component.actions?.forEach { dispatcher.dispatch(it) }
+                                        //todo replace OnClick -> OnCheckedChange
+                                        component.performActionsForEvent(ActionEvent.OnClick, dispatcher)
                                     }
                                     .padding(horizontal = 12.dp, vertical = 6.dp)
                             ) {
@@ -118,7 +122,8 @@ object CartItemRenderer {
                             Box(
                                 modifier = Modifier
                                     .clickable {
-                                        component.actions?.forEach { dispatcher.dispatch(it) }
+                                        //todo replace OnClick -> OnCheckedChange
+                                        component.performActionsForEvent(ActionEvent.OnClick, dispatcher)
                                     }
                                     .padding(horizontal = 12.dp, vertical = 6.dp)
                             ) {
@@ -145,7 +150,8 @@ object CartItemRenderer {
                         contentDescription = "favorite",
                         tint = if (component.isFavorite) Color.Red else Color.Gray,
                         modifier = Modifier.clickable {
-                            component.actions?.forEach { dispatcher.dispatch(it) }
+                            //todo replace OnClick -> OnCheckedChange
+                            component.performActionsForEvent(ActionEvent.OnClick, dispatcher)
                         }
                     )
 
@@ -154,7 +160,8 @@ object CartItemRenderer {
                         painter = painterResource(id = getIconRes(false, "delete")),
                         contentDescription = "delete",
                         modifier = Modifier.clickable {
-                            component.actions?.forEach { dispatcher.dispatch(it) }
+                            //todo replace OnClick -> OnCheckedChange
+                            component.performActionsForEvent(ActionEvent.OnClick, dispatcher)
                         }
                     )
                 }

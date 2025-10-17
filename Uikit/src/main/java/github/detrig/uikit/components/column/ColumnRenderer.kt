@@ -1,8 +1,10 @@
 package github.detrig.uikit.components.column
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +30,8 @@ import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 import github.detrig.uikit.custom_components.ListComponent
 import github.detrig.uikit.custom_components.ListRenderer
 
@@ -35,8 +39,18 @@ object ColumnRenderer {
 
     @Composable
     fun Render(component: ColumnComponent, state: ScreenState, dispatcher: ActionDispatcher) {
+        val onClick = if (component.actions?.any { it.event == ActionEvent.OnClick } == true) {
+            { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) }
+        } else null
+
+
+        var modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier)
+        val scrollState = rememberScrollState()
+        if (component.modifier?.scrollable == true)
+            modifier = modifier.horizontalScroll((scrollState))
+
         Column(
-            modifier = component.modifier?.toComposeModifier() ?: Modifier,
+            modifier = modifier,
             verticalArrangement = when (component.verticalArrangement) {
                 "top" -> Arrangement.Top
                 "center" -> Arrangement.Center
@@ -64,9 +78,21 @@ object ColumnRenderer {
 
                 when (child) {
                     is TextComponent -> TextRenderer.Render(child, state, modifierWithAlign)
-                    is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher, modifierWithAlign)
-                    is ImageComponent -> ImageRenderer.Render(child, state, modifierWithAlign)
-                    is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    is ButtonComponent -> ButtonRenderer.Render(
+                        child,
+                        state,
+                        dispatcher,
+                        modifierWithAlign
+                    )
+
+                    is ImageComponent -> ImageRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    is TextFieldComponent -> TextFieldRenderer.Render(
+                        child,
+                        state,
+                        dispatcher,
+                        modifierWithAlign
+                    )
+
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, state, modifierWithAlign)
@@ -77,10 +103,34 @@ object ColumnRenderer {
                         } ?: baseModifier
                         Spacer(modifier = finalModifier)
                     }
-                    is CardComponent -> CardRenderer.Render(child, state, dispatcher, modifierWithAlign)
-                    is BoxComponent -> BoxRenderer.Render(child, state, dispatcher, modifierWithAlign)
-                    is IconComponent -> IconRenderer.Render(child, state, dispatcher, modifierWithAlign)
-                    is ListComponent -> ListRenderer.Render(child, state, dispatcher, modifierWithAlign)
+
+                    is CardComponent -> CardRenderer.Render(
+                        child,
+                        state,
+                        dispatcher,
+                        modifierWithAlign
+                    )
+
+                    is BoxComponent -> BoxRenderer.Render(
+                        child,
+                        state,
+                        dispatcher,
+                        modifierWithAlign
+                    )
+
+                    is IconComponent -> IconRenderer.Render(
+                        child,
+                        state,
+                        dispatcher
+                    )
+
+                    is ListComponent -> ListRenderer.Render(
+                        child,
+                        state,
+                        dispatcher,
+                        modifierWithAlign
+                    )
+
                     else -> {}
                 }
             }

@@ -37,7 +37,7 @@ object RenderComponent {
         when (component) {
             is TextComponent -> TextRenderer.Render(component, state)
             is ButtonComponent -> ButtonRenderer.Render(component, state, dispatcher)
-            is ImageComponent -> ImageRenderer.Render(component, state)
+            is ImageComponent -> ImageRenderer.Render(component, state, dispatcher)
             is RowComponent -> RowRenderer.Render(component, state, dispatcher)
             is ColumnComponent -> ColumnRenderer.Render(component, state, dispatcher)
             is CheckboxComponent -> CheckboxRenderer.Render(component, state)

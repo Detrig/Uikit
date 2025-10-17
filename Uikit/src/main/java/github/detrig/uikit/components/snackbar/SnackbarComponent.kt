@@ -11,10 +11,10 @@ import kotlinx.serialization.Serializable
 data class SnackbarComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
+    override val actions: List<Action>? = null,
     val text: String,
     val actionText: String? = null,
     val duration: Long = 3000,
-    val actions: List<Action>? = null
 ) : Component()
 
 

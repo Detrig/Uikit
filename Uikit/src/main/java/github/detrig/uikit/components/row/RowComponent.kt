@@ -2,6 +2,7 @@ package github.detrig.uikit.components.row
 
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.utils.ModifierModel
+import github.detrig.uikit.core.Action
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.PolymorphicSerializer
@@ -17,6 +18,7 @@ import kotlinx.serialization.encoding.Encoder
 data class RowComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
+    override val actions: List<Action>? = null,
     val verticalAlignment: String? = null,
     val horizontalArrangement: String? = null,
     @Serializable(with = PolymorphicListSerializer::class)

@@ -1,0 +1,433 @@
+{
+  "_id": "1c24b76b-f646-40d4-84e1-65a613152aa9",
+  "content": [],
+  "bottomBar": [
+    {
+      "type": "box",
+      "_id": "comp-bottombar-mg9v8gqw-1j5nge1kt",
+      "id": "box1",
+      "modifier": {
+        "fillMaxWidth": true,
+        "fillMaxHeight": false,
+        "padding": {
+          "top": 0,
+          "bottom": 0,
+          "start": 16,
+          "end": 16
+        },
+        "size": {
+          "height": "wrap_content"
+        }
+      },
+      "background": "#FFFFFF",
+      "children": [
+        {
+          "type": "row",
+          "_id": "row_ah1i6qib",
+          "modifier": {
+            "background": null,
+            "shadow": {
+              "elevation": 0,
+              "color": "#000000"
+            },
+            "align": "start",
+            "fillMaxWidth": true,
+            "padding": {
+              "end": 0,
+              "top": 0,
+              "bottom": 0,
+              "all": 0,
+              "start": 0
+            },
+            "clip": {
+              "cornerRadius": 0
+            },
+            "alpha": 1,
+            "fillMaxHeight": false,
+            "clickable": false
+          },
+          "verticalAlignment": "centerVertically",
+          "horizontalArrangement": "start",
+          "children": [
+            {
+              "text": "Итого с доставкой:",
+              "style": {
+                "textAlign": "start",
+                "fontStyle": "normal",
+                "letterSpacing": 0,
+                "textDecoration": "none",
+                "overflow": "visible",
+                "fontWeight": "normal",
+                "color": "#000000",
+                "fontSize": 15,
+                "lineHeight": 18
+              },
+              "modifier": {
+                "size": {
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                },
+                "fillMaxWidth": false,
+                "clickable": false,
+                "alpha": 1,
+                "padding": {
+                  "start": 0,
+                  "end": 0,
+                  "top": 0,
+                  "bottom": 0,
+                  "all": 0
+                },
+                "fillMaxHeight": false,
+                "align": "start",
+                "background": null,
+                "clip": {
+                  "cornerRadius": 0
+                },
+                "shadow": {
+                  "elevation": 0,
+                  "color": "#000000"
+                }
+              },
+              "type": "text",
+              "_id": "text_d67i12oq"
+            },
+            {
+              "_id": "spacer_vfr15gwu",
+              "modifier": {
+                "padding": {
+                  "end": 10,
+                  "top": 10,
+                  "bottom": 10,
+                  "all": 5,
+                  "start": 10
+                },
+                "size": {
+                  "height": "wrap_content",
+                  "width": "133"
+                },
+                "background": null,
+                "alpha": 1,
+                "fillMaxWidth": false,
+                "clickable": false,
+                "align": "start",
+                "fillMaxHeight": false,
+                "clip": {
+                  "cornerRadius": 0
+                },
+                "shadow": {
+                  "color": "#000000",
+                  "elevation": 0
+                }
+              },
+              "type": "spacer"
+            },
+            {
+              "modifier": {
+                "fillMaxHeight": false,
+                "background": null,
+                "clip": {
+                  "cornerRadius": 0
+                },
+                "align": "start",
+                "clickable": false,
+                "padding": {
+                  "all": 0,
+                  "start": 10,
+                  "end": 10,
+                  "top": 10,
+                  "bottom": 10
+                },
+                "size": {
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                },
+                "fillMaxWidth": false,
+                "shadow": {
+                  "color": "#000000",
+                  "elevation": 0
+                },
+                "alpha": 1
+              },
+              "type": "text",
+              "_id": "text_bl7e4x7m",
+              "text": "110 687 ₽",
+              "style": {
+                "lineHeight": 18,
+                "fontWeight": "bold",
+                "textAlign": "start",
+                "overflow": "visible",
+                "letterSpacing": 0,
+                "textDecoration": "none",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "color": "#000000"
+              }
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "_id": "row_c5lebzya",
+          "modifier": {
+            "fillMaxHeight": false,
+            "align": "start",
+            "clip": {
+              "cornerRadius": 0
+            },
+            "alpha": 1,
+            "padding": {
+              "bottom": 5,
+              "all": 5,
+              "start": 5,
+              "end": 5,
+              "top": 42
+            },
+            "clickable": false,
+            "shadow": {
+              "elevation": 0,
+              "color": "#000000"
+            },
+            "background": null,
+            "fillMaxWidth": true
+          },
+          "verticalAlignment": "centerVertically",
+          "horizontalArrangement": "start",
+          "children": [
+            {
+              "children": [
+                {
+                  "contentScale": "Fill",
+                  "url": "https://i.ibb.co/JjVHXkn2/Shape-Content.png",
+                  "modifier": {
+                    "alpha": 1,
+                    "shadow": {
+                      "elevation": 0,
+                      "color": "#000000"
+                    },
+                    "clip": {
+                      "cornerRadius": 16
+                    },
+                    "size": {
+                      "width": "52",
+                      "height": "52"
+                    },
+                    "clickable": false,
+                    "fillMaxHeight": false,
+                    "padding": {
+                      "end": 0,
+                      "top": 0,
+                      "bottom": 0,
+                      "all": 0,
+                      "start": 0
+                    },
+                    "background": null,
+                    "align": "start",
+                    "fillMaxWidth": false
+                  },
+                  "type": "image",
+                  "placeholder": null,
+                  "error": null,
+                  "scaleType": null,
+                  "contentDescription": "",
+                  "_id": "image_zksbw734"
+                }
+              ],
+              "type": "column",
+              "_id": "column_aq1j1lfz",
+              "modifier": {
+                "fillMaxHeight": false,
+                "padding": {
+                  "bottom": 0,
+                  "all": 0,
+                  "start": 0,
+                  "end": 0,
+                  "top": 0
+                },
+                "align": "start",
+                "background": null,
+                "size": {
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                },
+                "shadow": {
+                  "elevation": 0,
+                  "color": "#000000"
+                },
+                "clickable": false,
+                "fillMaxWidth": false,
+                "clip": {
+                  "cornerRadius": 0
+                },
+                "alpha": 1
+              },
+              "verticalAlignment": "top",
+              "horizontalArrangement": "start"
+            },
+            {
+              "type": "spacer",
+              "_id": "spacer_sgdy00tt",
+              "modifier": {
+                "shadow": {
+                  "elevation": 0,
+                  "color": "#000000"
+                },
+                "fillMaxWidth": false,
+                "clickable": false,
+                "fillMaxHeight": false,
+                "background": null,
+                "size": {
+                  "height": "20",
+                  "width": "34"
+                },
+                "alpha": 1,
+                "clip": {
+                  "cornerRadius": 0
+                },
+                "align": "start"
+              }
+            },
+            {
+              "actions": [
+                {
+                  "event": "onClick",
+                  "type": "navigate",
+                  "targetId": "make_order"
+                }
+              ],
+              "modifier": {
+                "alpha": 1,
+                "clickable": true,
+                "fillMaxWidth": false,
+                "size": {
+                  "width": "wrap_content",
+                  "height": "wrap_content"
+                },
+                "background": "#141414",
+                "clip": {
+                  "cornerRadius": 16
+                },
+                "fillMaxHeight": false,
+                "align": "start",
+                "shadow": {
+                  "elevation": 0,
+                  "color": "#000000"
+                }
+              },
+              "verticalAlignment": "top",
+              "horizontalArrangement": "start",
+              "children": [
+                {
+                  "style": {
+                    "fontWeight": "normal",
+                    "fontStyle": "normal",
+                    "fontSize": 14,
+                    "textAlign": "center",
+                    "color": "#FFFFFF",
+                    "lineHeight": 18,
+                    "overflow": "visible",
+                    "letterSpacing": 0,
+                    "textDecoration": "none"
+                  },
+                  "modifier": {
+                    "align": "start",
+                    "fillMaxWidth": true,
+                    "background": null,
+                    "fillMaxHeight": false,
+                    "alpha": 1,
+                    "clip": {
+                      "cornerRadius": 0
+                    },
+                    "padding": {
+                      "bottom": 20,
+                      "start": 30,
+                      "end": 30,
+                      "top": 20
+                    },
+                    "shadow": {
+                      "elevation": 0,
+                      "color": "#000000"
+                    },
+                    "clickable": false
+                  },
+                  "type": "text",
+                  "_id": "text_sjq674j1",
+                  "text": "Перейти к оплате"
+                }
+              ],
+              "type": "column",
+              "_id": "column_ex37tva5"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "snackbars": [
+    {
+      "actionText": "Вернуть",
+      "type": "snackbar",
+      "id": "deleteCartItemSnackbar",
+      "text": "Товар удалён из корзины"
+    }
+  ],
+  "type": "screen",
+  "name": "New Screen mg9v8gqw",
+  "background": "#FFFFFF",
+  "topBar": [
+    {
+      "_id": "comp-topbar-mg9v8gqw-1j5nge1kt",
+      "id": "column1",
+      "type": "column",
+      "modifier": {
+        "fillMaxWidth": true,
+        "size": {
+          "height": "wrap_content",
+          "width": "420"
+        },
+        "fillMaxHeight": false
+      },
+      "background": "#FFFFFF",
+      "children": [
+        {
+          "_id": "text_nza1yzhc",
+          "text": "Оформление доставки",
+          "style": {
+            "color": "#000000",
+            "fontStyle": "normal",
+            "fontSize": 16,
+            "lineHeight": 18,
+            "textAlign": "center",
+            "letterSpacing": 0,
+            "fontWeight": "bold",
+            "textDecoration": "none",
+            "overflow": "visible"
+          },
+          "modifier": {
+            "onClick": null,
+            "alpha": 1,
+            "align": "start",
+            "shadow": {
+              "color": "#000000",
+              "elevation": 0
+            },
+            "fillMaxHeight": false,
+            "clip": {
+              "cornerRadius": 0
+            },
+            "fillMaxWidth": true,
+            "padding": {
+              "top": 14,
+              "bottom": 14,
+              "all": 0,
+              "start": 14,
+              "end": 14
+            },
+            "clickable": false,
+            "background": null
+          },
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}

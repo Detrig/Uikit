@@ -1,7 +1,6 @@
 package github.detrig.uikit.components.box
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,14 +20,11 @@ import github.detrig.uikit.components.image.ImageRenderer
 import github.detrig.uikit.components.row.RowComponent
 import github.detrig.uikit.components.row.RowRenderer
 import github.detrig.uikit.components.screen.ScreenState
-import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
-import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.core.ActionDispatcher
-import github.detrig.uikit.core.RenderComponent
 import github.detrig.uikit.custom_components.ListComponent
 import github.detrig.uikit.custom_components.ListRenderer
 
@@ -50,13 +46,13 @@ object BoxRenderer {
                 when (child) {
                     is TextComponent -> TextRenderer.Render(child, state, modifierWithAlign)
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher, modifierWithAlign)
-                    is ImageComponent -> ImageRenderer.Render(child, state, modifierWithAlign)
+                    is ImageComponent -> ImageRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is RowComponent -> RowRenderer.Render(child, state, dispatcher)
                     is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, state, modifierWithAlign)
                     is CardComponent -> CardRenderer.Render(child, state, dispatcher, modifierWithAlign)
-                    is IconComponent -> IconRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    is IconComponent -> IconRenderer.Render(child, state, dispatcher)
                     is ListComponent -> ListRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is BoxComponent -> Render(child, state, dispatcher)
                     else -> {}

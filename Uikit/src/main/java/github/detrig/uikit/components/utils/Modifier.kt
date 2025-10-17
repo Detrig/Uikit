@@ -1,11 +1,13 @@
 package github.detrig.uikit.components.utils
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -13,9 +15,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.serialization.Serializable
+import androidx.core.graphics.toColorInt
 
 @Serializable
 data class ModifierModel(
@@ -26,6 +30,9 @@ data class ModifierModel(
     val fillMaxHeight: Boolean? = null,
     val size: Size? = null,              // width/height
     val padding: Padding? = null,
+    val margin: Margin? = null,
+    val scrollable: Boolean? = null,
+    val border: Border? = null,
     val align: String? = null,           // start, center, end
     val clip: Shape? = null,
     val background: String? = null,
@@ -46,7 +53,20 @@ data class Padding(
     val end: Int? = null,
     val top: Int? = null,
     val bottom: Int? = null,
-    val all: Int? = null
+)
+
+@Serializable
+data class Margin(
+    val start: Int? = null,
+    val end: Int? = null,
+    val top: Int? = null,
+    val bottom: Int? = null,
+)
+
+@Serializable
+data class Border(
+    val color: String? = null,
+    val width: Int? = null
 )
 
 @Serializable
@@ -60,39 +80,19 @@ data class Shadow(
     val color: String? = null
 )
 
-fun ModifierModel.toComposeModifier(): Modifier {
+fun ModifierModel.toComposeModifier(
+    onClick: (() -> Unit)? = null
+): Modifier {
     var modifier: Modifier = Modifier
 
-
-    val widthDp = when (size?.width) {
-        "wrap_content" -> null
-        "match_parent" -> {
-            modifier = modifier.fillMaxWidth()
-            null
-        }
-        else -> size?.width?.toIntOrNull()?.dp
+    //Margin
+    this.margin?.let { margin ->
+        val start = margin.start?.dp ?: 0.dp
+        val end = margin.end?.dp ?: 0.dp
+        val top = margin.top?.dp ?: 0.dp
+        val bottom = margin.bottom?.dp ?: 0.dp
+        modifier = modifier.padding(start = start, end = end, top = top, bottom = bottom)
     }
-
-    val heightDp = when (size?.height) {
-        "wrap_content" -> null
-        "match_parent" -> {
-            modifier = modifier.fillMaxHeight()
-            null
-        }
-        else -> size?.height?.toIntOrNull()?.dp
-    }
-
-    if (widthDp != null || heightDp != null) {
-        modifier = modifier.then(
-            when {
-                widthDp != null && heightDp != null -> Modifier.size(widthDp, heightDp)
-                widthDp != null -> Modifier.width(widthDp)
-                heightDp != null -> Modifier.height(heightDp)
-                else -> Modifier
-            }
-        )
-    }
-
 
     if (this.fillMaxWidth == true) {
         modifier = modifier.fillMaxWidth()
@@ -101,29 +101,51 @@ fun ModifierModel.toComposeModifier(): Modifier {
         modifier = modifier.fillMaxHeight()
     }
 
-    this.padding?.let { padding ->
-        val p = padding.all?.dp ?: 0.dp
-        val start = padding.start?.dp ?: p
-        val end = padding.end?.dp ?: p
-        val top = padding.top?.dp ?: p
-        val bottom = padding.bottom?.dp ?: p
-        modifier = modifier.padding(start = start, end = end, top = top, bottom = bottom)
+    val width = size?.width
+    val height = size?.height
+
+    when (width) {
+        "wrap_content", null -> {} // ничего не делаем — wrap_content
+        else -> width.toIntOrNull()?.dp?.let { modifier = modifier.width(it) }
     }
 
+    when (height) {
+        "wrap_content", null -> {} // ничего не делаем
+        else -> height.toIntOrNull()?.dp?.let { modifier = modifier.height(it) }
+    }
+
+    var cornerShape: RoundedCornerShape? = null
     this.clip?.cornerRadius?.let { radius ->
-        modifier = modifier.clip(RoundedCornerShape(radius.dp))
+        cornerShape = RoundedCornerShape(radius.dp)
+        modifier = modifier.clip(cornerShape)
     }
 
     this.background?.let { colorHex ->
-        modifier = modifier.background(Color(android.graphics.Color.parseColor(colorHex)))
+        modifier = modifier.background(Color(colorHex.toColorInt()))
     }
 
-    if (this.clickable == true) {
-        modifier = modifier.clickable() { /* onClick добавить позже */ }
+    if (clickable == true && onClick != null) {
+        modifier = modifier.clickable(onClick = onClick)
     }
 
     if (this.alpha != null && this.alpha < 1f) {
         modifier = modifier.alpha(this.alpha)
+    }
+
+    this.border?.let { border ->
+        val color = border.color?.let { Color(it.toColorInt()) } ?: Color.Black
+        val width = border.width?.dp ?: 0.dp
+        val shape = cornerShape ?: RoundedCornerShape(0.dp)
+        if (width > 0.dp)
+            modifier = modifier.border(width, color, shape)
+    }
+
+    this.padding?.let { padding ->
+        val start = padding.start?.dp ?: 0.dp
+        val end = padding.end?.dp ?: 0.dp
+        val top = padding.top?.dp ?: 0.dp
+        val bottom = padding.bottom?.dp ?: 0.dp
+        modifier = modifier.padding(start = start, end = end, top = top, bottom = bottom)
     }
 
     return modifier

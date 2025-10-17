@@ -24,6 +24,7 @@ import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.custom_components.ListComponent
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 

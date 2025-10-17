@@ -1,5 +1,6 @@
 package github.detrig.uikit.components.utils
 
+import github.detrig.uikit.core.Action
 import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
 
@@ -8,5 +9,5 @@ import kotlinx.serialization.Serializable
 abstract class Component {
     abstract val id: String?
     abstract val modifier: ModifierModel?
-    //abstract val actions: Map<String, Action>?
+    abstract val actions: List<Action>?
 }

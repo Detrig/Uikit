@@ -1,6 +1,7 @@
-package github.detrig.composetutorial.core
+package github.detrig.composetutorial.core.navigation
 
 import android.util.Log
+import github.detrig.composetutorial.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

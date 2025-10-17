@@ -34,12 +34,8 @@ object UniversalScreen : Screen {
             fetchScreenJson = { screenId -> viewModel.loadScreenJson(screenId) },
             onRetry = { } //viewModel.loadScreenFromJsonString(json) }
         ) { screenComponent ->
-            val dispatcher = remember(screenComponent) {
-                ActionDispatcher(state = ScreenState(screenComponent)) { id ->
-                    viewModel.navigateToScreenById(id)
-                }.apply { registerDefaultActions() }
-            }
-            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), dispatcher)
+
+            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), viewModel.getDispatcher())
         }
     }
 }
