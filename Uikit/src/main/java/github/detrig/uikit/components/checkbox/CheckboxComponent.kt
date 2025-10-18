@@ -13,7 +13,7 @@ data class CheckboxComponent(
     override val modifier: ModifierModel? = null,
     override val actions: List<Action>? = null,
 
-    val isChecked: Boolean = false,
+    var isChecked: Boolean = false,
     val onCheckedChange: String? = null,
     val enabled: Boolean = true,
     val colors: CheckboxColors? = null

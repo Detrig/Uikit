@@ -1,6 +1,6 @@
 package github.detrig.uikit.components.screen
 
-import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.text.TextComponent
@@ -17,20 +17,25 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import android.util.Log
-import androidx.compose.runtime.*
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 class ScreenState(screen: ScreenComponent) {
 
-    private val componentStates = mutableStateMapOf<String, MutableState<Any?>>()
+    private val componentStates = mutableStateMapOf<String, Any?>()
 
+    private val visibleSnackbars = mutableStateMapOf<String, Boolean>()
     private val visibleSheets = mutableStateMapOf<String, Boolean>()
 
     init {
+        Log.d("alz-debug", "ScreenState created for screen: ${screen.id}")
+        updateFrom(screen)
+    }
+
+    fun updateFrom(screen: ScreenComponent) {
+        screen.snackbars.forEach { snackbar ->
+            val id = snackbar.id ?: return@forEach
+            visibleSnackbars[id] = false
+        }
 
         fun traverse(component: Component) {
             val id = component.id ?: return
@@ -48,7 +53,6 @@ class ScreenState(screen: ScreenComponent) {
                 is CardComponent -> component.children.forEach { traverse(it) }
                 is BottomSheetComponent -> component.children.forEach {
                     traverse(it)
-                    Log.d("alz-04", "BottomSheetComponent: $it")
                 }
 
                 is ListComponent -> component.items.forEach { traverse(it) }
@@ -65,48 +69,42 @@ class ScreenState(screen: ScreenComponent) {
         }
     }
 
-    fun getValueState(id: String): MutableState<Any?>? = componentStates[id]
+    fun getValue(id: String?): Any? = id?.let { componentStates[it] }
 
-    fun updateComponent(id: String, value: Any?) {
-        componentStates[id]?.value = value
+    fun updateComponent(id: String?, value: Any?) {
+        if (id != null) componentStates[id] = value
     }
 
     fun getList(id: String?): List<Any>? = id?.let { componentStates[it] as? List<Any> }
 
-    private val snackbars: Map<String, MutableStateFlow<Boolean>> =
-        screen.snackbars.associate { it.id!! to MutableStateFlow(false) }
 
     fun showSnackbar(id: String) {
-        snackbars[id]?.value = true
-        Log.d("alz-04", "snackbars: $id")
+        visibleSnackbars[id] = true
+        Log.d("alz-04", "showSnackbar ${id}")
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000)
-            snackbars[id]?.value = false
+            visibleSnackbars[id] = false
         }
     }
 
     fun hideSnackbar(id: String) {
-        Log.d("alz-04", "hideSnackbar: $id")
-        snackbars[id]?.value = false
+        visibleSnackbars[id] = false
     }
 
-    fun snackbarState(id: String): StateFlow<Boolean>? = snackbars[id]
-
+    fun isSnackbarVisible(id: String): Boolean = visibleSnackbars[id] == true
 
     //Sheet
     fun showSheet(id: String) {
         visibleSheets[id] = true
+        Log.d("alz-04", "showSheet ${id}")
     }
 
     fun hideSheet(id: String) {
         visibleSheets[id] = false
+        Log.d("alz-04", "hideSheet $id")
     }
 
-    @Composable
-    fun sheetVisibleState(id: String): State<Boolean> {
-        val state = remember { derivedStateOf { visibleSheets[id] == true } }
-        Log.d("alz-04", "sheetVisibleState($id) = ${state.value}")
-        return state
-    }
+    fun isSheetVisible(id: String): Boolean = visibleSheets[id] == true
+
 
 }

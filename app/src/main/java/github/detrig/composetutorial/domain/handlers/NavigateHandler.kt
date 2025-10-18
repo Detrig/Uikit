@@ -16,8 +16,9 @@ class NavigateHandler(
         navigation.update(
             when (action.targetId) {
                 //"1c24b76b-f646-40d4-84e1-65a613152aa9" -> CartScreen
-                "76b729c3-9213-49df-91af-25259cc56162" -> CartScreen
-                "3a7c12a5-6cb2-4bc3-bc0e-1549c405b413" -> MakeOrderScreen
+                //"76b729c3-9213-49df-91af-25259cc56162" -> CartScreen
+                CartScreen.SCREEN_ID -> CartScreen
+                MakeOrderScreen.SCREEN_ID -> MakeOrderScreen
                 else -> Screen.Empty
             }
         )

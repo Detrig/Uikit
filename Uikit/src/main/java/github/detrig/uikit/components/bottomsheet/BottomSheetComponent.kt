@@ -10,6 +10,7 @@ import github.detrig.uikit.core.Action
 @Serializable
 @SerialName("bottomSheet")
 data class BottomSheetComponent(
+    @SerialName("_id")
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
 

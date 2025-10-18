@@ -18,14 +18,14 @@ sealed class Action {
     @SerialName("showSnackbar")
     data class ShowSnackbar(
         override val event: ActionEvent,
-        val id: String
+        val targetId: String
     ) : Action()
 
     @Serializable
     @SerialName("showBottomSheet")
     data class ShowBottomSheet(
         override val event: ActionEvent,
-        val id: String
+        val targetId: String
     ) : Action()
 
     @Serializable

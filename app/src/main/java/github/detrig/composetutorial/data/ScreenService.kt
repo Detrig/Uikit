@@ -25,7 +25,6 @@ interface ScreenService {
                 parameter("id", id)
             }
             val body = response.body<String>()
-            Log.d("alz-04", "body: ${body}")
             return body
         }
 
@@ -41,7 +40,7 @@ interface ScreenService {
                         parameter("id", id)
                     }
                 ) {
-
+                    Log.d("alz-04", " client.webSocket observe")
                     for (frame in incoming) {
                         when (frame) {
                             is Frame.Text -> {

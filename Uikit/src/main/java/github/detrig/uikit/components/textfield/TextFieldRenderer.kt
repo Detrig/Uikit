@@ -20,7 +20,7 @@ object TextFieldRenderer {
 
     @Composable
     fun Render(component: TextFieldComponent, state: ScreenState, dispatcher: ActionDispatcher, modifier: Modifier = Modifier) {
-        val value = state.getValueState(component.id ?: "") as? String ?: ""
+        val value = state.getValue(component.id) as? String ?: ""
 
         val color = component.style?.color?.let { Color(it.toColorInt()) } ?: Color.Black
         val fontSize = (component.style?.fontSize ?: 16).sp

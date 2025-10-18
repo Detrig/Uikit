@@ -1,5 +1,6 @@
 package github.detrig.composetutorial.presentation.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import github.detrig.composetutorial.presentation.cart.CartScreen
 import github.detrig.composetutorial.core.navigation.Navigation
@@ -21,6 +22,7 @@ class MainViewModel(
     }
 
     fun init(firstRun: Boolean) {
+        Log.d("alz-debug", "MainViewModel init, firstRun=$firstRun")
         if (firstRun)
             navigation.update(CartScreen)
     }

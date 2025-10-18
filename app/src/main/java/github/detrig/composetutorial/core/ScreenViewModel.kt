@@ -25,61 +25,41 @@ open class ScreenViewModel(
     private val dispatcher: ActionDispatcher
 ) : ViewModel() {
 
-    private val _screenComponent = MutableStateFlow<ScreenComponent?>(null)
+    protected val _screenComponent = MutableStateFlow<ScreenComponent?>(null)
     val screenComponent: StateFlow<ScreenComponent?> = _screenComponent
 
-    private val _screenState = MutableStateFlow<ScreenState?>(null)
+    protected val _screenState = MutableStateFlow<ScreenState?>(null)
     val screenState: StateFlow<ScreenState?> = _screenState
 
-    private val _screenUiState = MutableStateFlow<UiState<ScreenComponent>>(UiState.Initial)
+    protected val _screenUiState = MutableStateFlow<UiState<ScreenComponent>>(UiState.Initial)
     val screenUiState: StateFlow<UiState<ScreenComponent>> = _screenUiState
 
-    /**
-     * Register Handlers for current screen
-     */
-    private fun registerHandlers(state: ScreenState) {
+    protected fun registerHandlers(state: ScreenState) {
         dispatcher.register(Action.ShowSnackbar::class, ShowSnackbarHandler(state))
         dispatcher.register(Action.ShowBottomSheet::class, ShowBottomSheetHandler(state))
     }
 
-    fun getDispatcher(): ActionDispatcher = dispatcher
-
-    fun loadScreenById(screenId: String) {
-        if (_screenComponent.value != null) return
-
-        viewModelScope.launch {
-            try {
-                val json = repository.getScreenJson(screenId)
-                val screen = ScreenParser.parse(json)
-
-                _screenComponent.value = screen
-                val state = ScreenState(screen)
-                _screenState.value = state
-                _screenUiState.value = UiState.Success(screen)
-
-                Log.d("alz-04", "screen bottomSheet: ${screen.bottomSheets}")
-
-                registerHandlers(state)
-                observeScreenUpdates(screenId)
-
-            } catch (e: Exception) {
-                Log.e("alz-04", "Error parsing screen", e)
-                _screenUiState.value = UiState.Error(e.message ?: "Unknown error")
-            }
-        }
-    }
-
-    private fun observeScreenUpdates(screenId: String) {
+    protected fun observeScreenUpdates(screenId: String) {
         viewModelScope.launch {
             repository.observeScreen(screenId).collect { jsonString ->
                 try {
-                    val message = ScreenParser.json.decodeFromString<ReloadScreenMessage>(jsonString)
+                    Log.d("alz-04", "update screen: $screenId")
+                    val message =
+                        ScreenParser.json.decodeFromString<ReloadScreenMessage>(jsonString)
+                    Log.d("alz-04", "message: $message")
                     if (message.data.id == screenId) {
                         val json = repository.getScreenJson(message.data.id)
                         val screen = ScreenParser.parse(json)
-                        _screenComponent.value = screen
-                        _screenState.value = ScreenState(screen)
-                        _screenUiState.value = UiState.Success(screen)
+
+                        if (message.data.id == screenId) {
+                            Log.d(
+                                "alz-04",
+                                "message.data.id == screenId: $message.data.id == screenId\n _screenComponent.value?.id != screen.id: ${_screenComponent.value?.id != screen.id}"
+                            )
+                            _screenComponent.value = screen
+                            _screenState.value?.updateFrom(screen)
+                            _screenUiState.value = UiState.Success(screen)
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e("alz-04", "Error parsing screen update", e)
@@ -88,13 +68,12 @@ open class ScreenViewModel(
         }
     }
 
-    suspend fun loadScreenJson(screenId: String): ScreenComponent? {
-        return try {
+    public suspend fun loadScreenJson(screenId: String): ScreenComponent? =
+        try {
             val json = repository.getScreenJson(screenId)
             ScreenParser.parse(json)
         } catch (e: Exception) {
             Log.e("alz-04", "Error loading screen JSON for $screenId", e)
             null
         }
-    }
 }

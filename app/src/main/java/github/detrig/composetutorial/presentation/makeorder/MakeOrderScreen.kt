@@ -17,7 +17,7 @@ import github.detrig.uikit.core.ActionDispatcher
 
 object MakeOrderScreen : Screen {
     //private const val SCREEN_ID = "76b729c3-9213-49df-91af-25259cc56162"
-    private const val SCREEN_ID = "3a7c12a5-6cb2-4bc3-bc0e-1549c405b413"
+    const val SCREEN_ID = "03213239-75dc-4393-8c88-c95d4c00cd5a"
 
     @Composable
     override fun Show() {
@@ -26,7 +26,7 @@ object MakeOrderScreen : Screen {
         )
 
         LaunchedEffect(Unit) {
-            viewModel.loadScreenById(MakeOrderScreen.SCREEN_ID)
+            viewModel.loadScreen(MakeOrderScreen.SCREEN_ID)
         }
 
         val screenUiState by viewModel.screenUiState.collectAsState()
@@ -36,7 +36,7 @@ object MakeOrderScreen : Screen {
             fetchScreenJson = { screenId -> viewModel.loadScreenJson(screenId) },
             onRetry = { } // { viewModel.loadScreenById(SCREEN_ID) }
         ) { screenComponent ->
-            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), viewModel.getDispatcher())
+            ScreenRenderer.Render(screenComponent, viewModel.makeOrderScreenState.value ?: ScreenState(screenComponent), viewModel.dispatcher)
         }
     }
 }

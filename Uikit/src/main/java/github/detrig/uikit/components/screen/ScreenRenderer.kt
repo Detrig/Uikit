@@ -55,41 +55,42 @@ object ScreenRenderer {
             Color(it.toColorInt())
         } ?: Color.White
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            Scaffold(
-                topBar = {
-                    if (component.topBar.isNotEmpty()) {
-                        component.topBar.forEach { RenderComponent(it, state, dispatcher) }
-                    }
-                },
-                bottomBar = {
-                    if (component.bottomBar.isNotEmpty()) {
-                        component.bottomBar.forEach { RenderComponent(it, state, dispatcher) }
-                    }
-                },
-                snackbarHost = {
+        Scaffold(
+            topBar = {
+                if (component.topBar.isNotEmpty()) {
+                    component.topBar.forEach { RenderComponent(it, state, dispatcher) }
+                }
+            },
+            bottomBar = {
+                if (component.bottomBar.isNotEmpty()) {
+                    component.bottomBar.forEach { RenderComponent(it, state, dispatcher) }
+                }
+            },
+            snackbarHost = {
+                Column {
                     component.snackbars.forEach { snackbar ->
                         RenderComponent(snackbar, state, dispatcher)
                     }
-                },
-                containerColor = backgroundColor
-            ) { paddingValues ->
-                Column(
-                    modifier = Modifier
-                        .padding(paddingValues)
-                        .fillMaxHeight()
-                        .fillMaxWidth()
-                ) {
-                    component.content.forEach {
-                        RenderComponent(it, state, dispatcher)
-                    }
+                }
+            },
+            containerColor = backgroundColor
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+            ) {
+                component.content.forEach {
+                    RenderComponent(it, state, dispatcher)
                 }
             }
-            component.bottomSheets.forEach {
-                RenderComponent(it, state, dispatcher)
-            }
+        }
+        component.bottomSheets.forEach {
+            RenderComponent(it, state, dispatcher)
         }
     }
+
 }
 
 @Composable
@@ -108,7 +109,6 @@ fun RenderComponent(component: Component, state: ScreenState, dispatcher: Action
         is CardComponent -> CardRenderer.Render(component, state, dispatcher)
         is SnackbarComponent -> SnackbarRenderer.Render(component, state, dispatcher)
         is BottomSheetComponent -> {
-            Log.d("alz-04", "RenderComponent: BottomSheet ${component.id}")
             BottomSheetRenderer.Render(component, state, dispatcher)
         }
 

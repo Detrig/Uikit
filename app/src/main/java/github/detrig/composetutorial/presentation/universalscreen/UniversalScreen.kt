@@ -24,7 +24,7 @@ object UniversalScreen : Screen {
                 .viewModel(CartViewModel::class.java)
 
         LaunchedEffect(Unit) {
-            viewModel.loadScreenById(SCREEN_ID)
+            viewModel.loadScreen(SCREEN_ID)
         }
 
         val screenUiState by viewModel.screenUiState.collectAsState()
@@ -35,7 +35,7 @@ object UniversalScreen : Screen {
             onRetry = { } //viewModel.loadScreenFromJsonString(json) }
         ) { screenComponent ->
 
-            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), viewModel.getDispatcher())
+            ScreenRenderer.Render(screenComponent, ScreenState(screenComponent), viewModel.dispatcher)
         }
     }
 }

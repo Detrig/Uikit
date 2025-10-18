@@ -1,7 +1,8 @@
 package github.detrig.uikit.components.bottomsheet
 
-import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -29,7 +30,6 @@ import github.detrig.uikit.components.row.RowRenderer
 import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
-import androidx.compose.runtime.*
 
 
 object BottomSheetRenderer {
@@ -38,45 +38,46 @@ object BottomSheetRenderer {
     @Composable
     fun Render(component: BottomSheetComponent, state: ScreenState, dispatcher: ActionDispatcher) {
         val sheetState = rememberModalBottomSheetState(
-            skipPartiallyExpanded = true
+            skipPartiallyExpanded = false
         )
 
-        val id = component.id ?: return
-        val sheetVisible by state.sheetVisibleState(id)
-        Log.d("alz-04", "Render($id): sheetVisible=$sheetVisible")
+        val sheetVisible = state.isSheetVisible(component.id ?: "")
+        //Log.d("alz-04", "sheetVisible: $sheetVisible")
 
-        LaunchedEffect(sheetVisible) {
-            if (sheetVisible) sheetState.show()
-        }
+        if (sheetVisible) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    //if (component.dismissible) {
+                        state.hideSheet(component.id ?: "")
+                    //}
+                },
+                sheetState = sheetState
+            ) {
+                Column(
+                    modifier = component.modifier?.toComposeModifier() ?: Modifier.fillMaxWidth()
+                ) {
+                    component.children.forEach { child ->
+                        when (child) {
+                            is TextComponent -> TextRenderer.Render(child, dispatcher, state)
+                            is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
+                            is ImageComponent -> ImageRenderer.Render(child, state, dispatcher)
+                            is RowComponent -> RowRenderer.Render(child, state, dispatcher)
+                            is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
+                            is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state)
+                            is SpacerComponent -> {
+                                val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
+                                val finalModifier = child.modifier?.weight?.let { w ->
+                                    baseModifier.then(Modifier.weight(w))
+                                } ?: baseModifier
+                                Spacer(modifier = finalModifier)
+                            }
 
-        ModalBottomSheet(
-            onDismissRequest = {
-                if (component.dismissible) {
-                    state.hideSheet(component.id ?: "")
-                }
-            },
-            sheetState = sheetState
-        ) {
-            component.children.forEach { child ->
-                when (child) {
-                    is TextComponent -> TextRenderer.Render(child, dispatcher, state)
-                    is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
-                    is ImageComponent -> ImageRenderer.Render(child, state, dispatcher)
-                    is RowComponent -> RowRenderer.Render(child, state, dispatcher)
-                    is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
-                    is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state)
-                    is SpacerComponent -> {
-                        val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
-                        val finalModifier = child.modifier?.weight?.let { w ->
-                            baseModifier.then(Modifier.weight(w))
-                        } ?: baseModifier
-                        Spacer(modifier = finalModifier)
+                            is CardComponent -> CardRenderer.Render(child, state, dispatcher)
+                            is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
+                            is IconComponent -> IconRenderer.Render(child, state, dispatcher)
+                            else -> {}
+                        }
                     }
-
-                    is CardComponent -> CardRenderer.Render(child, state, dispatcher)
-                    is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
-                    is IconComponent -> IconRenderer.Render(child, state, dispatcher)
-                    else -> {}
                 }
             }
         }

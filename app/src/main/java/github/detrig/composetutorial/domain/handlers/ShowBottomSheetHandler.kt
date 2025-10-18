@@ -10,6 +10,6 @@ class ShowBottomSheetHandler(
     override fun canHandle(action: Action): Boolean = action is Action.ShowSnackbar
 
     override suspend fun handle(action: Action.ShowBottomSheet) {
-        state.showSheet(action.id)
+        state.showSheet(action.targetId)
     }
 }
