@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,20 +44,21 @@ object SnackbarRenderer {
                     .padding(16.dp)
                     .background(Color(0xFF141414), RoundedCornerShape(32.dp))
                     .padding(horizontal = 16.dp, vertical = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = if (component.actionText.isNullOrEmpty())
+                    Arrangement.Center else Arrangement.SpaceBetween
             ) {
                 Text(
                     component.text,
                     color = Color.White,
-                    modifier = Modifier.weight(1f)
                 )
 
-                component.actionText?.let { actionText ->
+                component.actionText?.takeIf { it.isNotEmpty() }?.let { actionText ->
                     TextButton(
                         modifier = Modifier.background(Color.White, RoundedCornerShape(16.dp)),
                         onClick = {
-//                            component.actions?.forEach { dispatcher.dispatch(it) }
-//                            state.hideSnackbar(component.id ?: "")
+//                        component.actions?.forEach { dispatcher.dispatch(it) }
+//                        state.hideSnackbar(component.id ?: "")
                         }
                     ) {
                         Text(

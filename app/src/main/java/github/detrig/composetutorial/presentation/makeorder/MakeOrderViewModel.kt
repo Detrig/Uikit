@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import github.detrig.composetutorial.presentation.cart.CartScreen
 import github.detrig.composetutorial.core.navigation.Navigation
 import github.detrig.composetutorial.core.ScreenViewModel
+import github.detrig.composetutorial.data.NetworkRepository
 import github.detrig.composetutorial.domain.repository.ScreenRepository
 import github.detrig.composetutorial.ui.theme.common.UiState
 import github.detrig.uikit.components.screen.ScreenState
@@ -15,8 +16,9 @@ import kotlinx.coroutines.launch
 class MakeOrderViewModel(
     private val navigation: Navigation.Mutable,
     val dispatcher: ActionDispatcher,
-    screenRepository: ScreenRepository
-) : ScreenViewModel(navigation, screenRepository, dispatcher) {
+    screenRepository: ScreenRepository,
+    networkRepository: NetworkRepository
+) : ScreenViewModel(navigation, screenRepository, networkRepository, dispatcher) {
 
     private val _makeOrderScreenState = MutableStateFlow<ScreenState?>(null)
     val makeOrderScreenState: StateFlow<ScreenState?> = _makeOrderScreenState

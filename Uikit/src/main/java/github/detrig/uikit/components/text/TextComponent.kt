@@ -9,10 +9,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 @SerialName("text")
 data class TextComponent(
+    @SerialName("_id")
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
     override val actions: List<Action>? = null,
     val style: TextStyle? = null,
-    val text: String? = null,
+    var text: String? = null,
     val format: String? = null,                //  "(%s)"
 ) : Component()

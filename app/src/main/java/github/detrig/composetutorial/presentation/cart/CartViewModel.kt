@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import github.detrig.composetutorial.core.navigation.Navigation
 import github.detrig.composetutorial.core.ScreenViewModel
+import github.detrig.composetutorial.data.NetworkRepository
 import github.detrig.composetutorial.domain.repository.ScreenRepository
 import github.detrig.composetutorial.ui.theme.common.UiState
 import github.detrig.uikit.components.screen.ScreenState
@@ -15,8 +16,9 @@ import kotlinx.coroutines.launch
 class CartViewModel(
     navigation: Navigation.Mutable,
     repository: ScreenRepository,
+    networkRepository: NetworkRepository,
     val dispatcher: ActionDispatcher
-) : ScreenViewModel(navigation, repository, dispatcher) {
+) : ScreenViewModel(navigation, repository, networkRepository, dispatcher) {
 
     private val _cartScreenState = MutableStateFlow<ScreenState?>(null)
     val cartScreenState: StateFlow<ScreenState?> = _cartScreenState

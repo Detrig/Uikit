@@ -13,7 +13,7 @@ data class TextFieldComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
     override val actions: List<Action>? = null,
-    val value: String? = null,               // начальное значение
+    var value: String? = null,               // начальное значение
     val placeholder: String? = null,
     val enabled: Boolean = true,
     val singleLine: Boolean = true,

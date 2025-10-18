@@ -11,6 +11,7 @@ class CartModule(private val core: Core) : Module<CartViewModel> {
         return CartViewModel(
             core.navigation(),
             core.screenRepository(),
+            core.networkRepository(),
             core.actionDispatcher()
         )
     }

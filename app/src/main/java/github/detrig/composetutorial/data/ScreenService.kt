@@ -36,9 +36,6 @@ interface ScreenService {
                     host = "31.56.205.210",
                     port = 8080,
                     path = "/ws",
-                    request = {
-                        parameter("id", id)
-                    }
                 ) {
                     Log.d("alz-04", " client.webSocket observe")
                     for (frame in incoming) {

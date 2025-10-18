@@ -13,7 +13,7 @@ data class ImageComponent(
     override val modifier: ModifierModel? = null,
     override val actions: List<Action>? = null,
 
-    val url: String? = null,
+    var url: String? = null,
     val contentDescription: String? = null,
     val contentScale: ContentScaleType? = null,
     val placeholder: String? = null,

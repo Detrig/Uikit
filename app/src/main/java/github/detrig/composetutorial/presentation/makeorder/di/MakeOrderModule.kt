@@ -11,7 +11,8 @@ class MakeOrderModule(private val core: Core) : Module<MakeOrderViewModel> {
         return MakeOrderViewModel(
             core.navigation(),
             core.actionDispatcher(),
-            core.screenRepository()
+            core.screenRepository(),
+            core.networkRepository()
         )
     }
 }

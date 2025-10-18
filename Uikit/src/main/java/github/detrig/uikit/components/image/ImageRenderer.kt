@@ -29,7 +29,6 @@ object ImageRenderer {
                 .crossfade(true)
                 .listener(
                     onError = { request, throwable ->
-                        Log.e("alz-img", "Load error: ${throwable.throwable.message}")
                     },
                     onSuccess = { _, _ ->
                     }

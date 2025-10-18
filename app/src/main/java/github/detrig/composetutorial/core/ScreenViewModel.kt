@@ -4,11 +4,14 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import github.detrig.composetutorial.core.navigation.Navigation
+import github.detrig.composetutorial.data.NetworkRepository
+import github.detrig.composetutorial.domain.handlers.FetchDataHandler
 import github.detrig.composetutorial.domain.handlers.NavigateHandler
 import github.detrig.composetutorial.domain.handlers.ShowBottomSheetHandler
 import github.detrig.composetutorial.domain.handlers.ShowSnackbarHandler
 import github.detrig.composetutorial.domain.model.ReloadScreenMessage
 import github.detrig.composetutorial.domain.repository.ScreenRepository
+import github.detrig.composetutorial.domain.responseProcessors.CartItemsProcessor
 import github.detrig.composetutorial.ui.theme.common.UiState
 import github.detrig.uikit.components.screen.ScreenComponent
 import github.detrig.uikit.components.screen.ScreenParser
@@ -22,6 +25,7 @@ import kotlinx.coroutines.launch
 open class ScreenViewModel(
     private val navigation: Navigation.Mutable,
     private val repository: ScreenRepository,
+    private val networkRepository: NetworkRepository,
     private val dispatcher: ActionDispatcher
 ) : ViewModel() {
 
@@ -37,6 +41,16 @@ open class ScreenViewModel(
     protected fun registerHandlers(state: ScreenState) {
         dispatcher.register(Action.ShowSnackbar::class, ShowSnackbarHandler(state))
         dispatcher.register(Action.ShowBottomSheet::class, ShowBottomSheetHandler(state))
+        dispatcher.register(
+            Action.FetchData::class,
+            FetchDataHandler(
+                networkRepository,
+                dispatcher,
+                state,
+                processors = listOf(CartItemsProcessor()), //Можно добавить другие processors
+                screenComponent = _screenComponent.value
+            )
+        )
     }
 
     protected fun observeScreenUpdates(screenId: String) {
