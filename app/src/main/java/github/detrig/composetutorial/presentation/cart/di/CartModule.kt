@@ -10,8 +10,9 @@ class CartModule(private val core: Core) : Module<CartViewModel> {
     override fun viewModel(): CartViewModel {
         return CartViewModel(
             core.navigation(),
-            core.navigationHandler(),
-            core.screenRepository()
+            core.screenRepository(),
+            core.networkRepository(),
+            core.actionDispatcher()
         )
     }
 }

@@ -14,23 +14,19 @@ import github.detrig.uikit.R
 import github.detrig.uikit.components.utils.toComposeModifier
 import java.util.Locale
 import androidx.core.graphics.toColorInt
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 
 
 object IconRenderer {
 
     @Composable
-    fun Render(component: IconComponent, state: ScreenState? = null, dispatcher: ActionDispatcher? = null, modifier: Modifier = Modifier) {
-        val modifier = (component.modifier?.toComposeModifier() ?: Modifier)
-            .let { base ->
-                if (component.actions != null && component.actions.isNotEmpty()) {
-                    base.clickable {
-                        component.actions.forEach { dispatcher?.dispatch(it) }
-                    }
-                } else base
-            }
-
+    fun Render(component: IconComponent, state: ScreenState? = null, dispatcher: ActionDispatcher) {
+        val onClick = if (component.actions?.any { it.event == ActionEvent.OnClick } == true) {
+            { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) }
+        } else null
 
         val iconName = component.icon?.lowercase(Locale.getDefault())
         val vector: ImageVector? = when (iconName) {
@@ -49,14 +45,14 @@ object IconRenderer {
             Icon(
                 imageVector = vector,
                 contentDescription = component.contentDescription,
-                modifier = modifier,
+                modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier),
                 tint = tintColor
             )
         } else {
             Icon(
                 painter = painterResource(id = R.drawable.img_1),
                 contentDescription = component.contentDescription,
-                modifier = modifier,
+                modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier),
                 tint = tintColor
             )
         }

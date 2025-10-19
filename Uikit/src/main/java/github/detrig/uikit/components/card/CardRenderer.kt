@@ -24,20 +24,23 @@ import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.image.ImageRenderer
 import github.detrig.uikit.components.row.RowComponent
 import github.detrig.uikit.components.row.RowRenderer
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.core.ActionDispatcher
-import github.detrig.uikit.custom_components.ListComponent
-import github.detrig.uikit.custom_components.ListRenderer
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListRenderer
+import github.detrig.uikit.states.DataState
 
 object CardRenderer {
 
     @Composable
-    fun Render(component: CardComponent, state: ScreenState, dispatcher: ActionDispatcher, modifier: Modifier = Modifier) {
+    fun Render(component: CardComponent, state: ScreenState, dataState: DataState, dispatcher: ActionDispatcher, modifier: Modifier = Modifier) {
         val elevation = (component.elevation ?: 0).dp
         val shape = component.shape?.cornerRadius?.let { RoundedCornerShape(it.dp) }
             ?: RoundedCornerShape(0.dp)
@@ -45,21 +48,22 @@ object CardRenderer {
 
         Card(
             modifier = (component.modifier?.toComposeModifier() ?: Modifier),
+            onClick = { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) },
             elevation = CardDefaults.cardElevation(defaultElevation = elevation),
             shape = shape,
             colors = CardDefaults.cardColors(containerColor = backgroundColor)
         ) {
             component.children.forEach { child ->
                 when (child) {
-                    is TextComponent -> TextRenderer.Render(child, state)
+                    is TextComponent -> TextRenderer.Render(child, dispatcher, state)
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
-                    is ImageComponent -> ImageRenderer.Render(child, state)
+                    is ImageComponent -> ImageRenderer.Render(child, state, dispatcher)
                     is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher)
-                    is RowComponent -> RowRenderer.Render(child, state, dispatcher)
-                    is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
-                    is CheckboxComponent -> CheckboxRenderer.Render(child, state)
+                    is RowComponent -> RowRenderer.Render(child, state, dataState, dispatcher)
+                    is ColumnComponent -> ColumnRenderer.Render(child, state, dataState, dispatcher)
+                    is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state)
                     is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
-                    is ListComponent -> ListRenderer.Render(child, state, dispatcher)
+                    is ListComponent -> ListRenderer.Render(child, state, dataState, dispatcher)
                     is SpacerComponent -> {
                         val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
                         val finalModifier = child.modifier?.weight?.let { w ->
@@ -68,7 +72,7 @@ object CardRenderer {
                         Spacer(modifier = finalModifier)
                     }
 
-                    is CardComponent -> Render(child, state, dispatcher)
+                    is CardComponent -> Render(child, state, dataState, dispatcher)
                     is IconComponent -> IconRenderer.Render(child, state, dispatcher)
                     else -> {}
                 }

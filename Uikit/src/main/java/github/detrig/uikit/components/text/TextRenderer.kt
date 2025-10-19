@@ -8,19 +8,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
+import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 
 object TextRenderer {
 
     @Composable
     fun Render(
         component: TextComponent,
+        dispatcher: ActionDispatcher,
         state: ScreenState,
-        modifier: Modifier = Modifier // новый параметр
+        modifier: Modifier = Modifier
     ) {
         val color = component.style?.color?.let { Color(it.toColorInt()) } ?: Color.Black
         val fontSize = (component.style?.fontSize ?: 16).sp
@@ -39,6 +44,10 @@ object TextRenderer {
             else -> TextAlign.Start
         }
 
+        val onClick = if (component.actions?.any { it.event == ActionEvent.OnClick } == true) {
+            { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) }
+        } else null
+
         Text(
             text = component.text ?: "",
             color = color,
@@ -53,7 +62,7 @@ object TextRenderer {
             },
             lineHeight = component.style?.lineHeight?.sp ?: TextUnit.Unspecified,
             letterSpacing = component.style?.letterSpacing?.sp ?: TextUnit.Unspecified,
-            modifier = (component.modifier?.toComposeModifier() ?: Modifier),
+            modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier),
             textAlign = textAlign
         )
     }

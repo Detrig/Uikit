@@ -11,9 +11,9 @@ import kotlinx.serialization.Serializable
 data class IconComponent(
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
+    override val actions: List<Action>? = null,
 
     val icon: String? = null,
     val contentDescription: String? = null,
     val tint: String? = null,
-    val actions: List<Action>? = null
 ) : Component()

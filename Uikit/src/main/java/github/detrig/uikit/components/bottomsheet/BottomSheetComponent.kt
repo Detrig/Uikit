@@ -5,10 +5,12 @@ import github.detrig.uikit.components.utils.ModifierModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import github.detrig.uikit.components.row.PolymorphicListSerializer
+import github.detrig.uikit.core.Action
 
 @Serializable
 @SerialName("bottomSheet")
 data class BottomSheetComponent(
+    @SerialName("_id")
     override val id: String? = null,
     override val modifier: ModifierModel? = null,
 
@@ -16,6 +18,7 @@ data class BottomSheetComponent(
     val children: List<Component> = emptyList(),
 
     val dismissible: Boolean = true // можно ли закрыть тапом снаружи
+    , override val actions: List<Action>? = null
 ) : Component()
 
 

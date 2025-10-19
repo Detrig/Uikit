@@ -1,6 +1,7 @@
-package github.detrig.composetutorial.core
+package github.detrig.composetutorial.core.navigation
 
 import android.util.Log
+import github.detrig.composetutorial.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -24,7 +25,6 @@ interface Navigation {
         override fun screen(): StateFlow<Screen> = state
 
         override fun comeback() : Boolean {
-            Log.d("alz-04", "list: $list")
             val canComeback = list.isNotEmpty()
             if (canComeback) {
                 list.removeAt(list.size - 1)

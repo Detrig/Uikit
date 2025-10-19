@@ -5,7 +5,6 @@ import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.card.CardComponent
 import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.column.ColumnComponent
-import android.util.Log
 import github.detrig.uikit.components.icon.IconComponent
 import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.row.RowComponent
@@ -21,9 +20,10 @@ import kotlinx.serialization.json.jsonPrimitive
 import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.snackbar.SnackbarComponent
 import github.detrig.uikit.components.textfield.TextFieldComponent
-import github.detrig.uikit.custom_components.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 
@@ -66,6 +66,7 @@ object ScreenParser {
         val topBar = parseComponents(jsonObj["topBar"]?.jsonArray)
         val bottomBar = parseComponents(jsonObj["bottomBar"]?.jsonArray)
         val snackbars = parseComponents(jsonObj["snackbars"]?.jsonArray)
+        val bottomSheets = parseComponents(jsonObj["bottomSheets"]?.jsonArray)
         val content: List<Component> = json.decodeFromJsonElement(
             ListSerializer(PolymorphicSerializer(Component::class)),
             jsonObj["content"]!!
@@ -78,6 +79,7 @@ object ScreenParser {
             topBar = topBar,
             bottomBar = bottomBar,
             snackbars = snackbars,
+            bottomSheets = bottomSheets,
             content = content,
             modifier = jsonObj["modifier"]?.let {
                 json.decodeFromJsonElement(ModifierModel.serializer(), it)
