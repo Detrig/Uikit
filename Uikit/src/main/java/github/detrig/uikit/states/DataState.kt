@@ -9,7 +9,6 @@ class DataState {
 
     fun getList(key: String): List<JsonObject>? = dataMap[key]
     fun setList(key: String, list: List<JsonObject>) {
-        Log.d("alz-04", "key: $key")
         dataMap[key] = list
     }
 }

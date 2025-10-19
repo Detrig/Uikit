@@ -21,7 +21,6 @@ import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.snackbar.SnackbarComponent
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.universal_lazy_list.ListComponent
-import github.detrig.uikit.custom_components.lazy_column.LazyColumnComponent
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
@@ -41,7 +40,6 @@ object ScreenParser {
             subclass(ColumnComponent::class, ColumnComponent.serializer())
             subclass(CardComponent::class, CardComponent.serializer())
             subclass(CheckboxComponent::class, CheckboxComponent.serializer())
-            subclass(LazyColumnComponent::class, LazyColumnComponent.serializer())
             subclass(SpacerComponent::class, SpacerComponent.serializer())
             subclass(IconComponent::class, IconComponent.serializer())
             subclass(SnackbarComponent::class, SnackbarComponent.serializer())

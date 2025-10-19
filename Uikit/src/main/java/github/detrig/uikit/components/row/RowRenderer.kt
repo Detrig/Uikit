@@ -83,7 +83,7 @@ object RowRenderer {
                     is ImageComponent -> ImageRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is RowComponent -> Render(child, state, dataState, dispatcher)
-                    //is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
+                    is ColumnComponent -> ColumnRenderer.Render(child, state, dataState, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state, modifierWithAlign)
                     is IconComponent -> IconRenderer.Render(child, state, dispatcher)
                     is BoxComponent -> BoxRenderer.Render(child, state, dispatcher, modifierWithAlign)

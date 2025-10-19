@@ -35,6 +35,14 @@ sealed class Action {
         val endpoint: String,
         val targetId: String
     ) : Action()
+
+    @Serializable
+    @SerialName("set_value")
+    data class SetValue(
+        override val event: ActionEvent,
+        val targetId: String,
+        val value: String
+    ) : Action()
 }
 
 @Serializable

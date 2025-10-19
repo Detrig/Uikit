@@ -28,9 +28,6 @@ object SnackbarRenderer {
     fun Render(component: SnackbarComponent, state: ScreenState, dispatcher: ActionDispatcher) {
         val visible = state.isSnackbarVisible(component.id ?: "")
 
-        LaunchedEffect(visible) {
-            Log.d("alz-04", "Composable for ${component.id} observed visible=$visible")
-        }
 
         AnimatedVisibility(
             visible = visible,

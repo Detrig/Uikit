@@ -37,7 +37,6 @@ interface ScreenService {
                     port = 8080,
                     path = "/ws",
                 ) {
-                    Log.d("alz-04", " client.webSocket observe")
                     for (frame in incoming) {
                         when (frame) {
                             is Frame.Text -> {
@@ -45,7 +44,6 @@ interface ScreenService {
                                 trySend(update)
                             }
                             is Frame.Close -> {
-                                Log.d("alz-04", "WebSocket закрыт: ${frame.readReason()}")
                                 break
                             }
                             else -> Unit
@@ -53,11 +51,11 @@ interface ScreenService {
                     }
                 }
             } catch (e: Exception) {
-                Log.e("alz-04", "Ошибка WebSocket: ${e.message}")
+                Log.e("alz-debug", "Error WebSocket: ${e.message}")
             }
 
             awaitClose {
-                Log.d("alz-04", "WebSocket закрыт локально для id=$id")
+                Log.d("alz-debug", "WebSocket is close locally for id=$id")
             }
         }
     }

@@ -23,8 +23,6 @@ import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.core.ActionDispatcher
-import github.detrig.uikit.custom_components.CartItemComponent
-import github.detrig.uikit.custom_components.CartItemRenderer
 import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import github.detrig.uikit.components.universal_lazy_list.ListRenderer
 import github.detrig.uikit.states.DataState
@@ -44,7 +42,6 @@ object ComponentRenderer {
             is CardComponent -> CardRenderer.Render(component, state, dataState, dispatcher)
             is BoxComponent -> BoxRenderer.Render(component, state, dispatcher)
             is IconComponent -> IconRenderer.Render(component, state, dispatcher)
-            is CartItemComponent -> CartItemRenderer.Render(component, state, dispatcher)
             is ListComponent -> ListRenderer.Render(component, state, dataState, dispatcher)
             else -> {}
         }

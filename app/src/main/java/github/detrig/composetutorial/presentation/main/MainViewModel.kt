@@ -7,13 +7,15 @@ import github.detrig.composetutorial.core.navigation.Navigation
 import github.detrig.composetutorial.core.Screen
 import github.detrig.composetutorial.domain.handlers.NavigateHandler
 import github.detrig.composetutorial.domain.handlers.ShowSnackbarHandler
+import github.detrig.uikit.components.utils.SetValueHandler
 import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.states.ScreenState
 import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel(
     private val navigation: Navigation.Mutable,
-    private val dispatcher: ActionDispatcher
+    private val dispatcher: ActionDispatcher,
 ) : ViewModel(), Navigation.Read {
 
     init {

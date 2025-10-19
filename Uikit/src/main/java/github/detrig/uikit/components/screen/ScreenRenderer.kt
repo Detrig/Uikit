@@ -40,8 +40,6 @@ import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import github.detrig.uikit.components.universal_lazy_list.ListRenderer
 import github.detrig.uikit.core.ActionEvent
 import github.detrig.uikit.core.performActionsForEvent
-import github.detrig.uikit.custom_components.lazy_column.LazyColumnComponent
-import github.detrig.uikit.custom_components.lazy_column.LazyColumnRenderer
 import github.detrig.uikit.states.DataState
 import github.detrig.uikit.states.ScreenState
 
@@ -52,7 +50,7 @@ object ScreenRenderer {
             Color(it.toColorInt())
         } ?: Color.White
 
-        LaunchedEffect(component) {
+        LaunchedEffect(component.id) {
             component.performActionsForEvent(ActionEvent.OnScreenInitialized, dispatcher)
         }
 
@@ -107,7 +105,6 @@ fun RenderComponent(component: Component, state: ScreenState, dataState: DataSta
         is BoxComponent -> BoxRenderer.Render(component, state, dispatcher)
         is ColumnComponent -> ColumnRenderer.Render(component, state, dataState, dispatcher)
         is ListComponent -> ListRenderer.Render(component, state, dataState, dispatcher)
-        is LazyColumnComponent -> LazyColumnRenderer.Render(component, state, dataState, dispatcher)
         is CardComponent -> CardRenderer.Render(component, state, dataState, dispatcher)
         is SnackbarComponent -> SnackbarRenderer.Render(component, state, dispatcher)
         is BottomSheetComponent -> {

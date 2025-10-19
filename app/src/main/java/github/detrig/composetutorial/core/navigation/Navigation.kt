@@ -25,7 +25,6 @@ interface Navigation {
         override fun screen(): StateFlow<Screen> = state
 
         override fun comeback() : Boolean {
-            Log.d("alz-04", "list: $list")
             val canComeback = list.isNotEmpty()
             if (canComeback) {
                 list.removeAt(list.size - 1)

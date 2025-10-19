@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import github.detrig.uikit.core.DataBinder
 import github.detrig.uikit.components.screen.ScreenParser
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.states.ScreenState
@@ -22,6 +23,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
 object ListRenderer {
+
     @Composable
     fun Render(
         component: ListComponent,
@@ -40,39 +42,19 @@ object ListRenderer {
         ) {
             items(items.size) { index ->
                 val itemData = items[index]
-                Log.d("alz-04", "itemData $itemData")
-                val filledTemplate = substituteDataFromJson(component.template[0], itemData)
+
+                val templateJson = component.template[0]
+
+                val templateComponent = ScreenParser.json.decodeFromJsonElement(
+                    Component.serializer(),
+                    templateJson
+                )
+
+                val filledTemplate = DataBinder.bindData(templateComponent, itemData)
 
                 ComponentRenderer.Render(filledTemplate, state, dataState, dispatcher)
             }
         }
     }
 
-    fun substituteDataFromJson(template: JsonObject, data: JsonObject): Component {
-        val substituted = substituteInJson(template, data)
-        return ScreenParser.json.decodeFromJsonElement(Component.serializer(), substituted)
-    }
-
-    /**
-     * Рекурсивная подстановка значений из data в шаблон
-     */
-    private fun substituteInJson(element: JsonElement, data: JsonObject): JsonElement {
-        return when (element) {
-            is JsonObject -> JsonObject(
-                element.mapValues { (_, v) -> substituteInJson(v, data) }
-            )
-
-            is JsonArray -> JsonArray(element.map { substituteInJson(it, data) })
-            is JsonPrimitive -> {
-                if (element.isString && element.content.startsWith("$")) {
-                    val key = element.content.removePrefix("$")
-                    data[key] ?: JsonPrimitive("") // если нет значения — пустая строка
-                } else {
-                    element
-                }
-            }
-
-            else -> element
-        }
-    }
 }

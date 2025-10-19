@@ -19,10 +19,10 @@ class FetchDataHandler(
     override suspend fun handle(action: Action.FetchData) {
         try {
             val response = repository.fetch(action.endpoint)
-            Log.d("alz-04", "response: $response")
+
             val dataJson = Json.parseToJsonElement(response).jsonObject
             val items = dataJson["items"]?.jsonArray?.map { it.jsonObject } ?: emptyList()
-            Log.d("alz-04", "items: $items")
+
             dataState.setList(action.targetId, items)
 
         } catch (e: Exception) {

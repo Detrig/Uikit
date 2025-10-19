@@ -13,6 +13,7 @@ import github.detrig.composetutorial.domain.repository.ScreenRepository
 import github.detrig.composetutorial.ui.theme.common.UiState
 import github.detrig.uikit.components.screen.ScreenComponent
 import github.detrig.uikit.components.screen.ScreenParser
+import github.detrig.uikit.components.utils.SetValueHandler
 import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.ActionDispatcher
@@ -39,6 +40,7 @@ open class ScreenViewModel(
 
     protected fun registerHandlers(state: ScreenState, dataState: DataState) {
         dispatcher.register(Action.ShowSnackbar::class, ShowSnackbarHandler(state))
+        dispatcher.register(Action.SetValue::class, SetValueHandler(state))
         dispatcher.register(Action.ShowBottomSheet::class, ShowBottomSheetHandler(state))
         dispatcher.register(
             Action.FetchData::class,
@@ -53,19 +55,13 @@ open class ScreenViewModel(
         viewModelScope.launch {
             repository.observeScreen(screenId).collect { jsonString ->
                 try {
-                    Log.d("alz-04", "update screen: $screenId")
                     val message =
                         ScreenParser.json.decodeFromString<ReloadScreenMessage>(jsonString)
-                    Log.d("alz-04", "message: $message")
                     if (message.data.id == screenId) {
                         val json = repository.getScreenJson(message.data.id)
                         val screen = ScreenParser.parse(json)
 
                         if (message.data.id == screenId) {
-                            Log.d(
-                                "alz-04",
-                                "message.data.id == screenId: $message.data.id == screenId\n _screenComponent.value?.id != screen.id: ${_screenComponent.value?.id != screen.id}"
-                            )
                             _screenComponent.value = screen
                             _screenState.value?.updateFrom(screen)
                             _screenUiState.value = UiState.Success(screen)

@@ -1,6 +1,7 @@
 package github.detrig.uikit.states
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -29,7 +30,6 @@ class ScreenState(screen: ScreenComponent) {
     private val visibleSheets = mutableStateMapOf<String, Boolean>()
 
     init {
-        Log.d("alz-debug", "ScreenState created for screen: ${screen.id}")
         updateFrom(screen)
     }
 
@@ -85,7 +85,6 @@ class ScreenState(screen: ScreenComponent) {
 
     fun showSnackbar(id: String) {
         visibleSnackbars[id] = true
-        Log.d("alz-04", "showSnackbar ${id}")
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000)
             visibleSnackbars[id] = false
@@ -101,15 +100,28 @@ class ScreenState(screen: ScreenComponent) {
     //Sheet
     fun showSheet(id: String) {
         visibleSheets[id] = true
-        Log.d("alz-04", "showSheet ${id}")
     }
 
     fun hideSheet(id: String) {
         visibleSheets[id] = false
-        Log.d("alz-04", "hideSheet $id")
     }
 
     fun isSheetVisible(id: String): Boolean = visibleSheets[id] == true
 
 
+    fun updateValue(id: String?, newValue: Any?) {
+        if (id == null) return
+        val state = componentStates[id]
+        if (state is MutableState<*>) {
+            when (state.value) {
+                is String -> (state as MutableState<String>).value = newValue.toString()
+                is Boolean -> (state as MutableState<Boolean>).value = newValue.toString().toBooleanStrictOrNull() ?: false
+                is Int -> (state as MutableState<Int>).value = newValue.toString().toIntOrNull() ?: 0
+                is Double -> (state as MutableState<Double>).value = newValue.toString().toDoubleOrNull() ?: 0.0
+                else -> (state as MutableState<Any?>).value = newValue
+            }
+        } else {
+            componentStates[id] = mutableStateOf(newValue)
+        }
+    }
 }

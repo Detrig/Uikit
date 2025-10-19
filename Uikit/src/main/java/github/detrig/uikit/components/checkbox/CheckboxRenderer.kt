@@ -37,9 +37,9 @@ object CheckboxRenderer {
         Checkbox(
             checked = checked,
             onCheckedChange = { newValue ->
-                checked = newValue // обновляем Compose-состояние
+                checked = newValue
                 component.isChecked = newValue
-                //onClick?.invoke() // если есть действия на клик — вызываем
+                component.performActionsForEvent(ActionEvent.OnValueChange, dispatcher)
             },
             enabled = component.enabled,
             colors = CheckboxDefaults.colors(
