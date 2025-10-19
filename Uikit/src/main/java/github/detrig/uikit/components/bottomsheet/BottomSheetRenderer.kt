@@ -10,7 +10,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
 import github.detrig.uikit.components.box.BoxComponent
@@ -32,13 +32,14 @@ import github.detrig.uikit.components.row.RowRenderer
 import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
+import github.detrig.uikit.states.DataState
 
 
 object BottomSheetRenderer {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun Render(component: BottomSheetComponent, state: ScreenState, dispatcher: ActionDispatcher) {
+    fun Render(component: BottomSheetComponent, state: ScreenState, dataState: DataState, dispatcher: ActionDispatcher) {
         val sheetState = rememberModalBottomSheetState(
             skipPartiallyExpanded = false
         )
@@ -64,8 +65,8 @@ object BottomSheetRenderer {
                             is TextComponent -> TextRenderer.Render(child, dispatcher, state)
                             is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher)
                             is ImageComponent -> ImageRenderer.Render(child, state, dispatcher)
-                            is RowComponent -> RowRenderer.Render(child, state, dispatcher)
-                            is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
+                            is RowComponent -> RowRenderer.Render(child, state, dataState, dispatcher)
+                            is ColumnComponent -> ColumnRenderer.Render(child, state, dataState, dispatcher)
                             is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state)
                             is SpacerComponent -> {
                                 val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
@@ -75,7 +76,7 @@ object BottomSheetRenderer {
                                 Spacer(modifier = finalModifier)
                             }
 
-                            is CardComponent -> CardRenderer.Render(child, state, dispatcher)
+                            is CardComponent -> CardRenderer.Render(child, state, dataState, dispatcher)
                             is BoxComponent -> BoxRenderer.Render(child, state, dispatcher)
                             is IconComponent -> IconRenderer.Render(child, state, dispatcher)
                             else -> {}

@@ -11,6 +11,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @SerialName("screen")
 data class ScreenComponent(
+    @SerialName("_id")
     override val id: String?,
     override val modifier: ModifierModel?,
     override val actions: List<Action>? = null,

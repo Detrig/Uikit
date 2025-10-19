@@ -32,7 +32,8 @@ sealed class Action {
     @SerialName("fetch_data")
     data class FetchData(
         override val event: ActionEvent,
-        val endpoint: String
+        val endpoint: String,
+        val targetId: String
     ) : Action()
 }
 
@@ -40,6 +41,9 @@ sealed class Action {
 enum class ActionEvent {
     @SerialName("onClick")
     OnClick,
+
+    @SerialName("onScreenInitialized")
+    OnScreenInitialized,
 
     @SerialName("onLongClick")
     OnLongClick,

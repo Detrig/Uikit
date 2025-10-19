@@ -22,7 +22,7 @@ import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.image.ImageRenderer
 import github.detrig.uikit.components.row.RowComponent
 import github.detrig.uikit.components.row.RowRenderer
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.components.spacer.SpacerComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
@@ -34,11 +34,12 @@ import github.detrig.uikit.core.ActionEvent
 import github.detrig.uikit.core.performActionsForEvent
 import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import github.detrig.uikit.components.universal_lazy_list.ListRenderer
+import github.detrig.uikit.states.DataState
 
 object ColumnRenderer {
 
     @Composable
-    fun Render(component: ColumnComponent, state: ScreenState, dispatcher: ActionDispatcher) {
+    fun Render(component: ColumnComponent, state: ScreenState, dataState: DataState, dispatcher: ActionDispatcher) {
         val onClick = if (component.actions?.any { it.event == ActionEvent.OnClick } == true) {
             { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) }
         } else null
@@ -93,8 +94,8 @@ object ColumnRenderer {
                         modifierWithAlign
                     )
 
-                    is RowComponent -> RowRenderer.Render(child, state, dispatcher)
-                    is ColumnComponent -> Render(child, state, dispatcher)
+                    is RowComponent -> RowRenderer.Render(child, state, dataState, dispatcher)
+                    is ColumnComponent -> Render(child, state, dataState, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state, modifierWithAlign)
                     is SpacerComponent -> {
                         val baseModifier = child.modifier?.toComposeModifier() ?: Modifier
@@ -107,6 +108,7 @@ object ColumnRenderer {
                     is CardComponent -> CardRenderer.Render(
                         child,
                         state,
+                        dataState,
                         dispatcher,
                         modifierWithAlign
                     )
@@ -127,8 +129,8 @@ object ColumnRenderer {
                     is ListComponent -> ListRenderer.Render(
                         child,
                         state,
-                        dispatcher,
-                        modifierWithAlign
+                        dataState,
+                        dispatcher
                     )
 
                     else -> {}

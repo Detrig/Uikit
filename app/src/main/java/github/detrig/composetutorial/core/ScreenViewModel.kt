@@ -6,18 +6,17 @@ import androidx.lifecycle.viewModelScope
 import github.detrig.composetutorial.core.navigation.Navigation
 import github.detrig.composetutorial.data.NetworkRepository
 import github.detrig.composetutorial.domain.handlers.FetchDataHandler
-import github.detrig.composetutorial.domain.handlers.NavigateHandler
 import github.detrig.composetutorial.domain.handlers.ShowBottomSheetHandler
 import github.detrig.composetutorial.domain.handlers.ShowSnackbarHandler
 import github.detrig.composetutorial.domain.model.ReloadScreenMessage
 import github.detrig.composetutorial.domain.repository.ScreenRepository
-import github.detrig.composetutorial.domain.responseProcessors.CartItemsProcessor
 import github.detrig.composetutorial.ui.theme.common.UiState
 import github.detrig.uikit.components.screen.ScreenComponent
 import github.detrig.uikit.components.screen.ScreenParser
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.states.DataState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -38,17 +37,14 @@ open class ScreenViewModel(
     protected val _screenUiState = MutableStateFlow<UiState<ScreenComponent>>(UiState.Initial)
     val screenUiState: StateFlow<UiState<ScreenComponent>> = _screenUiState
 
-    protected fun registerHandlers(state: ScreenState) {
+    protected fun registerHandlers(state: ScreenState, dataState: DataState) {
         dispatcher.register(Action.ShowSnackbar::class, ShowSnackbarHandler(state))
         dispatcher.register(Action.ShowBottomSheet::class, ShowBottomSheetHandler(state))
         dispatcher.register(
             Action.FetchData::class,
             FetchDataHandler(
                 networkRepository,
-                dispatcher,
-                state,
-                processors = listOf(CartItemsProcessor()), //Можно добавить другие processors
-                screenComponent = _screenComponent.value
+                dataState
             )
         )
     }

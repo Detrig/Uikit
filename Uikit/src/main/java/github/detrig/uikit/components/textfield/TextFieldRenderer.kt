@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.ActionDispatcher

@@ -9,7 +9,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
 import github.detrig.uikit.core.ActionEvent

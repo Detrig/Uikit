@@ -1,6 +1,6 @@
 package github.detrig.composetutorial.domain.handlers
 
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.Action
 import github.detrig.uikit.core.ActionHandler
 

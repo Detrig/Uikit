@@ -1,23 +1,25 @@
-package github.detrig.uikit.components.screen
+package github.detrig.uikit.states
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
-import github.detrig.uikit.components.button.ButtonComponent
-import github.detrig.uikit.components.text.TextComponent
+import androidx.compose.runtime.mutableStateOf
 import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.box.BoxComponent
+import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.card.CardComponent
 import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.column.ColumnComponent
 import github.detrig.uikit.components.row.RowComponent
+import github.detrig.uikit.components.screen.ScreenComponent
+import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.textfield.TextFieldComponent
-import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.universal_lazy_list.ListComponent
+import github.detrig.uikit.components.utils.Component
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.mutableStateOf
 
 class ScreenState(screen: ScreenComponent) {
 
@@ -55,7 +57,10 @@ class ScreenState(screen: ScreenComponent) {
                     traverse(it)
                 }
 
-                is ListComponent -> component.items.forEach { traverse(it) }
+//                is ListComponent -> {
+//                    val list = mutableStateListOf<Component>()
+//                    componentStates[id] = list
+//                }
             }
         }
 

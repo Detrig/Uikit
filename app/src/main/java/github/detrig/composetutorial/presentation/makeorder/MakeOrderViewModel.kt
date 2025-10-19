@@ -7,8 +7,9 @@ import github.detrig.composetutorial.core.ScreenViewModel
 import github.detrig.composetutorial.data.NetworkRepository
 import github.detrig.composetutorial.domain.repository.ScreenRepository
 import github.detrig.composetutorial.ui.theme.common.UiState
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.ActionDispatcher
+import github.detrig.uikit.states.DataState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,6 +20,8 @@ class MakeOrderViewModel(
     screenRepository: ScreenRepository,
     networkRepository: NetworkRepository
 ) : ScreenViewModel(navigation, screenRepository, networkRepository, dispatcher) {
+
+    private val dataState = DataState()
 
     private val _makeOrderScreenState = MutableStateFlow<ScreenState?>(null)
     val makeOrderScreenState: StateFlow<ScreenState?> = _makeOrderScreenState
@@ -32,7 +35,7 @@ class MakeOrderViewModel(
             if (isFirstLoad) {
                 val state = ScreenState(screen)
                 _makeOrderScreenState.value = state
-                registerHandlers(state)
+                registerHandlers(state, dataState)
                 observeScreenUpdates(screenId)
             } else {
                 _makeOrderScreenState.value?.updateFrom(screen)
@@ -42,4 +45,6 @@ class MakeOrderViewModel(
             _screenUiState.value = UiState.Success(screen)
         }
     }
+
+    fun getDataStateFroScreen(): DataState = dataState
 }

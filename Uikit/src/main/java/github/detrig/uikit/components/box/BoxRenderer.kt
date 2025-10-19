@@ -19,7 +19,7 @@ import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.image.ImageRenderer
 import github.detrig.uikit.components.row.RowComponent
 import github.detrig.uikit.components.row.RowRenderer
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.text.TextRenderer
 import github.detrig.uikit.components.textfield.TextFieldComponent
@@ -48,12 +48,11 @@ object BoxRenderer {
                     is ButtonComponent -> ButtonRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is ImageComponent -> ImageRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is TextFieldComponent -> TextFieldRenderer.Render(child, state, dispatcher, modifierWithAlign)
-                    is RowComponent -> RowRenderer.Render(child, state, dispatcher)
-                    is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
+                    //is RowComponent -> RowRenderer.Render(child, state, dataState, dispatcher)
+                    //is ColumnComponent -> ColumnRenderer.Render(child, state, dispatcher)
                     is CheckboxComponent -> CheckboxRenderer.Render(child, dispatcher, state, modifierWithAlign)
-                    is CardComponent -> CardRenderer.Render(child, state, dispatcher, modifierWithAlign)
+                    //is CardComponent -> CardRenderer.Render(child, state, dataState, dispatcher, modifierWithAlign)
                     is IconComponent -> IconRenderer.Render(child, state, dispatcher)
-                    is ListComponent -> ListRenderer.Render(child, state, dispatcher, modifierWithAlign)
                     is BoxComponent -> Render(child, state, dispatcher)
                     else -> {}
                 }

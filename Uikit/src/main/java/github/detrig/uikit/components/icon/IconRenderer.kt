@@ -14,7 +14,7 @@ import github.detrig.uikit.R
 import github.detrig.uikit.components.utils.toComposeModifier
 import java.util.Locale
 import androidx.core.graphics.toColorInt
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.ActionDispatcher
 import github.detrig.uikit.core.ActionEvent
 import github.detrig.uikit.core.performActionsForEvent

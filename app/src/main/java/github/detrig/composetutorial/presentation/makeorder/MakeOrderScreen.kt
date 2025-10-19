@@ -11,7 +11,7 @@ import github.detrig.composetutorial.di.ProvideViewModel
 import github.detrig.composetutorial.presentation.cart.CartScreen
 import github.detrig.composetutorial.ui.theme.common.UiStateHandler
 import github.detrig.uikit.components.screen.ScreenRenderer
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.ActionDispatcher
 
 
@@ -37,7 +37,7 @@ object MakeOrderScreen : Screen {
             fetchScreenJson = { screenId -> viewModel.loadScreenJson(screenId) },
             onRetry = { } // { viewModel.loadScreenById(SCREEN_ID) }
         ) { screenComponent ->
-            ScreenRenderer.Render(screenComponent, viewModel.makeOrderScreenState.value ?: ScreenState(screenComponent), viewModel.dispatcher)
+            ScreenRenderer.Render(screenComponent, viewModel.makeOrderScreenState.value ?: ScreenState(screenComponent), viewModel.getDataStateFroScreen(), viewModel.dispatcher)
         }
     }
 }

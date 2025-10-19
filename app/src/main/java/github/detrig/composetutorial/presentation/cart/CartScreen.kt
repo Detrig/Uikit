@@ -11,14 +11,15 @@ import github.detrig.composetutorial.di.ProvideViewModel
 import github.detrig.composetutorial.presentation.makeorder.MakeOrderViewModel
 import github.detrig.uikit.components.screen.ScreenRenderer
 import github.detrig.composetutorial.ui.theme.common.UiStateHandler
-import github.detrig.uikit.components.screen.ScreenState
+import github.detrig.uikit.states.ScreenState
 
 object CartScreen : Screen {
-    //private const val SCREEN_ID = "1c24b76b-f646-40d4-84e1-65a613152aa9"
-    const val SCREEN_ID = "3a7c12a5-6cb2-4bc3-bc0e-1549c405b413"
+    const val SCREEN_ID = "03213239-75dc-4393-8c88-c95d4c00cd5a"
+    //const val SCREEN_ID = "3a7c12a5-6cb2-4bc3-bc0e-1549c405b413"
     //const val SCREEN_ID = "a50e5b71-402e-4ac0-9acb-e8fc91f18c76"
     //const val SCREEN_ID = "76b729c3-9213-49df-91af-25259cc56162"
-    //const val SCREEN_ID = "03213239-75dc-4393-8c88-c95d4c00cd5a"
+    //const val SCREEN_ID = "d8ca047f-9c92-4150-a8fd-a79c359e54df"
+    //const val SCREEN_ID = "c1fcc58c-14a8-4ec1-b451-b0cbb1c36c03"
     //private const val SCREEN_ID = "4761c8a0-74bf-4733-8444-93faebb6f6da"
     //private const val SCREEN_ID = "21d7850d-1775-4610-9ccd-5896515aa381"
     //private const val SCREEN_ID = "9abfbcab-f242-4a1d-a3d4-0f4d9a84cd33"
@@ -42,7 +43,7 @@ object CartScreen : Screen {
             fetchScreenJson = { screenId -> viewModel.loadScreenJson(screenId) },
             onRetry = { } //viewModel.loadScreen(SCREEN_ID) }
         ) { screenComponent ->
-            ScreenRenderer.Render(screenComponent, viewModel.cartScreenState.collectAsState().value!!, viewModel.dispatcher)
+            ScreenRenderer.Render(screenComponent, viewModel.cartScreenState.collectAsState().value!!, viewModel.getDataStateFroScreen(), viewModel.dispatcher)
         }
     }
 }
