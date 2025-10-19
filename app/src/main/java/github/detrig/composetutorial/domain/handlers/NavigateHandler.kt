@@ -15,8 +15,6 @@ class NavigateHandler(
     override suspend fun handle(action: Action.Navigate) {
         navigation.update(
             when (action.targetId) {
-                //"1c24b76b-f646-40d4-84e1-65a613152aa9" -> CartScreen
-                //"76b729c3-9213-49df-91af-25259cc56162" -> CartScreen
                 CartScreen.SCREEN_ID -> CartScreen
                 MakeOrderScreen.SCREEN_ID -> MakeOrderScreen
                 else -> Screen.Empty

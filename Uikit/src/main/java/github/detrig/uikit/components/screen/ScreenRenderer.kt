@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import github.detrig.uikit.components.box.BoxComponent
@@ -37,6 +38,8 @@ import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import github.detrig.uikit.components.universal_lazy_list.ListRenderer
+import github.detrig.uikit.core.ActionEvent
+import github.detrig.uikit.core.performActionsForEvent
 import github.detrig.uikit.custom_components.lazy_column.LazyColumnComponent
 import github.detrig.uikit.custom_components.lazy_column.LazyColumnRenderer
 import github.detrig.uikit.states.DataState
@@ -48,6 +51,10 @@ object ScreenRenderer {
         val backgroundColor = component.background?.let {
             Color(it.toColorInt())
         } ?: Color.White
+
+        LaunchedEffect(component) {
+            component.performActionsForEvent(ActionEvent.OnScreenInitialized, dispatcher)
+        }
 
         Scaffold(
             topBar = {

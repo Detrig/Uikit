@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import github.detrig.uikit.components.box.BoxComponent
@@ -43,7 +44,6 @@ object ColumnRenderer {
         val onClick = if (component.actions?.any { it.event == ActionEvent.OnClick } == true) {
             { component.performActionsForEvent(ActionEvent.OnClick, dispatcher) }
         } else null
-
 
         var modifier = (component.modifier?.toComposeModifier(onClick) ?: Modifier)
         val scrollState = rememberScrollState()
