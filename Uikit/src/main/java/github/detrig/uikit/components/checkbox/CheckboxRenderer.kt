@@ -1,6 +1,5 @@
 package github.detrig.uikit.components.checkbox
 
-import android.R.attr.checked
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.runtime.Composable
