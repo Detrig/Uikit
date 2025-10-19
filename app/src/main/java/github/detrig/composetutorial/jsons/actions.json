@@ -1,0 +1,166 @@
+{
+  "_id": "9abfbcab-f242-4a1d-a3d4-0f4d9a84cd33",
+  "type": "screen",
+  "name": "New Screen mgtg2k91",
+  "background": "#FFFFFF",
+  "topBar": [
+    {
+      "children": [],
+      "_id": "comp-topbar-mgtg2k91-u3fdj8qlk",
+      "type": "row",
+      "modifier": {
+        "background": "#FFFFFF",
+        "fillMaxWidth": true,
+        "size": {
+          "height": "50",
+          "width": "match_parent"
+        }
+      }
+    }
+  ],
+  "content": [
+    {
+      "modifier": {
+        "size": {
+          "width": "match_parent",
+          "height": "wrap_content"
+        },
+        "fillMaxWidth": true,
+        "fillMaxHeight": true
+      },
+      "children": [
+        {
+          "type": "row",
+          "_id": "row_f9048jdi",
+          "modifier": {
+            "clip": {
+              "cornerRadius": 0
+            },
+            "background": "#acb7c9",
+            "alpha": 1,
+            "size": {
+              "height": "20",
+              "width": "match_parent"
+            },
+            "align": "start",
+            "shadow": {
+              "elevation": 0,
+              "color": "#000000"
+            },
+            "border": {
+              "color": "#000000",
+              "width": 0
+            },
+            "clickable": false,
+            "margin": {
+              "bottom": 10,
+              "start": 10,
+              "end": 5,
+              "top": 150
+            },
+            "fillMaxWidth": true,
+            "fillMaxHeight": false
+          },
+          "verticalAlignment": "centerVertically",
+          "horizontalArrangement": "start",
+          "children": [
+            {
+              "verticalAlignment": "top",
+              "horizontalArrangement": "start",
+              "children": [],
+              "type": "column",
+              "_id": "column_ezhq71lt",
+              "modifier": {
+                "shadow": {
+                  "elevation": 0,
+                  "color": "#000000"
+                },
+                "border": {
+                  "color": "#000000",
+                  "width": 0
+                },
+                "clickable": false,
+                "alpha": 1,
+                "size": {
+                  "width": "20",
+                  "height": "match_parent"
+                },
+                "background": "#bc2929",
+                "clip": {
+                  "cornerRadius": 0
+                },
+                "padding": {
+                  "start": 10,
+                  "end": 10,
+                  "top": 10,
+                  "bottom": 10,
+                  "all": 5
+                },
+                "fillMaxWidth": false,
+                "fillMaxHeight": true,
+                "align": "start"
+              }
+            },
+            {
+              "_id": "card_s3lvdw5r",
+              "modifier": {
+                "border": {
+                  "width": 0,
+                  "color": "#000000"
+                },
+                "padding": {
+                  "start": 10,
+                  "end": 10,
+                  "top": 10,
+                  "bottom": 10,
+                  "all": 5
+                },
+                "clickable": false,
+                "alpha": 1,
+                "size": {
+                  "height": "20",
+                  "width": "20"
+                },
+                "fillMaxHeight": false,
+                "clip": {
+                  "cornerRadius": 0
+                },
+                "shadow": {
+                  "elevation": 0,
+                  "color": "#000000"
+                },
+                "fillMaxWidth": false,
+                "align": "start",
+                "background": "#2f6541"
+              },
+              "elevation": 1,
+              "shape": {
+                "cornerRadius": 12
+              },
+              "children": [],
+              "type": "card"
+            }
+          ]
+        }
+      ],
+      "_id": "comp-content-mgtg2k91-u3fdj8qlk",
+      "type": "column"
+    }
+  ],
+  "bottomBar": [
+    {
+      "_id": "comp-bottombar-mgtg2k91-u3fdj8qlk",
+      "modifier": {
+        "size": {
+          "width": "match_parent",
+          "height": "50"
+        },
+        "background": "#FFFFFF",
+        "fillMaxWidth": true
+      },
+      "children": [],
+      "type": "row"
+    }
+  ],
+  "snackbars": []
+}
