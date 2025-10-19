@@ -10,7 +10,7 @@ import github.detrig.uikit.components.screen.ScreenComponent
 import github.detrig.uikit.components.text.TextComponent
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.utils.Component
-import github.detrig.uikit.custom_components.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
@@ -36,7 +36,6 @@ object DataBinder {
             }
         }
 
-        // рекурсивно спускаемся в детей
         when (component) {
             is RowComponent -> component.children.forEach { bindDataToComponent(it, data) }
             is ColumnComponent -> component.children.forEach { bindDataToComponent(it, data) }

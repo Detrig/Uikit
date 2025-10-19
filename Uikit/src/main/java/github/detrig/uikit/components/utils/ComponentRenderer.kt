@@ -25,8 +25,8 @@ import github.detrig.uikit.components.textfield.TextFieldRenderer
 import github.detrig.uikit.core.ActionDispatcher
 import github.detrig.uikit.custom_components.CartItemComponent
 import github.detrig.uikit.custom_components.CartItemRenderer
-import github.detrig.uikit.custom_components.ListComponent
-import github.detrig.uikit.custom_components.ListRenderer
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListRenderer
 
 object ComponentRenderer {
 

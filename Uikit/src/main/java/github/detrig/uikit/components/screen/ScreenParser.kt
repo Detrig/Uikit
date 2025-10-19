@@ -5,7 +5,6 @@ import github.detrig.uikit.components.button.ButtonComponent
 import github.detrig.uikit.components.card.CardComponent
 import github.detrig.uikit.components.checkbox.CheckboxComponent
 import github.detrig.uikit.components.column.ColumnComponent
-import android.util.Log
 import github.detrig.uikit.components.icon.IconComponent
 import github.detrig.uikit.components.image.ImageComponent
 import github.detrig.uikit.components.row.RowComponent
@@ -21,7 +20,7 @@ import kotlinx.serialization.json.jsonPrimitive
 import github.detrig.uikit.components.bottomsheet.BottomSheetComponent
 import github.detrig.uikit.components.snackbar.SnackbarComponent
 import github.detrig.uikit.components.textfield.TextFieldComponent
-import github.detrig.uikit.custom_components.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer

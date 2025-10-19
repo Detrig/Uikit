@@ -1,4 +1,4 @@
-package github.detrig.uikit.custom_components
+package github.detrig.uikit.components.universal_lazy_list
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn

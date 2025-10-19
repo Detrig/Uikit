@@ -35,8 +35,8 @@ import github.detrig.uikit.components.box.BoxRenderer
 import github.detrig.uikit.components.snackbar.SnackbarComponent
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.textfield.TextFieldRenderer
-import github.detrig.uikit.custom_components.ListComponent
-import github.detrig.uikit.custom_components.ListRenderer
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListRenderer
 
 object ScreenRenderer {
     @Composable

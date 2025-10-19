@@ -1,4 +1,4 @@
-package github.detrig.uikit.custom_components
+package github.detrig.uikit.components.universal_lazy_list
 
 import github.detrig.uikit.components.utils.Component
 import github.detrig.uikit.components.utils.ModifierModel

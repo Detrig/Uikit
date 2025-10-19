@@ -12,7 +12,7 @@ import github.detrig.uikit.components.column.ColumnComponent
 import github.detrig.uikit.components.row.RowComponent
 import github.detrig.uikit.components.textfield.TextFieldComponent
 import github.detrig.uikit.components.utils.Component
-import github.detrig.uikit.custom_components.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

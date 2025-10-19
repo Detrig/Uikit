@@ -1,10 +1,8 @@
 package github.detrig.uikit.components.column
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -34,8 +32,8 @@ import github.detrig.uikit.components.utils.toComposeModifier
 import github.detrig.uikit.core.ActionDispatcher
 import github.detrig.uikit.core.ActionEvent
 import github.detrig.uikit.core.performActionsForEvent
-import github.detrig.uikit.custom_components.ListComponent
-import github.detrig.uikit.custom_components.ListRenderer
+import github.detrig.uikit.components.universal_lazy_list.ListComponent
+import github.detrig.uikit.components.universal_lazy_list.ListRenderer
 
 object ColumnRenderer {
 
