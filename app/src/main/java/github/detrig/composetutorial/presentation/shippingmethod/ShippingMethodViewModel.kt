@@ -1,45 +1,43 @@
-package github.detrig.composetutorial.presentation.cart
+package github.detrig.composetutorial.presentation.shippingmethod
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import github.detrig.composetutorial.core.navigation.Navigation
 import github.detrig.composetutorial.core.ScreenViewModel
+import github.detrig.composetutorial.core.navigation.Navigation
 import github.detrig.composetutorial.data.NetworkRepository
 import github.detrig.composetutorial.domain.repository.ScreenRepository
 import github.detrig.composetutorial.ui.theme.common.UiState
-import github.detrig.uikit.states.ScreenState
 import github.detrig.uikit.core.ActionDispatcher
 import github.detrig.uikit.states.DataState
+import github.detrig.uikit.states.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class CartViewModel(
-    navigation: Navigation.Mutable,
-    repository: ScreenRepository,
-    networkRepository: NetworkRepository,
-    val dispatcher: ActionDispatcher
-) : ScreenViewModel(navigation, repository, networkRepository, dispatcher) {
+class ShippingMethodViewModel(
+    private val navigation: Navigation.Mutable,
+    val dispatcher: ActionDispatcher,
+    screenRepository: ScreenRepository,
+    networkRepository: NetworkRepository
+) : ScreenViewModel(navigation, screenRepository, networkRepository, dispatcher) {
 
-    val dataState = DataState()
+    private val dataState = DataState()
 
-    private val _cartScreenState = MutableStateFlow<ScreenState?>(null)
-    val cartScreenState: StateFlow<ScreenState?> = _cartScreenState
+    private val _ShippingMethodScreenState = MutableStateFlow<ScreenState?>(null)
+    val shippingScreenState: StateFlow<ScreenState?> = _ShippingMethodScreenState
 
     fun loadScreen(screenId: String) {
         viewModelScope.launch {
             val screen = loadScreenJson(screenId) ?: return@launch
 
-            val isFirstLoad = _cartScreenState.value == null
-            Log.d("alz-debug", "loadScreen called for $screenId, isFirstLoad=$isFirstLoad")
+            val isFirstLoad = _ShippingMethodScreenState.value == null
 
             if (isFirstLoad) {
                 val state = ScreenState(screen)
-                _cartScreenState.value = state
+                _ShippingMethodScreenState.value = state
                 registerHandlers(state, dataState)
                 observeScreenUpdates(screenId)
             } else {
-                _cartScreenState.value?.updateFrom(screen)
+                _ShippingMethodScreenState.value?.updateFrom(screen)
             }
 
             _screenComponent.value = screen
